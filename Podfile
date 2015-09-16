@@ -1,0 +1,8 @@
+pod 'SDWebImage'
+pod 'AFNetworking'
+pod 'SSToolkit'
+pod 'MJRefresh'
+pod 'PopMenu'
+pod 'MBProgressHUD'
+pod 'Masonry'
+pod 'TAlertView'

@@ -1,0 +1,101 @@
+//
+//  PrefixHeader.pch
+//  Jay
+//
+//  Created by aayongche on 15/9/8.
+//  Copyright (c) 2015年 lei.cheng. All rights reserved.
+//
+
+#ifndef Jay_PrefixHeader_pch
+#define Jay_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
+#import "MJRefresh.h"
+#import "SSToolkit.h"
+#import "APISDK.h"
+#import "interface.h"
+#import "TAlertView.h"
+#import "UIImageView+WebCache.h"
+#import "Masonry.h"
+#import "BMReachability/BMReachability.h"
+#import "userDefault.h"
+
+#define CL_TEST YES
+#define CL_TITLE  @"浪死浪断气"
+
+
+
+
+
+
+#import "TKGlobal.h"
+
+// ADDITIONS
+#import "NSObject+TKCategory.h"
+#import "NSString+TKCategory.h"
+#import "NSDate+TKCategory.h"
+#import "NSArray+TKCategory.h"
+#import "NSMutableArray+TKCategory.h"
+#import "NSAttributedString+TKCategory.h"
+#import "NSMutableAttributedString+TKCategory.h"
+#import "UIDevice+TKCategory.h"
+#import "UIScreen+TKCategory.h"
+#import "UIView+TKCategory.h"
+#import "UIImage+TKCategory.h"
+#import "UIColor+TKCategory.h"
+#import "UIImageView+TKCategory.h"
+#import "UIScrollview+TKCategory.h"
+#import "UIButton+TKCategory.h"
+#import "UITextField+TKCategory.h"
+#import "UIImagePickerController+TKCategory.h"
+#import "UIViewController+TKCategory.h"
+#import "UIBarButtonItem+TKCategory.h"
+#import "UIActionSheet+TKCategory.h"
+#import "UIAlertView+TKCategory.h"
+#import "UIGestureRecognizer+TKCategory.h"
+#import "UIFont+TKCategory.h"
+#import "UINavigationBar+TKCategory.h"
+#import "UILabel+TKCategory.h"
+#import "UIApplication+TKCategory.h"
+
+// Animations
+#import "UIView+TKAnimation.h"
+#import "CAAnimation+TKAnimation.h"
+#import "CALayer+TKAnimation.h"
+#import "CAKeyframeAnimation+TKAnimation.h"
+
+/**
+ *  当Xcode为Release时不输出，为Debug时输出
+ *
+ *  @param ...
+ *
+ *  @return
+ */
+#ifndef __OPTIMIZE__
+#define NSLog(...) NSLog(__VA_ARGS__)
+
+/**
+ *  打印的时候可以看到类名、方法以及行数
+ *
+ */
+//#define NSLog(fmt,...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__);
+
+#else
+#define NSLog(...) {}
+#endif
+
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+
+
+#define RGB_Color(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define RGB_ColorAlpha(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
+#define RGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:1.0]
+#define RGBALPHA(rgbValue,a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:(a)]
+#define APP_SIZE [UIScreen mainScreen].bounds.size
+#define APP_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define APP_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+#define PPSystemVersionGreaterOrEqualThan(version) ([[[UIDevice currentDevice] systemVersion] floatValue] >= version) 
+#define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
