@@ -90,9 +90,6 @@
     [self createUI];
     
 //    [self requestComments];
-    //播放
-    [self.moviePlayer play];
-    
     //添加通知
     [self addNotification];
 }
