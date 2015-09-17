@@ -14,6 +14,7 @@
 #import "WxApi.h"
 #import "MainViewController.h"
 #import "LeftSortsViewController.h"
+#import "WeiboSDK.h"
 
 @interface AppDelegate ()
 
@@ -43,7 +44,6 @@
     LeftSortsViewController *leftVC = [[LeftSortsViewController alloc] init];
     self.LeftSlideVC = [[LeftSlideViewController alloc] initWithLeftView:leftVC andMainView:self.mainNavigationController];
     self.window.rootViewController = self.LeftSlideVC;
-    
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     
