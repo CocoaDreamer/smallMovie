@@ -20,10 +20,17 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
+  - LKDBHelper (2.1.4):
+    - FMDB
   - Masonry (0.6.2)
   - MBProgressHUD (0.9.1)
-  - MJRefresh (2.4.9)
-  - pop (1.0.7)
+  - MJExtension (2.5.10)
+  - pop (1.0.8)
   - PopMenu (2.4):
     - pop
     - XHRealTimeBlur
@@ -60,9 +67,10 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - LKDBHelper
   - Masonry
   - MBProgressHUD
-  - MJRefresh
+  - MJExtension
   - PopMenu
   - SDWebImage
   - SSToolkit
@@ -70,10 +78,12 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  LKDBHelper: 6bde14a7d8d1915dd6f1a960176cc868175dd14d
   Masonry: 362e8a1cc0beada4a4c4832d5e863da2a51533be
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MJRefresh: be84acb912d0a66364f76a75426698a39528e2ed
-  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  MJExtension: 944fb5a12bceb9b866914527f66101566e66292b
+  pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   PopMenu: 26b97baeaf250070f4f61b93727ca86d127d7bc5
   SAMAddressBar: ca4278987cca36a65fd8d29fae3fc5f3fa732469
   SAMBadgeView: f27d499b7f233e29277325f318a9dcdd2a8fc9e9

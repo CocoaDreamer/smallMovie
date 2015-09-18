@@ -219,6 +219,14 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [self.moviePlayer play];
 }
 
+- (void)like{
+    NSLog(@"喜欢");
+    LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    if ([helper insertToDB:self.listModel]) {
+        NSLog(@"插入成功");
+    }
+}
+
 /**
  *  创建UI
  */
@@ -247,8 +255,14 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [shareBtn setImage:[UIImage imageNamed:@"wshare_normal"] forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     shareBtn.frame = CGRectMake(0, 0, 40, 40);
+    UIBarButtonItem *likeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(like)];
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    self.navigationItem.rightBarButtonItem = barItem;
+    NSArray *array = [NSArray arrayWithObjects:likeItem,barItem, nil];
+    self.navigationItem.rightBarButtonItems = array;
+
+//    self.navigationItem.rightBarButtonItem = barItem;
+    
+    
     
     
     //多少人看过

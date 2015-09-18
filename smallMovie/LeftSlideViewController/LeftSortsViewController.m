@@ -9,6 +9,7 @@
 #import "LeftSortsViewController.h"
 #import "AppDelegate.h"
 #import "otherViewController.h"
+#import "ListModel.h"
 
 @interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -50,7 +51,8 @@
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing = YES;
     picker.delegate = self;
-    [self presentViewController:picker animated:YES completion:nil];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
@@ -109,10 +111,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    otherViewController *vc = [[otherViewController alloc] init];
-    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
+//    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+//    otherViewController *vc = [[otherViewController alloc] init];
+//    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+//    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
+    NSInteger count = [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:nil];
+    NSMutableArray *array = [[LKDBHelper getUsingLKDBHelper] search:[ListModel class] where:nil orderBy:nil offset:0 count:count];
+    NSLog(@"%lu",(unsigned long)array.count);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

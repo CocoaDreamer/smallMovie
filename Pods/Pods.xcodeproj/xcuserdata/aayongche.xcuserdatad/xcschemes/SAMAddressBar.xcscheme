@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "89A27C4FD2F0E7A1C4163694"
+               BlueprintIdentifier = "F5E7B76912FE84060FE2B775"
                BuildableName = "libSAMAddressBar.a"
                BlueprintName = "SAMAddressBar"
                ReferencedContainer = "container:Pods.xcodeproj">

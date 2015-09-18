@@ -58,7 +58,6 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "SAMAddressBar/Resources/SAMAddressBar-background.png"
   install_resource "SAMAddressBar/Resources/SAMAddressBar-background@2x.png"
   install_resource "SAMAddressBar/Resources/SAMAddressBar-reload.png"
@@ -96,7 +95,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "SAMWebView/Resources/SAMWebView-stop-button@2x.png"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "SAMAddressBar/Resources/SAMAddressBar-background.png"
   install_resource "SAMAddressBar/Resources/SAMAddressBar-background@2x.png"
   install_resource "SAMAddressBar/Resources/SAMAddressBar-reload.png"

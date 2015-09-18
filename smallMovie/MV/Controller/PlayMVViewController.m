@@ -130,6 +130,15 @@
     
 }
 
+//收藏按钮
+- (void)like{
+    NSLog(@"喜欢");
+    LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    if ([helper insertToDB:self.listModel]) {
+        NSLog(@"插入成功");
+    }
+}
+
 - (void)createUI{
     NSURL *url=[self getNetworkUrl];
     if (!_moviePlayer) {
@@ -155,7 +164,10 @@
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     shareBtn.frame = CGRectMake(0, 0, 40, 40);
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    self.navigationItem.rightBarButtonItem = barItem;
+//    self.navigationItem.rightBarButtonItem = barItem;
+    UIBarButtonItem *likeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(like)];
+    NSArray *array = [NSArray arrayWithObjects:likeItem,barItem, nil];
+    self.navigationItem.rightBarButtonItems = array;
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"MV描述",@"MV相关", nil]];
     segmentedControl.frame = CGRectMake(20, 280, APP_WIDTH-40, 30);
