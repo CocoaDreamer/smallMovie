@@ -357,6 +357,8 @@
 		43A1B5341BA7084700ADB041 /* BMEnvObserverCenterNetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B52D1BA7084700ADB041 /* BMEnvObserverCenterNetworkStatus.m */; };
 		43A1B5351BA7084700ADB041 /* BMEnvObserverCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B52F1BA7084700ADB041 /* BMEnvObserverCoordinator.m */; };
 		43A1B5361BA7084700ADB041 /* BMObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B5311BA7084700ADB041 /* BMObserver.m */; };
+		43C1D3681BAF01770092010B /* UseHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C1D3671BAF01770092010B /* UseHelpViewController.m */; settings = {ASSET_TAGS = (); }; };
+		43C1D36C1BAF0B450092010B /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C1D36B1BAF0B450092010B /* AboutUsViewController.m */; settings = {ASSET_TAGS = (); }; };
 		55FBEF044629C8B79447C054 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC042A1B698F1958A4DA9BD5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -835,6 +837,10 @@
 		43A1B5301BA7084700ADB041 /* BMObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMObserver.h; sourceTree = "<group>"; };
 		43A1B5311BA7084700ADB041 /* BMObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMObserver.m; sourceTree = "<group>"; };
 		43A1B5321BA7084700ADB041 /* BMReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMReachability.h; sourceTree = "<group>"; };
+		43C1D3661BAF01770092010B /* UseHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseHelpViewController.h; sourceTree = "<group>"; };
+		43C1D3671BAF01770092010B /* UseHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseHelpViewController.m; sourceTree = "<group>"; };
+		43C1D36A1BAF0B450092010B /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		43C1D36B1BAF0B450092010B /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		731115B1A1105EE7B9100FB4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		EC042A1B698F1958A4DA9BD5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2BA6D95FCDD128BEC606A23 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -1183,6 +1189,8 @@
 				078F7D941B9EE568005B1500 /* PrefixHeader.pch */,
 				078F7D6C1B9EE18D005B1500 /* AppDelegate.h */,
 				078F7D6D1B9EE18D005B1500 /* AppDelegate.m */,
+				43C1D3691BAF01B40092010B /* AboutUs */,
+				43C1D3651BAF01630092010B /* UseHelp */,
 				0795E8E61BA9133500B2FEB3 /* LeftSlideViewController */,
 				07C458E81BA8225700158EF2 /* Category */,
 				07C458D71BA8204A00158EF2 /* Game */,
@@ -1695,6 +1703,24 @@
 			path = BMReachability;
 			sourceTree = "<group>";
 		};
+		43C1D3651BAF01630092010B /* UseHelp */ = {
+			isa = PBXGroup;
+			children = (
+				43C1D3661BAF01770092010B /* UseHelpViewController.h */,
+				43C1D3671BAF01770092010B /* UseHelpViewController.m */,
+			);
+			path = UseHelp;
+			sourceTree = "<group>";
+		};
+		43C1D3691BAF01B40092010B /* AboutUs */ = {
+			isa = PBXGroup;
+			children = (
+				43C1D36A1BAF0B450092010B /* AboutUsViewController.h */,
+				43C1D36B1BAF0B450092010B /* AboutUsViewController.m */,
+			);
+			path = AboutUs;
+			sourceTree = "<group>";
+		};
 		A1D117FC1222C105957B57C3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2107,6 +2133,7 @@
 				078F7F541BA019C5005B1500 /* PlayMovieViewController.m in Sources */,
 				07C4596D1BA8225700158EF2 /* UIViewController+DismissKeyboard.m in Sources */,
 				076C37A71BA6987E000D2DDC /* OrientationController.m in Sources */,
+				43C1D36C1BAF0B450092010B /* AboutUsViewController.m in Sources */,
 				0786F6AD1BABBA550083C05E /* MJRefreshStateHeader.m in Sources */,
 				0795E8F71BA942CA00B2FEB3 /* MovieViewController.m in Sources */,
 				07C4596F1BA8225700158EF2 /* UIViewController+TKCategory.m in Sources */,
@@ -2143,6 +2170,7 @@
 				0795E8EF1BA9135900B2FEB3 /* LeftSortsViewController.m in Sources */,
 				07C4595E1BA8225700158EF2 /* UIImage+Extension.m in Sources */,
 				0786F6A81BABBA550083C05E /* MJRefreshBackGifFooter.m in Sources */,
+				43C1D3681BAF01770092010B /* UseHelpViewController.m in Sources */,
 				0786F6A01BABBA550083C05E /* MJRefreshAutoFooter.m in Sources */,
 				07C459591BA8225700158EF2 /* UIColor+TKCategory.m in Sources */,
 				0786F6AC1BABBA550083C05E /* MJRefreshNormalHeader.m in Sources */,
@@ -2286,7 +2314,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: PENG BAO (LD3S977XKB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: PENG BAO (LD3S977XKB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2323,7 +2351,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: PENG BAO (LD3S977XKB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: PENG BAO (LD3S977XKB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

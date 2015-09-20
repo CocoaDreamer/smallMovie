@@ -11,6 +11,8 @@
 #import "otherViewController.h"
 #import "ListModel.h"
 #import "MyCollectionViewController.h"
+#import "UseHelpViewController.h"
+#import "AboutUsViewController.h"
 
 @interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -102,9 +104,9 @@
     } else if (indexPath.row == 4) {
         cell.textLabel.text = @"我的收藏";
     } else if (indexPath.row == 5) {
-        cell.textLabel.text = @"我的相册";
+        cell.textLabel.text = @"使用帮助";
     } else if (indexPath.row == 6) {
-        cell.textLabel.text = @"我的文件";
+        cell.textLabel.text = @"关于美华小视";
     }
     return cell;
 }
@@ -112,18 +114,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    id vc;
     if (indexPath.row == 4) {
-        MyCollectionViewController *collectionVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyCollectionViewController"];
-        [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-        [tempAppDelegate.mainNavigationController pushViewController:collectionVC animated:NO];
-    } else {
-    otherViewController *vc = [[otherViewController alloc] init];
-    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
-//    NSInteger count = [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:nil];
-//    NSMutableArray *array = [[LKDBHelper getUsingLKDBHelper] search:[ListModel class] where:nil orderBy:nil offset:0 count:count];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyCollectionViewController"];
+    } else if (indexPath.row == 5){
+         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UseHelpViewController"];
     }
+    else {
+    vc = [[otherViewController alloc] init];
+    }
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
+    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

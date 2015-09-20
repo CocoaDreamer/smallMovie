@@ -35,8 +35,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initData];
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     
     [self addNotifications];
 }
