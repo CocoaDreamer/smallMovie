@@ -68,11 +68,8 @@
         if (_moviePlayer) {
             [self.moviePlayer stop];
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-
         }
-        
     }
-    
     [super viewWillDisappear:animated];
 }
 
