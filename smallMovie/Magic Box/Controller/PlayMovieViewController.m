@@ -77,11 +77,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        
     self.tabBarController.tabBar.hidden = YES;
-    
     self.navigationItem.title = self.listModel.title;
-    
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     
