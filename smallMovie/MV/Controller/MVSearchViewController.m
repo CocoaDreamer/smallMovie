@@ -10,6 +10,7 @@
 #import "MVListModel.h"
 #import "MVSearchTableViewCell.h"
 #import "PlayMVViewController.h"
+#import "AppDelegate.h"
 
 @interface MVSearchViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
@@ -31,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     [self initData];
     [self setupRefresh];
     _MVSearchBar.delegate = self;

@@ -11,6 +11,7 @@
 #import "APISDK.h"
 #import "MVListModel.h"
 #import "PlayMVViewController.h"
+#import "AppDelegate.h"
 
 @interface MVListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *mvListTableView;
@@ -43,7 +44,12 @@
     self.tabBarController.title = @"热播MV";
 }
 
-
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
+}
 
 - (IBAction)btnClick:(UIButton *)sender {
     if (sender.tag == 10) {

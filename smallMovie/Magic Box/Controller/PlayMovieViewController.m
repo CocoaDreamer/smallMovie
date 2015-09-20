@@ -85,6 +85,9 @@
     
     self.navigationItem.title = self.listModel.title;
     
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
+    
     [self initData];
     
     [self createUI];

@@ -25,7 +25,7 @@
     // Do any additional setup after loading the view.
     
     [self initData];
-    
+        
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openOrCloseLeftList)];

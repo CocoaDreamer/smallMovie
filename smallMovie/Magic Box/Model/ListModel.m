@@ -21,4 +21,8 @@
     
 }
 
++ (NSString *)getPrimaryKey{
+    return @"id";
+}
+
 @end

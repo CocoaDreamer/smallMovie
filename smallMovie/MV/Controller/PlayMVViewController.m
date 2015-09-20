@@ -81,10 +81,11 @@
         
     self.navigationItem.title = self.listModel.title;
     
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
+    
     [self initData];
     [self createUI];
-    
-    
     
     [self addNotification];
     
@@ -134,7 +135,7 @@
 - (void)like{
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-    if ([helper insertToDB:self.listModel]) {
+    if ([helper insertWhenNotExists:self.listModel]) {
         NSLog(@"插入成功");
     }
 }

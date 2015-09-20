@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "otherViewController.h"
 #import "ListModel.h"
+#import "MyCollectionViewController.h"
 
 @interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -111,14 +112,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-//    otherViewController *vc = [[otherViewController alloc] init];
-//    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-//    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
-    NSInteger count = [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:nil];
-    NSMutableArray *array = [[LKDBHelper getUsingLKDBHelper] search:[ListModel class] where:nil orderBy:nil offset:0 count:count];
-    NSLog(@"%lu",(unsigned long)array.count);
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (indexPath.row == 4) {
+        MyCollectionViewController *collectionVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyCollectionViewController"];
+        [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+        [tempAppDelegate.mainNavigationController pushViewController:collectionVC animated:NO];
+    } else {
+    otherViewController *vc = [[otherViewController alloc] init];
+    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
+//    NSInteger count = [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:nil];
+//    NSMutableArray *array = [[LKDBHelper getUsingLKDBHelper] search:[ListModel class] where:nil orderBy:nil offset:0 count:count];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

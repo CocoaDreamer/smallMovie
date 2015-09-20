@@ -8,6 +8,7 @@
 
 #import "GuessYourThinkViewController.h"
 #import "DeformationButton.h"
+#import "AppDelegate.h"
 
 @interface GuessYourThinkViewController (){
     DeformationButton *yesBtn;
@@ -42,12 +43,18 @@
     self.tabBarController.navigationController.navigationItem.rightBarButtonItem = nil;
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.tabBarController.title = @"猜你在想谁";
-
     
 //    self.foundView = [[UIView alloc] initWithFrame:self.view.bounds];
 //    self.foundView.backgroundColor = [UIColor clearColor];

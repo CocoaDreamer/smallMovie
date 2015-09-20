@@ -11,6 +11,7 @@
 #import "ListTableViewCell.h"
 #import "PlayMovieViewController.h"
 #import "MVSearchViewController.h"
+#import "AppDelegate.h"
 
 @interface MovieViewController ()
 
@@ -31,6 +32,13 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
     self.tabBarController.title = @"热播视频";
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
 }
 
 /**
