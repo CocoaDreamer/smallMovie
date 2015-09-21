@@ -70,7 +70,7 @@
         [self stopMJRefresh];
     } failed:^(NSInteger errorCode) {
         NSLog(@"errorCode = %ld",(long)errorCode);
-        [self alertTitle:@"请求列表错误" andMessage:[NSString stringWithFormat:@"%ld",(long)errorCode]];
+        [self showHint:@"列表请求错误"];
         [self stopMJRefresh];
     }];
 }
@@ -112,16 +112,6 @@
 - (void)stopMJRefresh{
     [_searchMVTableView.footer endRefreshing];
 }
-
-/**
- *  弹出提示框
- *
- */
-- (void)alertTitle:(NSString *)title andMessage:(NSString *)message{
-    TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
-    [alert show];
-}
-
 
 #pragma mark - UITableViewDelegate
 - (MVSearchTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

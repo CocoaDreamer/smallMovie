@@ -29,7 +29,6 @@
     } failed:^(NSInteger errorCode) {
         NSLog(@"%ld",(long)errorCode);
     }];
-    
 }
 
 - (void)didReceiveMemoryWarning {

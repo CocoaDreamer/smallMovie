@@ -106,7 +106,7 @@
     } else if (indexPath.row == 5) {
         cell.textLabel.text = @"使用帮助";
     } else if (indexPath.row == 6) {
-        cell.textLabel.text = @"关于美华小视";
+        cell.textLabel.text = @"关于我们";
     }
     return cell;
 }
@@ -119,6 +119,8 @@
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyCollectionViewController"];
     } else if (indexPath.row == 5){
          vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UseHelpViewController"];
+    } else if (indexPath.row == 6){
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutUsViewController"];
     }
     else {
     vc = [[otherViewController alloc] init];

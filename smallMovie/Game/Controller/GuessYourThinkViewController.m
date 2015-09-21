@@ -99,8 +99,6 @@
     [notsureBtn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:notsureBtn];
     [self AskQuestion];
-    
-    
 }
 
 
@@ -134,8 +132,7 @@
         noBtn.enabled = YES;
         notsureBtn.enabled = YES;
         [self performSelector:@selector(btnSettings) withObject:self afterDelay:0.8];
-
-        NSLog(@"网络请求失败");
+        [self showHint:@"请求失败"];
     }];
 }
 

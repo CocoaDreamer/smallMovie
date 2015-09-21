@@ -136,7 +136,7 @@
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
     if ([helper insertWhenNotExists:self.listModel]) {
-        NSLog(@"插入成功");
+        [self alertTitle:@"成功" andMessage:@"收藏成功"];
     }
 }
 
@@ -160,14 +160,19 @@
     [_backImageView addSubview:playButton];
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareBtn setImage:[UIImage imageNamed:@"wshare_click"] forState:UIControlStateNormal];
-    [shareBtn setImage:[UIImage imageNamed:@"wshare_normal"] forState:UIControlStateHighlighted];
+    [shareBtn setImage:[UIImage imageNamed:@"share_normal"] forState:UIControlStateNormal];
+    [shareBtn setImage:[UIImage imageNamed:@"share_click"] forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     shareBtn.frame = CGRectMake(0, 0, 40, 40);
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
 //    self.navigationItem.rightBarButtonItem = barItem;
-    UIBarButtonItem *likeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(like)];
-    NSArray *array = [NSArray arrayWithObjects:likeItem,barItem, nil];
+    UIButton *collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    collectBtn.frame = CGRectMake(0, 0, 40, 40);
+    [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
+    [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
+    [collectBtn addTarget:self action:@selector(like) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
+    NSArray *array = [NSArray arrayWithObjects:barItem,collectItem, nil];
     self.navigationItem.rightBarButtonItems = array;
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"MV描述",@"MV相关", nil]];

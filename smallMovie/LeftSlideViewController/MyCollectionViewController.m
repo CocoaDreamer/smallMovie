@@ -37,6 +37,8 @@
     [self initData];
     
     [self addNotifications];
+    
+    self.title = @"我的收藏";
 }
 
 - (void)addNotifications{
@@ -88,22 +90,45 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:nil];
+        if (_movieDataSoure.count > 0) {
+            return _movieDataSoure.count;
+        } else {
+            return 0;
+        }
     } else {
-        return [[LKDBHelper getUsingLKDBHelper] rowCount:[MVListModel class] where:nil];
+        if (_mvDataSource.count > 0) {
+            return _mvDataSource.count;
+        } else {
+            return 0;
+        }
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    if (_mvDataSource.count > 0 && _movieDataSoure.count > 0) {
+        return 2;
+    } else if (_movieDataSoure.count > 0 || _mvDataSource.count > 0){
+        return 1;
+    } else {
+        return 1;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        return @"Movie";
+    if (_mvDataSource.count > 0 && _movieDataSoure.count > 0) {
+        if (section == 0) {
+            return @"我收藏的电影";
+        } else {
+            return @"我收藏的MV";
+        }
+    } else if (_movieDataSoure.count > 0){
+        return @"我收藏的电影";
+    } else if (_mvDataSource.count > 0){
+        return @"我收藏的MV";
     } else {
-        return @"MV";
+        return nil;
     }
+    
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -114,9 +139,11 @@
     if (indexPath.section == 0) {
         ListModel *model = _movieDataSoure[indexPath.row];
         [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
+        [_movieDataSoure removeObject:model];
     } else {
         MVListModel *model = _mvDataSource[indexPath.row];
         [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
+        [_mvDataSource removeObject:model];
     }
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
 }

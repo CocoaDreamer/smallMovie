@@ -16,25 +16,22 @@
 @implementation MainViewController
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     [self initData];
-        
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 34, 34)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openOrCloseLeftList)];
     [imageView addGestureRecognizer:tap];
     imageView.image = [UIImage imageWithData:[USERDEFAULT objectForKey:MY_Icon]];
-    imageView.layer.cornerRadius = 20;
+    imageView.layer.cornerRadius = 17;
     imageView.layer.masksToBounds = YES;
-    imageView.layer.borderWidth = 2;
-    imageView.layer.borderColor = [UIColor redColor].CGColor;
+    imageView.layer.borderWidth = 1;
+    imageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.iconImageView = imageView;
     BMAddNetworkStatusObserver(self);

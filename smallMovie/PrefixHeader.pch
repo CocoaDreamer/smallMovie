@@ -61,6 +61,11 @@
 #import "UINavigationBar+TKCategory.h"
 #import "UILabel+TKCategory.h"
 #import "UIApplication+TKCategory.h"
+#import "NSString+Extension.h"
+#import "NSString+Hashing.h"
+#import "UIView+HUD.h"
+#import "UIView+Screenshot.h"
+#import "UIViewController+HUD.h"
 
 // Animations
 #import "UIView+TKAnimation.h"

@@ -162,13 +162,13 @@
         [ShareSDK share:formType parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
             switch (state) {
                 case SSDKResponseStateSuccess:
-                    [self alertErrorTitle:@"成功" andMessage:@"分享成功"];
+                    [self alertTitle:@"成功" andMessage:@"分享成功"];
                     break;
                 case SSDKResponseStateFail:
-                    [self alertErrorTitle:@"失败" andMessage:@"分享失败"];
+                    [self alertTitle:@"失败" andMessage:@"分享失败"];
                     break;
                 case SSDKResponseStateCancel:
-                    [self alertErrorTitle:@"取消" andMessage:@"取消分享"];
+                    [self alertTitle:@"取消" andMessage:@"取消分享"];
                 default:
                     break;
             }
@@ -195,7 +195,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
         
     } failed:^(NSInteger errorCode) {
         NSLog(@"%ld",(long)errorCode);
-        [self alertErrorTitle:@"列表请求失败" andMessage:[NSString stringWithFormat:@"错误码%ld",(long)errorCode]];
+        [self alertTitle:@"列表请求失败" andMessage:[NSString stringWithFormat:@"错误码%ld",(long)errorCode]];
     }];
 }
 
@@ -203,7 +203,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  *  弹出提示框
  *
  */
-- (void)alertErrorTitle:(NSString *)title andMessage:(NSString *)message{
+- (void)alertTitle:(NSString *)title andMessage:(NSString *)message{
     TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
     [alert show];
 }
@@ -220,7 +220,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
     if ([helper insertToDB:self.listModel]) {
-        NSLog(@"插入成功");
+        [self alertTitle:@"成功" andMessage:@"收藏成功"];
     }
 }
 
@@ -248,23 +248,27 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [_backImageView addSubview:playButton];
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareBtn setImage:[UIImage imageNamed:@"wshare_click"] forState:UIControlStateNormal];
-    [shareBtn setImage:[UIImage imageNamed:@"wshare_normal"] forState:UIControlStateHighlighted];
+    [shareBtn setImage:[UIImage imageNamed:@"share_normal"] forState:UIControlStateNormal];
+    [shareBtn setImage:[UIImage imageNamed:@"share_click"] forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     shareBtn.frame = CGRectMake(0, 0, 40, 40);
-    UIBarButtonItem *likeItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(like)];
+    UIButton *collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    collectBtn.frame = CGRectMake(0, 0, 40, 40);
+    [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
+    [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
+    [collectBtn addTarget:self action:@selector(like) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    NSArray *array = [NSArray arrayWithObjects:likeItem,barItem, nil];
+    NSArray *array = [NSArray arrayWithObjects:barItem,collectItem, nil];
     self.navigationItem.rightBarButtonItems = array;
 
-//    self.navigationItem.rightBarButtonItem = barItem;
     
     
     
     
     //多少人看过
     UIImageView *count_viewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 274, 20, 20)];
-    count_viewImageView.image = [UIImage imageNamed:@"wshare_click"];
+    count_viewImageView.image = [UIImage imageNamed:@"explore_selected"];
     [self.view addSubview:count_viewImageView];
     UILabel *count_viewLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 274, 60, 20)];
     count_viewLabel.font = [UIFont systemFontOfSize:15];
@@ -274,7 +278,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     
     //多少人喜欢
     UIImageView *count_likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 274, 20, 20)];
-    count_likeImageView.image = [UIImage imageNamed:@"wshare_click"];
+    count_likeImageView.image = [UIImage imageNamed:@"icon_activation_story_heart"];
     [self.view addSubview:count_likeImageView];
     UILabel *count_likeLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 274, 60, 20)];
     count_likeLabel.font = [UIFont systemFontOfSize:15];

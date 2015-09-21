@@ -86,7 +86,7 @@
         }
     } failed:^(NSInteger errorCode) {
         NSLog(@"%ld",(long)errorCode);
-        [self alertErrorTitle:@"列表请求失败" andMessage:[NSString stringWithFormat:@"错误码%ld",(long)errorCode]];
+        [self showHint:@"列表请求失败"];
         if (upOrDown) {
             _page = 1;
         }
@@ -100,15 +100,6 @@
 - (void)stopMJRefresh{
     [self.mvListTableView.header endRefreshing];
     [self .mvListTableView.footer endRefreshing];
-}
-
-/**
- *  弹出提示框
- *
- */
-- (void)alertErrorTitle:(NSString *)title andMessage:(NSString *)message{
-    TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
-    [alert show];
 }
 
 
