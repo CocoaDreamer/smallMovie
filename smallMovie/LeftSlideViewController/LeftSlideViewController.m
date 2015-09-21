@@ -80,7 +80,6 @@
 
         self.leftTableview.center = CGPointMake(kLeftCenterX, kScreenHeight * 0.5);
         self.leftIconImageView.center = CGPointMake(kLeftCenterX, kScreenHeight * 0.2);
-
         
         [self.view addSubview:self.mainVC.view];
         self.closed = YES;//初始时侧滑窗关闭
