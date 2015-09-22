@@ -230,7 +230,12 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 - (void) createUI{
     
     if (!_moviePlayer) {
-        NSURL *url=[self getNetworkUrl];
+        NSURL *url;
+        if ([self getFileUrl] != nil) {
+            url = [self getFileUrl];
+        } else {
+            url=[self getNetworkUrl];
+        }
         _moviePlayer=[[MPMoviePlayerController alloc]initWithContentURL:url];
         _moviePlayer.view.frame = CGRectMake(0, 64, APP_WIDTH, 200);
         [self.view addSubview:_moviePlayer.view];
@@ -256,7 +261,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     collectBtn.frame = CGRectMake(0, 0, 40, 40);
     [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
     [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
-    [collectBtn addTarget:self action:@selector(like) forControlEvents:UIControlEventTouchUpInside];
+    [collectBtn addTarget:self action:@selector(down) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     NSArray *array = [NSArray arrayWithObjects:barItem,collectItem, nil];
@@ -308,6 +313,30 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [self.view addSubview:introLabel];
 }
 
+- (void)down{
+    APISDK *apisdk = [[APISDK alloc] init];
+    NSLog(@"%@",self.listModel.pdownlink[0]);
+    NSArray *pdownlinkArray = self.listModel.pdownlink[0];
+    NSDictionary *dic = pdownlinkArray[0];
+    if ([dic objectForKey:@"video"] != nil) {
+        apisdk.interface = dic[@"video"];
+        [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+            NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+            NSString *newFielPath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",self.listModel.title]];
+            BOOL isSucceed = [responseObject writeToFile:newFielPath atomically:YES];
+            if (isSucceed) {
+                [self showHint:@"下载成功"];
+            } else {
+                [self showHint:@"下载失败，请重试"];
+            }
+        } failed:^(NSInteger errorCode) {
+            [self showHint:@"下载失败，请重试"];
+        }];
+    } else {
+        [self alertTitle:@"提示" andMessage:@"该视频暂时无法下载"];
+    }
+}
+
 - (void)share{
     [_popMenu showMenuAtView:self.view];
 }
@@ -319,7 +348,9 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  *  @return 文件路径
  */
 -(NSURL *)getFileUrl{
-    NSString *urlStr=[[NSBundle mainBundle] pathForResource:@"The New Look of OS X Yosemite.mp4" ofType:nil];
+//    NSString *urlStr=[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@.mp4",self.listModel.title] ofType:nil];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",self.listModel.title]];
     NSURL *url=[NSURL fileURLWithPath:urlStr];
     return url;
 }

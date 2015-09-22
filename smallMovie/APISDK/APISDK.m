@@ -23,6 +23,8 @@
         _manager.requestSerializer.HTTPShouldUsePipelining = YES;
         _manager.requestSerializer.HTTPShouldHandleCookies = YES;
         _manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        _sessionManager = [AFHTTPSessionManager manager];
+        _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return self;
 }
@@ -49,8 +51,6 @@
     }
 }
 
-
-
 - (void)CloseAndClearRequest{
     if (_manager) {
         [_manager.operationQueue cancelAllOperations];
@@ -60,6 +60,24 @@
 - (void)addValue:(id)value forKey:(NSString *)key{
     if (value) {
         [self.requestDic setObject:value forKey:key];
+    }
+}
+
+//下载
+- (void)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+    NSString *urlString = self.interface;
+    if (method == post) {
+        [_sessionManager POST:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            finished(responseObject);
+        } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+            failed(error.code);
+        }];
+    } else {
+        [_sessionManager GET:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            finished(responseObject);
+        } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+            failed(error.code);
+        }];
     }
 }
 

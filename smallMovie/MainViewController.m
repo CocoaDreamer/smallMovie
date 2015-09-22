@@ -23,6 +23,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initData];
+    [self createFile];//创建文件夹
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 34, 34)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openOrCloseLeftList)];
@@ -35,6 +36,18 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.iconImageView = imageView;
     BMAddNetworkStatusObserver(self);
+}
+
+//创建文件夹
+- (void)createFile{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    BOOL isDirExist = [fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/video",documentPath] isDirectory:FALSE];
+    if (!(isDir && isDirExist)) {
+        
+    }
+    
 }
 
 - (void)updateIconImageView{
@@ -54,10 +67,19 @@
         NSLog(@"========状态改变了啊=========");
     }
     NSLog(@"fromStatus:  %@   toStatus: %@",@(fromStatus),@(toStatus));
-    NSString  *statusStr = [[BMEnvObserverCenterNetworkStatus defaultCenter] currentNetWorkStatusString];
+    BMEnvObserverCenterNetworkStatus *networkStatus = [BMEnvObserverCenterNetworkStatus defaultCenter];
+    NSString  *statusStr = [networkStatus currentNetWorkStatusString];
     NSLog(@"当前网络状态为: %@",statusStr);
-    if ([BMEnvObserverCenterNetworkStatus defaultCenter].currentNetWorkStatus == BMNetworkReachabilityStatusUnknown || [BMEnvObserverCenterNetworkStatus defaultCenter].currentNetWorkStatus == BMNetworkReachabilityStatusNotReachable) {
-        [self alertTitle:@"Warning" andMessage:@"无网络连接,请重试"];
+    if (networkStatus.currentNetWorkStatus == BMNetworkReachabilityStatusUnknown || networkStatus.currentNetWorkStatus == BMNetworkReachabilityStatusNotReachable) {
+        [self showHint:@"亲，请检查您的网络连接"];
+    } else if (networkStatus.currentNetWorkStatus == BMNetworkReachabilityStatusReachableVia2G) {
+        [self showHint:@"您现在处在2G网络，建议您切换到Wifi网络下使用此应用"];
+    } else if (networkStatus.currentNetWorkStatus == BMNetworkReachabilityStatusReachableVia3G) {
+        [self showHint:@"您现在处在3G网络，建议您切换到Wifi网络下使用此应用"];
+    } else if (networkStatus.currentNetWorkStatus == BMNetworkReachabilityStatusReachableVia4G) {
+        [self showHint:@"您现在处在4G网络，建议您切换到Wifi网络下使用此应用"];
+    } else if (networkStatus.currentNetWorkStatus == BMNetworkReachabilityStatusReachableViaWiFi) {
+        [self showHint:@"您现在处在Wifi下，请放心使用此应用"];
     }
 }
 
