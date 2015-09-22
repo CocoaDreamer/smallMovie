@@ -41,11 +41,15 @@
 //创建文件夹
 - (void)createFile{
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL isDir = NO;
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    BOOL isDirExist = [fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/video",documentPath] isDirectory:FALSE];
-    if (!(isDir && isDirExist)) {
-        
+    BOOL isDirExist = [fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",documentPath,VIDEO_Location] isDirectory:FALSE];
+    if (!(isDirExist)) {
+        BOOL isCreateDir = [fileManager createDirectoryAtPath:[NSString stringWithFormat:@"%@/video",documentPath] withIntermediateDirectories:YES attributes:nil error:nil];
+        if (isCreateDir) {
+            NSLog(@"创建成功:%@",[NSString stringWithFormat:@"%@/video",documentPath]);
+        } else {
+            NSLog(@"常见失败");
+        }
     }
     
 }

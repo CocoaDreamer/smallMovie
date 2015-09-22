@@ -20,6 +20,7 @@ typedef void(^RequestFailed)(NSInteger errorCode);
 @property(nonatomic,strong) NSMutableDictionary * requestDic;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
+@property (nonatomic, strong) NSURLSessionTask *task;
 @property (nonatomic, strong) NSString *interface;
 - (void)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
 //- (void)sendDataNoLoadingWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method;

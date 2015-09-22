@@ -29,9 +29,6 @@
     return self;
 }
 
-
-
-
 - (void)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
     NSString *urlString = self.interface;
     if (method == post) {
@@ -67,18 +64,19 @@
 - (void)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
     NSString *urlString = self.interface;
     if (method == post) {
-        [_sessionManager POST:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        _task = [_sessionManager POST:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
             finished(responseObject);
         } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
             failed(error.code);
         }];
     } else {
-        [_sessionManager GET:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        _task = [_sessionManager GET:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
             finished(responseObject);
         } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
             failed(error.code);
         }];
     }
+    
 }
 
 @end

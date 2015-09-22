@@ -47,8 +47,9 @@
 		0750E7DE1BAFE092001A9752 /* icon_activation_story_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DB1BAFE092001A9752 /* icon_activation_story_heart.png */; settings = {ASSET_TAGS = (); }; };
 		0750E7DF1BAFE092001A9752 /* icon_activation_story_heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DC1BAFE092001A9752 /* icon_activation_story_heart@2x.png */; settings = {ASSET_TAGS = (); }; };
 		0750E7E01BAFE092001A9752 /* icon_activation_story_heart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DD1BAFE092001A9752 /* icon_activation_story_heart@3x.png */; settings = {ASSET_TAGS = (); }; };
+		0750E7E51BB13E68001A9752 /* Download.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7E41BB13E68001A9752 /* Download.png */; settings = {ASSET_TAGS = (); }; };
+		0750E7E71BB13F81001A9752 /* DownloadHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7E61BB13F81001A9752 /* DownloadHighlighted.png */; settings = {ASSET_TAGS = (); }; };
 		076C37A41BA66AF9000D2DDC /* MVListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37A31BA66AF9000D2DDC /* MVListTableViewCell.m */; };
-		076C37A71BA6987E000D2DDC /* OrientationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37A61BA6987E000D2DDC /* OrientationController.m */; };
 		076C37A91BA6A507000D2DDC /* bfzn.png in Resources */ = {isa = PBXBuildFile; fileRef = 076C37A81BA6A507000D2DDC /* bfzn.png */; };
 		076C37AC1BA6B37A000D2DDC /* MVSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37AB1BA6B37A000D2DDC /* MVSearchViewController.m */; };
 		076C37AF1BA6C174000D2DDC /* MVSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37AE1BA6C174000D2DDC /* MVSearchTableViewCell.m */; };
@@ -417,10 +418,10 @@
 		0750E7DB1BAFE092001A9752 /* icon_activation_story_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_activation_story_heart.png; sourceTree = "<group>"; };
 		0750E7DC1BAFE092001A9752 /* icon_activation_story_heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_activation_story_heart@2x.png"; sourceTree = "<group>"; };
 		0750E7DD1BAFE092001A9752 /* icon_activation_story_heart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_activation_story_heart@3x.png"; sourceTree = "<group>"; };
+		0750E7E41BB13E68001A9752 /* Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Download.png; sourceTree = "<group>"; };
+		0750E7E61BB13F81001A9752 /* DownloadHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadHighlighted.png; sourceTree = "<group>"; };
 		076C37A21BA66AF9000D2DDC /* MVListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVListTableViewCell.h; sourceTree = "<group>"; };
 		076C37A31BA66AF9000D2DDC /* MVListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVListTableViewCell.m; sourceTree = "<group>"; };
-		076C37A51BA6987E000D2DDC /* OrientationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrientationController.h; sourceTree = "<group>"; };
-		076C37A61BA6987E000D2DDC /* OrientationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrientationController.m; sourceTree = "<group>"; };
 		076C37A81BA6A507000D2DDC /* bfzn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bfzn.png; sourceTree = "<group>"; };
 		076C37AA1BA6B37A000D2DDC /* MVSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVSearchViewController.h; sourceTree = "<group>"; };
 		076C37AB1BA6B37A000D2DDC /* MVSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVSearchViewController.m; sourceTree = "<group>"; };
@@ -1187,8 +1188,6 @@
 				078F7D721B9EE18D005B1500 /* Main.storyboard */,
 				078F7D751B9EE18D005B1500 /* Images.xcassets */,
 				078F7D681B9EE18D005B1500 /* Supporting Files */,
-				076C37A51BA6987E000D2DDC /* OrientationController.h */,
-				076C37A61BA6987E000D2DDC /* OrientationController.m */,
 				0795E8FA1BA9719300B2FEB3 /* userDefault.h */,
 			);
 			path = smallMovie;
@@ -1236,6 +1235,8 @@
 		078F7D9F1B9FFEFA005B1500 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				0750E7E61BB13F81001A9752 /* DownloadHighlighted.png */,
+				0750E7E41BB13E68001A9752 /* Download.png */,
 				0750E7D31BAFB760001A9752 /* collectionSelectedIcon.png */,
 				0750E7D11BAFB6F5001A9752 /* collectionIcon.png */,
 				0795E8F81BA957BC00B2FEB3 /* menu.png */,
@@ -1968,6 +1969,7 @@
 				078F7F241B9FFEFB005B1500 /* toastNeterror@2x.png in Resources */,
 				438561F61BA8518D0066DC3A /* guessNameBackground.jpg in Resources */,
 				078F7EF71B9FFEFB005B1500 /* microphone@2x.png in Resources */,
+				0750E7E51BB13E68001A9752 /* Download.png in Resources */,
 				078F7EF21B9FFEFB005B1500 /* magicbox_normal@3x.png in Resources */,
 				078F7F271B9FFEFB005B1500 /* ToolViewInputText@2x.png in Resources */,
 				078F7EE31B9FFEFB005B1500 /* loading@2x.png in Resources */,
@@ -1988,6 +1990,7 @@
 				078F7EE61B9FFEFB005B1500 /* loadings2@2x.png in Resources */,
 				078F7E941B9FFEFB005B1500 /* blueArrow.png in Resources */,
 				078F7E9E1B9FFEFB005B1500 /* defaultcover_s@2x.png in Resources */,
+				0750E7E71BB13F81001A9752 /* DownloadHighlighted.png in Resources */,
 				078F7ED71B9FFEFB005B1500 /* ipad_76@2x.png in Resources */,
 				078F7EA01B9FFEFB005B1500 /* del_emoji_normal@2x.png in Resources */,
 				078F7F371B9FFEFB005B1500 /* videoMaxCountLimit@2x.png in Resources */,
@@ -2096,7 +2099,6 @@
 				078F7F4F1BA0039E005B1500 /* ListTableViewCell.m in Sources */,
 				078F7F541BA019C5005B1500 /* PlayMovieViewController.m in Sources */,
 				07C4596D1BA8225700158EF2 /* UIViewController+DismissKeyboard.m in Sources */,
-				076C37A71BA6987E000D2DDC /* OrientationController.m in Sources */,
 				43C1D36C1BAF0B450092010B /* AboutUsViewController.m in Sources */,
 				0786F6AD1BABBA550083C05E /* MJRefreshStateHeader.m in Sources */,
 				0795E8F71BA942CA00B2FEB3 /* MovieViewController.m in Sources */,

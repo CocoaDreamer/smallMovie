@@ -195,7 +195,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
         
     } failed:^(NSInteger errorCode) {
         NSLog(@"%ld",(long)errorCode);
-        [self alertTitle:@"列表请求失败" andMessage:[NSString stringWithFormat:@"错误码%ld",(long)errorCode]];
+        [self showHint:@"请求失败"];
     }];
 }
 
@@ -213,10 +213,17 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  */
 - (void)playVideo{
     [_backImageView removeFromSuperview];
+    NSURL *url;
+    if ([self getFileUrl] != nil) {
+        url = [self getFileUrl];
+    } else {
+        url=[self getNetworkUrl];
+    }
+    self.moviePlayer.contentURL = url;
     [self.moviePlayer play];
 }
 
-- (void)like{
+- (void)save{
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
     if ([helper insertToDB:self.listModel]) {
@@ -230,13 +237,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 - (void) createUI{
     
     if (!_moviePlayer) {
-        NSURL *url;
-        if ([self getFileUrl] != nil) {
-            url = [self getFileUrl];
-        } else {
-            url=[self getNetworkUrl];
-        }
-        _moviePlayer=[[MPMoviePlayerController alloc]initWithContentURL:url];
+        _moviePlayer=[[MPMoviePlayerController alloc] init];
         _moviePlayer.view.frame = CGRectMake(0, 64, APP_WIDTH, 200);
         [self.view addSubview:_moviePlayer.view];
     }
@@ -246,25 +247,38 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [self.view addSubview:_backImageView];
     _backImageView.userInteractionEnabled = YES;
     
+    //播放按钮
     UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [playButton setImage:[UIImage imageNamed:@"bfzn"] forState:UIControlStateNormal];
     playButton.frame = CGRectMake(_backImageView.frame.size.width/2-30, _backImageView.frame.size.height/2-30, 60, 60);
     [playButton addTarget:self action:@selector(playVideo) forControlEvents:UIControlEventTouchUpInside];
     [_backImageView addSubview:playButton];
     
+    //分享按钮
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [shareBtn setImage:[UIImage imageNamed:@"share_normal"] forState:UIControlStateNormal];
     [shareBtn setImage:[UIImage imageNamed:@"share_click"] forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
-    shareBtn.frame = CGRectMake(0, 0, 40, 40);
+    shareBtn.frame = CGRectMake(0, 0, 25, 25);
+    
+    //收藏按钮
     UIButton *collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    collectBtn.frame = CGRectMake(0, 0, 40, 40);
+    collectBtn.frame = CGRectMake(0, 0, 25, 25);
     [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
     [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
-    [collectBtn addTarget:self action:@selector(down) forControlEvents:UIControlEventTouchUpInside];
+    [collectBtn addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    NSArray *array = [NSArray arrayWithObjects:barItem,collectItem, nil];
+    
+    //下载按钮
+    UIButton *downBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    downBtn.frame = CGRectMake(0, 0, 25, 25);
+    [downBtn addTarget:self action:@selector(download) forControlEvents:UIControlEventTouchUpInside];
+    [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
+    [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
+    UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];
+    
+    NSArray *array = [NSArray arrayWithObjects:downItem,barItem,collectItem, nil];
     self.navigationItem.rightBarButtonItems = array;
 
     
@@ -308,12 +322,13 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
                                                                     NSFontAttributeName: [UIFont systemFontOfSize:17.0],
                                                                     NSParagraphStyleAttributeName: paragraphStyle
                                                                     }context:nil].size;
-    UITextView *introLabel = [[UITextView alloc] initWithFrame:CGRectMake(20, 314, APP_WIDTH-40, introLabelSize.height)];
-    introLabel.text = self.listModel.intro;
-    [self.view addSubview:introLabel];
+    UITextView *introTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 314, APP_WIDTH-40, introLabelSize.height)];
+    introTextView.editable = NO;
+    introTextView.text = self.listModel.intro;
+    [self.view addSubview:introTextView];
 }
 
-- (void)down{
+- (void)download{
     APISDK *apisdk = [[APISDK alloc] init];
     NSLog(@"%@",self.listModel.pdownlink[0]);
     NSArray *pdownlinkArray = self.listModel.pdownlink[0];
@@ -322,7 +337,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
         apisdk.interface = dic[@"video"];
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
-            NSString *newFielPath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",self.listModel.title]];
+            NSString *newFielPath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
             BOOL isSucceed = [responseObject writeToFile:newFielPath atomically:YES];
             if (isSucceed) {
                 [self showHint:@"下载成功"];
@@ -348,11 +363,16 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  *  @return 文件路径
  */
 -(NSURL *)getFileUrl{
-//    NSString *urlStr=[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@.mp4",self.listModel.title] ofType:nil];
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
-    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",self.listModel.title]];
-    NSURL *url=[NSURL fileURLWithPath:urlStr];
-    return url;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+        NSURL *url=[NSURL fileURLWithPath:urlStr];
+        return url;
+    } else {
+        return nil;
+    }
+    
 }
 
 /**

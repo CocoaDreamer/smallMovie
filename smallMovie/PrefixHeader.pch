@@ -27,7 +27,7 @@
 
 #define CL_TEST YES
 #define CL_TITLE  @"浪死浪断气"
-
+#define VIDEO_Location @"video"//文件下载的文件夹
 
 
 

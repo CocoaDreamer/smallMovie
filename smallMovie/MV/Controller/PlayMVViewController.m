@@ -11,7 +11,6 @@
 #import <ShareSDK/ShareSDK.h>
 #import "PopMenu.h"
 #import "MVListTableViewCell.h"
-#import "OrientationController.h"
 #import "AppDelegate.h"
 
 
@@ -113,6 +112,13 @@
 
 - (void)playVideo{
     [_backImageView removeFromSuperview];
+    NSURL *url;
+    if ([self getFileUrl] != nil) {
+        url = [self getFileUrl];
+    } else {
+        url=[self getNetworkUrl];
+    }
+    self.moviePlayer.contentURL = url;
     [self.moviePlayer play];
 }
 
@@ -140,10 +146,26 @@
     }
 }
 
+- (void)download{
+    APISDK *apisdk = [[APISDK alloc] init];
+        apisdk.interface = self.listModel.url;
+        [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+            NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+            NSString *newFielPath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+            BOOL isSucceed = [responseObject writeToFile:newFielPath atomically:YES];
+            if (isSucceed) {
+                [self showHint:@"下载成功"];
+            } else {
+                [self showHint:@"下载失败，请重试"];
+            }
+        } failed:^(NSInteger errorCode) {
+            [self showHint:@"下载失败，请重试"];
+        }];
+}
+
 - (void)createUI{
-    NSURL *url=[self getNetworkUrl];
     if (!_moviePlayer) {
-        _moviePlayer=[[MPMoviePlayerController alloc]initWithContentURL:url];
+        _moviePlayer=[[MPMoviePlayerController alloc] init];
         _moviePlayer.view.frame = CGRectMake(0, 64, APP_WIDTH, 200);
         [self.view addSubview:_moviePlayer.view];
     }
@@ -159,6 +181,8 @@
     [playButton addTarget:self action:@selector(playVideo) forControlEvents:UIControlEventTouchUpInside];
     [_backImageView addSubview:playButton];
     
+    
+    //分享按钮
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [shareBtn setImage:[UIImage imageNamed:@"share_normal"] forState:UIControlStateNormal];
     [shareBtn setImage:[UIImage imageNamed:@"share_click"] forState:UIControlStateHighlighted];
@@ -166,13 +190,25 @@
     shareBtn.frame = CGRectMake(0, 0, 40, 40);
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
 //    self.navigationItem.rightBarButtonItem = barItem;
+    
+    
+    //收藏按钮
     UIButton *collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     collectBtn.frame = CGRectMake(0, 0, 40, 40);
     [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
     [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
     [collectBtn addTarget:self action:@selector(like) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
-    NSArray *array = [NSArray arrayWithObjects:barItem,collectItem, nil];
+    
+    //下载按钮
+    UIButton *downBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    downBtn.frame = CGRectMake(0, 0, 25, 25);
+    [downBtn addTarget:self action:@selector(download) forControlEvents:UIControlEventTouchUpInside];
+    [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
+    [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
+    UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];
+    
+    NSArray *array = [NSArray arrayWithObjects:downItem,barItem,collectItem, nil];
     self.navigationItem.rightBarButtonItems = array;
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"MV描述",@"MV相关", nil]];
@@ -211,6 +247,7 @@
     [_backgroundView addSubview:_viewCountLabel];
     
     _descriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(15, 384-324, APP_WIDTH-30, APP_HEIGHT-404)];
+    _descriptionTextView.editable = NO;
     _descriptionTextView.text = self.listModel.MVdescription;
     [_backgroundView addSubview:_descriptionTextView];
     
@@ -349,12 +386,6 @@
     [alert show];
 }
 
-#pragma tableView Delegate
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//}
-
-
 //#pragma MPMovieController
 ///**
 // *  创建媒体播放控制器
@@ -371,6 +402,26 @@
 //    return _moviePlayer;
 //}
 
+
+
+#pragma mark - 获取视频路径
+/**
+ *  取得本地文件路径
+ *
+ *  @return 文件路径
+ */
+-(NSURL *)getFileUrl{
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+        NSURL *url=[NSURL fileURLWithPath:urlStr];
+        return url;
+    } else {
+        return nil;
+    }
+    
+}
 /**
  *  取得网络文件路径
  *
@@ -382,6 +433,7 @@
     NSURL *url = [NSURL URLWithString:urlStr];
     return url;
 }
+#pragma mark -添加通知
 /**
  *  添加通知监控媒体播放控制器状态
  */
@@ -399,6 +451,7 @@
     
 }
 
+#pragma mark -moviePlayer代理方法
 - (void)moviePlayerWillEnterFullscreenNotification:(NSNotification*)notify
 
 {
@@ -416,18 +469,51 @@
     NSLog(@"moviePlayerWillExitFullscreenNotification");
 }
 
+/**
+ *  播放状态改变，注意播放完成时的状态是暂停
+ *
+ *  @param notification 通知对象
+ */
+-(void)mediaPlayerPlaybackStateChange:(NSNotification *)notification{
+    switch (self.moviePlayer.playbackState) {
+        case MPMoviePlaybackStatePlaying:
+            NSLog(@"正在播放...");
+            break;
+        case MPMoviePlaybackStatePaused:
+            NSLog(@"暂停播放.");
+            break;
+        case MPMoviePlaybackStateStopped:
+            NSLog(@"停止播放.");
+            break;
+        default:
+            NSLog(@"播放状态:%li",self.moviePlayer.playbackState);
+            break;
+    }
+}
+
+
+
+/**
+ *  播放完成
+ *
+ *  @param notification 通知对象
+ */
+-(void)mediaPlayerPlaybackFinished:(NSNotification *)notification{
+    NSLog(@"播放完成.%li",self.moviePlayer.playbackState);
+}
+
 #pragma mark -tableview代理方法
 - (MVListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MVListModel *model = _dataSource[indexPath.row];
     MVListTableViewCell *cell = [MVListTableViewCell cellWithTable:tableView];
     [cell.listImageView sd_setImageWithURL:[NSURL URLWithString:model.thumbnailPic] placeholderImage:[UIImage imageNamed:@"Jay.jpg"]];
     cell.titleLabel.text = model.title;
-//    NSMutableString *artist = [NSMutableString string];
-//    for (NSDictionary *dict in model.artists) {
-//        [artist appendString:[NSString stringWithFormat:@"%@&",[dict objectForKey:@"artistName"]]];
-//    }
-//    [artist deleteCharactersInRange:NSMakeRange(artist.length-1, 1)];
-//    NSLog(@"artist = %@",artist);
+    //    NSMutableString *artist = [NSMutableString string];
+    //    for (NSDictionary *dict in model.artists) {
+    //        [artist appendString:[NSString stringWithFormat:@"%@&",[dict objectForKey:@"artistName"]]];
+    //    }
+    //    [artist deleteCharactersInRange:NSMakeRange(artist.length-1, 1)];
+    //    NSLog(@"artist = %@",artist);
     cell.artistLabel.text = model.artistName;
     return cell;
 }
@@ -454,38 +540,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80;
 }
-
-/**
- *  播放状态改变，注意播放完成时的状态是暂停
- *
- *  @param notification 通知对象
- */
--(void)mediaPlayerPlaybackStateChange:(NSNotification *)notification{
-    switch (self.moviePlayer.playbackState) {
-        case MPMoviePlaybackStatePlaying:
-            NSLog(@"正在播放...");
-            break;
-        case MPMoviePlaybackStatePaused:
-            NSLog(@"暂停播放.");
-            break;
-        case MPMoviePlaybackStateStopped:
-            NSLog(@"停止播放.");
-            break;
-        default:
-            NSLog(@"播放状态:%li",self.moviePlayer.playbackState);
-            break;
-    }
-}
-
-/**
- *  播放完成
- *
- *  @param notification 通知对象
- */
--(void)mediaPlayerPlaybackFinished:(NSNotification *)notification{
-    NSLog(@"播放完成.%li",self.moviePlayer.playbackState);
-}
-
 
 
 - (void)didReceiveMemoryWarning {
