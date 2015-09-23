@@ -754,7 +754,7 @@
                                     <constraint firstAttribute="height" constant="30" id="IhH-8a-sSj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本软件完全免费，用户不需要登录即可观看所有的音乐MV或者优秀的小视频，其中产生的流量费用由运营商收取，建议在Wifi环境下使用" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BRu-jK-ATZ">
@@ -763,7 +763,7 @@
                                     <constraint firstAttribute="height" constant="70" id="gsu-Fe-UZl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.如何进行搜索" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMo-lh-LoF">
@@ -772,7 +772,7 @@
                                     <constraint firstAttribute="height" constant="30" id="H4o-yX-KrJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本软件暂时仅支持对MV进行搜索，点击右上角搜索按钮进入查询页面输入关键字即可查询搜索" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mft-w2-SHv">
@@ -781,7 +781,7 @@
                                     <constraint firstAttribute="height" constant="59" id="LS4-Z3-SU5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.如何收藏MV以及小视频" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jm3-wK-n2b">
@@ -790,7 +790,7 @@
                                     <constraint firstAttribute="height" constant="30" id="ipK-kF-Wzj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在播放页面点击右上方的收藏按钮收藏自己喜欢的视频或者MV" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VEj-FY-gTk">
@@ -799,7 +799,7 @@
                                     <constraint firstAttribute="height" constant="37" id="3Y8-sD-aTr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.如何查看自己已经收藏的MV或视频" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEM-rd-wnE">
@@ -808,7 +808,7 @@
                                     <constraint firstAttribute="height" constant="30" id="fen-4W-j0a"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="打开左侧的菜单栏，点击我的收藏即可查看，如果想取消收藏进入页面左滑即可删除" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTW-P8-ERv">
@@ -817,7 +817,7 @@
                                     <constraint firstAttribute="height" constant="36" id="j2d-NP-7wK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5.如何更换自己的头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igN-90-YH9">
@@ -826,7 +826,7 @@
                                     <constraint firstAttribute="height" constant="30" id="iac-HZ-5DK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="进入菜单栏，点击你自己的头像即可选择自己的专属头像" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuR-XN-6wP">
@@ -835,7 +835,7 @@
                                     <constraint firstAttribute="height" constant="40" id="PcD-qP-3EB"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -896,7 +896,7 @@
                                     <constraint firstAttribute="height" constant="25" id="rhQ-0R-GtU"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版本号:1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNe-QR-BoS">
@@ -905,7 +905,7 @@
                                     <constraint firstAttribute="height" constant="25" id="EEg-bp-l0h"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本软件完全免费，用户不需要登录即可观看所有的音乐MV或者优秀的小视频，其中产生的流量费用由运营商收取，建议在Wifi环境下使用" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-yV-MEd">
@@ -914,7 +914,7 @@
                                     <constraint firstAttribute="height" constant="79" id="Nwv-Ly-Lsu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -935,6 +935,92 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6XP-pv-TCs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2603" y="-1460"/>
+        </scene>
+        <!--My Downloads View Controller-->
+        <scene sceneID="t1N-bk-cEw">
+            <objects>
+                <viewController storyboardIdentifier="MyDownloadsViewController" id="vDR-Rd-Zhz" customClass="MyDownloadsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jGT-8k-Meo"/>
+                        <viewControllerLayoutGuide type="bottom" id="hDE-3p-KWE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zjA-3y-f8d">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hET-wi-izT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MVSearchTableViewCell" rowHeight="100" id="GPa-IZ-R0K" customClass="MVSearchTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GPa-IZ-R0K" id="Zbs-yr-3Tt">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gLN-oT-Lhg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="140" height="100"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="140" id="aWi-lV-5vc"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Oh-6F-03j">
+                                                    <rect key="frame" x="160" y="20" width="115" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6Q-mp-ZAf">
+                                                    <rect key="frame" x="160" y="55" width="115" height="23"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="0.02925999596" blue="0.017480126540000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1Oh-6F-03j" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" constant="160" id="ACk-Xo-NeJ"/>
+                                                <constraint firstItem="L6Q-mp-ZAf" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" constant="160" id="K3k-cz-h61"/>
+                                                <constraint firstAttribute="bottom" secondItem="gLN-oT-Lhg" secondAttribute="bottom" id="Lu7-6x-KmB"/>
+                                                <constraint firstAttribute="bottom" secondItem="1Oh-6F-03j" secondAttribute="bottom" constant="50" id="MY7-9s-Ibm"/>
+                                                <constraint firstItem="1Oh-6F-03j" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="top" constant="20" id="P71-hz-CyV"/>
+                                                <constraint firstItem="L6Q-mp-ZAf" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="top" constant="55" id="dgf-lH-xyC"/>
+                                                <constraint firstItem="gLN-oT-Lhg" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" id="eGZ-9r-7eM"/>
+                                                <constraint firstItem="gLN-oT-Lhg" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="top" id="iq1-D1-KTf"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Oh-6F-03j" secondAttribute="trailing" constant="12" id="xSE-y1-qLj"/>
+                                                <constraint firstAttribute="trailing" secondItem="L6Q-mp-ZAf" secondAttribute="trailing" constant="12" id="yJl-ow-yAV"/>
+                                                <constraint firstAttribute="bottom" secondItem="L6Q-mp-ZAf" secondAttribute="bottom" constant="22" id="zaX-Vh-XoW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="artistLabel" destination="L6Q-mp-ZAf" id="KQi-LJ-yMM"/>
+                                            <outlet property="iconImageView" destination="gLN-oT-Lhg" id="qab-wO-mu4"/>
+                                            <outlet property="titleLabel" destination="1Oh-6F-03j" id="HUb-IK-a25"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vDR-Rd-Zhz" id="vwX-nE-zCu"/>
+                                    <outlet property="delegate" destination="vDR-Rd-Zhz" id="RLu-6d-P3P"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hET-wi-izT" secondAttribute="trailing" id="Mi2-J6-8SK"/>
+                            <constraint firstItem="hET-wi-izT" firstAttribute="top" secondItem="zjA-3y-f8d" secondAttribute="top" id="PVk-TQ-mk6"/>
+                            <constraint firstItem="hET-wi-izT" firstAttribute="leading" secondItem="zjA-3y-f8d" secondAttribute="leading" id="Vv1-p4-gEO"/>
+                            <constraint firstItem="hET-wi-izT" firstAttribute="bottom" secondItem="hDE-3p-KWE" secondAttribute="top" id="seB-3X-yV5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dloadsTableView" destination="hET-wi-izT" id="QiJ-Qy-XXl"/>
+                        <outlet property="myListTableView" destination="hET-wi-izT" id="kX1-h6-8gO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0b4-Rk-HI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1330" y="-1452"/>
         </scene>
     </scenes>
     <resources>

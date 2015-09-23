@@ -68,6 +68,8 @@
 
 @property (nonatomic, assign) BOOL isDownload;
 
+@property (nonatomic, assign) BOOL isSaved;
+
 
 - (instancetype)initWithDic:(NSDictionary *)dic;
 

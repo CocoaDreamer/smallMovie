@@ -13,6 +13,7 @@
 #import "MyCollectionViewController.h"
 #import "UseHelpViewController.h"
 #import "AboutUsViewController.h"
+#import "MyDownloadsViewController.h"
 
 @interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -100,9 +101,9 @@
     } else if (indexPath.row == 2) {
         cell.textLabel.text = @"网上营业厅";
     } else if (indexPath.row == 3) {
-        cell.textLabel.text = @"个性装扮";
-    } else if (indexPath.row == 4) {
         cell.textLabel.text = @"我的收藏";
+    } else if (indexPath.row == 4) {
+        cell.textLabel.text = @"我的文件";
     } else if (indexPath.row == 5) {
         cell.textLabel.text = @"使用帮助";
     } else if (indexPath.row == 6) {
@@ -115,12 +116,14 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     id vc;
-    if (indexPath.row == 4) {
+    if (indexPath.row == 3) {
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyCollectionViewController"];
     } else if (indexPath.row == 5){
          vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UseHelpViewController"];
     } else if (indexPath.row == 6){
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutUsViewController"];
+    } else if (indexPath.row == 4) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyDownloadsViewController"];
     }
     else {
     vc = [[otherViewController alloc] init];

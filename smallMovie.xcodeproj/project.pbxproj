@@ -343,6 +343,7 @@
 		07C4596D1BA8225700158EF2 /* UIViewController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4593E1BA8225700158EF2 /* UIViewController+DismissKeyboard.m */; };
 		07C4596E1BA8225700158EF2 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C459401BA8225700158EF2 /* UIViewController+HUD.m */; };
 		07C4596F1BA8225700158EF2 /* UIViewController+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C459421BA8225700158EF2 /* UIViewController+TKCategory.m */; };
+		4363915B1BB2F65600386081 /* MyDownloadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4363915A1BB2F65600386081 /* MyDownloadsViewController.m */; settings = {ASSET_TAGS = (); }; };
 		438561F61BA8518D0066DC3A /* guessNameBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 438561F51BA8518D0066DC3A /* guessNameBackground.jpg */; };
 		438561F81BA8568A0066DC3A /* Jay_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 438561F71BA8568A0066DC3A /* Jay_2.jpg */; };
 		43A1B5331BA7084700ADB041 /* BMEnvObserverCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B52B1BA7084700ADB041 /* BMEnvObserverCenter.m */; };
@@ -429,8 +430,8 @@
 		076C37AE1BA6C174000D2DDC /* MVSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVSearchTableViewCell.m; sourceTree = "<group>"; };
 		076FA2871BABE9F80035DD6F /* SQLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLHelper.h; sourceTree = "<group>"; };
 		076FA2881BABE9F80035DD6F /* SQLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLHelper.m; sourceTree = "<group>"; };
-		076FA28A1BAC13B40035DD6F /* MyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewController.h; sourceTree = "<group>"; };
-		076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewController.m; sourceTree = "<group>"; };
+		076FA28A1BAC13B40035DD6F /* MyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCollectionViewController.h; path = ../LeftSlideViewController/MyCollectionViewController.h; sourceTree = "<group>"; };
+		076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCollectionViewController.m; path = ../LeftSlideViewController/MyCollectionViewController.m; sourceTree = "<group>"; };
 		0786F6701BABBA550083C05E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		0786F6731BABBA550083C05E /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		0786F6741BABBA550083C05E /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
@@ -809,6 +810,8 @@
 		07C459401BA8225700158EF2 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
 		07C459411BA8225700158EF2 /* UIViewController+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TKCategory.h"; sourceTree = "<group>"; };
 		07C459421BA8225700158EF2 /* UIViewController+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TKCategory.m"; sourceTree = "<group>"; };
+		436391591BB2F65600386081 /* MyDownloadsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDownloadsViewController.h; sourceTree = "<group>"; };
+		4363915A1BB2F65600386081 /* MyDownloadsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDownloadsViewController.m; sourceTree = "<group>"; };
 		438561F51BA8518D0066DC3A /* guessNameBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = guessNameBackground.jpg; sourceTree = "<group>"; };
 		438561F71BA8568A0066DC3A /* Jay_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Jay_2.jpg; sourceTree = "<group>"; };
 		43A1B52A1BA7084700ADB041 /* BMEnvObserverCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMEnvObserverCenter.h; sourceTree = "<group>"; };
@@ -1025,37 +1028,6 @@
 			path = ../Share/image_share;
 			sourceTree = "<group>";
 		};
-		0750E7E81BB258CC001A9752 /* MyDownLoads */ = {
-			isa = PBXGroup;
-			children = (
-				0750E7E91BB2737C001A9752 /* Controller */,
-				0750E7EA1BB2737C001A9752 /* Model */,
-				0750E7EB1BB2737C001A9752 /* View */,
-			);
-			path = MyDownLoads;
-			sourceTree = "<group>";
-		};
-		0750E7E91BB2737C001A9752 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		0750E7EA1BB2737C001A9752 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		0750E7EB1BB2737C001A9752 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		0786F66E1BABBA3E0083C05E /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -1203,7 +1175,8 @@
 				078F7D941B9EE568005B1500 /* PrefixHeader.pch */,
 				078F7D6C1B9EE18D005B1500 /* AppDelegate.h */,
 				078F7D6D1B9EE18D005B1500 /* AppDelegate.m */,
-				0750E7E81BB258CC001A9752 /* MyDownLoads */,
+				436391551BB2EF9400386081 /* MyDownloads */,
+				436391541BB2EEA700386081 /* MyCollection */,
 				43C1D3691BAF01B40092010B /* AboutUs */,
 				43C1D3651BAF01630092010B /* UseHelp */,
 				0795E8E61BA9133500B2FEB3 /* LeftSlideViewController */,
@@ -1526,8 +1499,6 @@
 				0795E8E81BA9133500B2FEB3 /* LeftSlideViewController.m */,
 				0795E8E91BA9133500B2FEB3 /* UIView_extra.h */,
 				0795E8EA1BA9133500B2FEB3 /* UIView_extra.m */,
-				076FA28A1BAC13B40035DD6F /* MyCollectionViewController.h */,
-				076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */,
 			);
 			path = LeftSlideViewController;
 			sourceTree = "<group>";
@@ -1691,6 +1662,48 @@
 				EC042A1B698F1958A4DA9BD5 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		436391541BB2EEA700386081 /* MyCollection */ = {
+			isa = PBXGroup;
+			children = (
+				076FA28A1BAC13B40035DD6F /* MyCollectionViewController.h */,
+				076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */,
+			);
+			path = MyCollection;
+			sourceTree = "<group>";
+		};
+		436391551BB2EF9400386081 /* MyDownloads */ = {
+			isa = PBXGroup;
+			children = (
+				436391561BB2EF9400386081 /* Controller */,
+				436391571BB2EF9400386081 /* Model */,
+				436391581BB2EF9400386081 /* View */,
+			);
+			path = MyDownloads;
+			sourceTree = "<group>";
+		};
+		436391561BB2EF9400386081 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				436391591BB2F65600386081 /* MyDownloadsViewController.h */,
+				4363915A1BB2F65600386081 /* MyDownloadsViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		436391571BB2EF9400386081 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		436391581BB2EF9400386081 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		43A1B5291BA7084700ADB041 /* BMReachability */ = {
@@ -2115,6 +2128,7 @@
 				07C459551BA8225700158EF2 /* UIAlertView+TKCategory.m in Sources */,
 				0786F6A11BABBA550083C05E /* MJRefreshBackFooter.m in Sources */,
 				07C459601BA8225700158EF2 /* UIImagePickerController+TKCategory.m in Sources */,
+				4363915B1BB2F65600386081 /* MyDownloadsViewController.m in Sources */,
 				078F7D6E1B9EE18D005B1500 /* AppDelegate.m in Sources */,
 				43A1B5341BA7084700ADB041 /* BMEnvObserverCenterNetworkStatus.m in Sources */,
 				0786F6AF1BABBA550083C05E /* MJRefreshConst.m in Sources */,
@@ -2339,7 +2353,7 @@
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/WeChatSDK",
 				);
 				PRODUCT_NAME = smallMovie;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "228c7d22-fdb0-4cdd-beba-96d1cdb570e9";
 			};
 			name = Debug;
 		};
@@ -2376,7 +2390,7 @@
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/WeChatSDK",
 				);
 				PRODUCT_NAME = smallMovie;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "228c7d22-fdb0-4cdd-beba-96d1cdb570e9";
 			};
 			name = Release;
 		};

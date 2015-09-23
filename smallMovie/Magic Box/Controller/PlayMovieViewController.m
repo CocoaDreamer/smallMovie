@@ -226,7 +226,8 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 - (void)save{
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-    if ([helper updateToDB:self.listModel where:[NSString stringWithFormat:@"id == %@",self.listModel.id]]) {
+    self.listModel.isSaved = YES;
+    if ([helper insertWhenNotExists:self.listModel]) {
         [self alertTitle:@"成功" andMessage:@"收藏成功"];
     }
 }
@@ -349,13 +350,11 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     if ([dic objectForKey:@"video"] != nil) {
         apisdk.interface = dic[@"video"];
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-            NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
-            NSString *newFielPath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
-            BOOL isSucceed = [responseObject writeToFile:newFielPath atomically:YES];
+            BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
             if (isSucceed) {
                 [self showHint:@"下载成功"];
                 self.listModel.isDownload = YES;
-                BOOL isUpdate = [[LKDBHelper getUsingLKDBHelper] updateToDB:self.listModel where:[NSString stringWithFormat:@"id == %@",self.listModel.id]];
+                BOOL isUpdate = [[LKDBHelper getUsingLKDBHelper] insertWhenNotExists:self.listModel];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {

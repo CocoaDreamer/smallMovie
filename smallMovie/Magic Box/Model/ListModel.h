@@ -72,6 +72,9 @@
 //自己加的字段  用来判断是不是下载了
 @property (nonatomic, assign) BOOL isDownload;
 
+@property (nonatomic, assign) BOOL isSaved;//是否收藏
+
+
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 @end

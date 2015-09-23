@@ -46,7 +46,7 @@ static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
 //    hud.yOffset = -[UIScreen mainScreen].bounds.size.height/5;
     hud.removeFromSuperViewOnHide = YES;
 //    [hud hide:YES afterDelay:[hint dataUsingEncoding:NSUTF8StringEncoding].length*0.1>5.0?5.0:[hint dataUsingEncoding:NSUTF8StringEncoding].length*0.1];
-    [hud hide:YES afterDelay:1.5];
+    [hud hide:YES afterDelay:0.8];
 }
 
 - (void)showHint:(NSString *)hint yOffset:(float)yOffset {

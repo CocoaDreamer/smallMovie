@@ -1,22 +1,22 @@
 //
-//  MyCollectionViewController.m
+//  MyDownloadsViewController.m
 //  smallMovie
 //
-//  Created by aayongche on 15/9/18.
+//  Created by 程磊 on 15/9/23.
 //  Copyright © 2015年 lei.cheng. All rights reserved.
 //
 
-#import "MyCollectionViewController.h"
+#import "MyDownloadsViewController.h"
 #import "MVSearchTableViewCell.h"
 #import "ListModel.h"
 #import "MVListModel.h"
-#import "PlayMovieViewController.h" 
+#import "PlayMovieViewController.h"
 #import "PlayMVViewController.h"
 #import "AppDelegate.h"
 
-@interface MyCollectionViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MyDownloadsViewController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *myListTableView;
+@property (weak, nonatomic) IBOutlet UITableView *dloadsTableView;
 
 @property (nonatomic, strong) NSMutableArray *mvDataSource;
 
@@ -27,30 +27,33 @@
 @property (nonatomic, assign) NSInteger mvCount;//收藏MV的数量
 
 
+
 @end
 
-@implementation MyCollectionViewController
+@implementation MyDownloadsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self initData];
     
     [self addNotifications];
     
-    self.title = @"我的收藏";
+    self.title = @"我的下载";
+
 }
 
 - (void)addNotifications{
 }
 
 - (void)initData{
-    _movieCount = [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:[NSString stringWithFormat:@"isSaved = 1"]];
-    _movieDataSoure = [[LKDBHelper getUsingLKDBHelper] search:[ListModel class] where:[NSString stringWithFormat:@"isSaved = 1"] orderBy:nil offset:0 count:_movieCount];
-    _mvCount = [[LKDBHelper getUsingLKDBHelper] rowCount:[MVListModel class] where:[NSString stringWithFormat:@"isSaved = 1"]];
-    _mvDataSource = [[LKDBHelper getUsingLKDBHelper] search:[MVListModel class] where:[NSString stringWithFormat:@"isSaved = 1"] orderBy:nil offset:0 count:_mvCount];
+    _movieCount = [[LKDBHelper getUsingLKDBHelper] rowCount:[ListModel class] where:[NSString stringWithFormat:@"isDownload == 1"]];
+    _movieDataSoure = [[LKDBHelper getUsingLKDBHelper] search:[ListModel class] where:[NSString stringWithFormat:@"isDownload == 1"] orderBy:nil offset:0 count:_movieCount];
+    _mvCount = [[LKDBHelper getUsingLKDBHelper] rowCount:[MVListModel class] where:[NSString stringWithFormat:@"isDownload == 1"]];
+    _mvDataSource = [[LKDBHelper getUsingLKDBHelper] search:[MVListModel class] where:[NSString stringWithFormat:@"isDownload == 1"] orderBy:nil offset:0 count:_mvCount];
     if (_movieCount == 0 && _mvCount == 0) {
-        [self showHint:@"无收藏视频"];
+        [self showHint:@"无下载视频"];
     }
 }
 
@@ -120,14 +123,14 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (_mvDataSource.count > 0 && _movieDataSoure.count > 0) {
         if (section == 0) {
-            return @"我收藏的电影";
+            return @"我下载的电影";
         } else {
-            return @"我收藏的MV";
+            return @"我下载的MV";
         }
     } else if (_movieDataSoure.count > 0){
-        return @"我收藏的电影";
+        return @"我下载的电影";
     } else if (_mvDataSource.count > 0){
-        return @"我收藏的MV";
+        return @"我下载的MV";
     } else {
         return nil;
     }
@@ -141,10 +144,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         ListModel *model = _movieDataSoure[indexPath.row];
-        if (model.isDownload == NO) {
+        NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,model.title]];
+        [fileManager removeItemAtPath:urlStr error:nil];
+        if (model.isSaved == NO) {
             [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
         } else {
-            model.isSaved = NO;
+            model.isDownload = NO;
             BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertWhenNotExists:model];
             if (isSuccess) {
                 NSLog(@"更新成功");
@@ -155,10 +162,14 @@
         [_movieDataSoure removeObject:model];
     } else {
         MVListModel *model = _mvDataSource[indexPath.row];
-        if (model.isDownload == NO) {
+        NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,model.title]];
+        [fileManager removeItemAtPath:urlStr error:nil];
+        if (model.isSaved == NO) {
             [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
         } else {
-            model.isSaved = NO;
+            model.isDownload = NO;
             BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertWhenNotExists:model];
             if (isSuccess) {
                 NSLog(@"更新成功");
@@ -170,11 +181,6 @@
     }
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
 }
-
-//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return YES;
-//}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
