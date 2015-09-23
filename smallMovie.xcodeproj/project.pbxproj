@@ -1025,6 +1025,37 @@
 			path = ../Share/image_share;
 			sourceTree = "<group>";
 		};
+		0750E7E81BB258CC001A9752 /* MyDownLoads */ = {
+			isa = PBXGroup;
+			children = (
+				0750E7E91BB2737C001A9752 /* Controller */,
+				0750E7EA1BB2737C001A9752 /* Model */,
+				0750E7EB1BB2737C001A9752 /* View */,
+			);
+			path = MyDownLoads;
+			sourceTree = "<group>";
+		};
+		0750E7E91BB2737C001A9752 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0750E7EA1BB2737C001A9752 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0750E7EB1BB2737C001A9752 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		0786F66E1BABBA3E0083C05E /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -1172,6 +1203,7 @@
 				078F7D941B9EE568005B1500 /* PrefixHeader.pch */,
 				078F7D6C1B9EE18D005B1500 /* AppDelegate.h */,
 				078F7D6D1B9EE18D005B1500 /* AppDelegate.m */,
+				0750E7E81BB258CC001A9752 /* MyDownLoads */,
 				43C1D3691BAF01B40092010B /* AboutUs */,
 				43C1D3651BAF01630092010B /* UseHelp */,
 				0795E8E61BA9133500B2FEB3 /* LeftSlideViewController */,

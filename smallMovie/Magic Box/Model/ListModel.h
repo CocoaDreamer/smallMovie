@@ -69,6 +69,9 @@
 
 @property (nonatomic, strong) NSString *videolink;
 
+//自己加的字段  用来判断是不是下载了
+@property (nonatomic, assign) BOOL isDownload;
+
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 @end

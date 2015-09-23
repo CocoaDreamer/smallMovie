@@ -36,6 +36,11 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.iconImageView = imageView;
     BMAddNetworkStatusObserver(self);
+    [self createAPISDK];//创建一个实例，但并不传参数，只是确保一直有一个sessionManager来管理下载
+}
+
+- (void)createAPISDK{
+    APISDK *apisdk = [[APISDK alloc] init];
 }
 
 //创建文件夹

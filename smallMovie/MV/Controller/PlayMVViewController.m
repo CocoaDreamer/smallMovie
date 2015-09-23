@@ -141,12 +141,25 @@
 - (void)like{
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-    if ([helper insertWhenNotExists:self.listModel]) {
+    if ([helper updateToDB:self.listModel where:[NSString stringWithFormat:@"id == %@",self.listModel.id]]) {
         [self alertTitle:@"成功" andMessage:@"收藏成功"];
     }
 }
 
-- (void)download{
+- (void)download:(UIButton *)button{
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+        [self showHint:@"您已下载过该视频，无需重新下载"];
+        return;
+    }
+    button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
+    MBRoundProgressView *roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    roundProgressView.progress = 0;
+    roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+    roundProgressView.backgroundTintColor = [UIColor whiteColor];
+    [button addSubview:roundProgressView];
     APISDK *apisdk = [[APISDK alloc] init];
         apisdk.interface = self.listModel.url;
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
@@ -155,12 +168,29 @@
             BOOL isSucceed = [responseObject writeToFile:newFielPath atomically:YES];
             if (isSucceed) {
                 [self showHint:@"下载成功"];
+                self.listModel.isDownload = YES;
+                BOOL isUpdate = [[LKDBHelper getUsingLKDBHelper] updateToDB:self.listModel where:[NSString stringWithFormat:@"id == %@",self.listModel.id]];
+                if (isUpdate) {
+                    NSLog(@"更新成功");
+                } else {
+                    NSLog(@"更新失败");
+                }
             } else {
                 [self showHint:@"下载失败，请重试"];
             }
+            [roundProgressView removeFromSuperview];
+            button.enabled = YES;
         } failed:^(NSInteger errorCode) {
             [self showHint:@"下载失败，请重试"];
+            [roundProgressView removeFromSuperview];
+            button.enabled = YES;
         }];
+    [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
+        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        });
+    }];
 }
 
 - (void)createUI{
@@ -187,14 +217,14 @@
     [shareBtn setImage:[UIImage imageNamed:@"share_normal"] forState:UIControlStateNormal];
     [shareBtn setImage:[UIImage imageNamed:@"share_click"] forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
-    shareBtn.frame = CGRectMake(0, 0, 40, 40);
+    shareBtn.frame = CGRectMake(0, 0, 25, 25);
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
 //    self.navigationItem.rightBarButtonItem = barItem;
     
     
     //收藏按钮
     UIButton *collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    collectBtn.frame = CGRectMake(0, 0, 40, 40);
+    collectBtn.frame = CGRectMake(0, 0, 25, 25);
     [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
     [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
     [collectBtn addTarget:self action:@selector(like) forControlEvents:UIControlEventTouchUpInside];
@@ -203,7 +233,7 @@
     //下载按钮
     UIButton *downBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     downBtn.frame = CGRectMake(0, 0, 25, 25);
-    [downBtn addTarget:self action:@selector(download) forControlEvents:UIControlEventTouchUpInside];
+    [downBtn addTarget:self action:@selector(download:) forControlEvents:UIControlEventTouchUpInside];
     [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
     [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
     UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];

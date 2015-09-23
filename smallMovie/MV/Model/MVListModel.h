@@ -66,6 +66,9 @@
 
 @property (nonatomic, strong) NSString *playListPic;
 
+@property (nonatomic, assign) BOOL isDownload;
+
+
 - (instancetype)initWithDic:(NSDictionary *)dic;
 
 @end

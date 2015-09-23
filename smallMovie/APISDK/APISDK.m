@@ -76,7 +76,6 @@
             failed(error.code);
         }];
     }
-    
 }
 
 @end

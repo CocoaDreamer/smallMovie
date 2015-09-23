@@ -226,7 +226,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 - (void)save{
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-    if ([helper insertToDB:self.listModel]) {
+    if ([helper updateToDB:self.listModel where:[NSString stringWithFormat:@"id == %@",self.listModel.id]]) {
         [self alertTitle:@"成功" andMessage:@"收藏成功"];
     }
 }
@@ -273,7 +273,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     //下载按钮
     UIButton *downBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     downBtn.frame = CGRectMake(0, 0, 25, 25);
-    [downBtn addTarget:self action:@selector(download) forControlEvents:UIControlEventTouchUpInside];
+    [downBtn addTarget:self action:@selector(download:) forControlEvents:UIControlEventTouchUpInside];
     [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
     [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
     UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];
@@ -328,7 +328,20 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [self.view addSubview:introTextView];
 }
 
-- (void)download{
+- (void)download:(UIButton *)button{
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+        [self showHint:@"您已下载过该视频，无需重新下载"];
+        return;
+    }
+    button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
+    MBRoundProgressView *roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    roundProgressView.progress = 0;
+    roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+    roundProgressView.backgroundTintColor = [UIColor whiteColor];
+    [button addSubview:roundProgressView];
     APISDK *apisdk = [[APISDK alloc] init];
     NSLog(@"%@",self.listModel.pdownlink[0]);
     NSArray *pdownlinkArray = self.listModel.pdownlink[0];
@@ -341,15 +354,39 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
             BOOL isSucceed = [responseObject writeToFile:newFielPath atomically:YES];
             if (isSucceed) {
                 [self showHint:@"下载成功"];
+                self.listModel.isDownload = YES;
+                BOOL isUpdate = [[LKDBHelper getUsingLKDBHelper] updateToDB:self.listModel where:[NSString stringWithFormat:@"id == %@",self.listModel.id]];
+                if (isUpdate) {
+                    NSLog(@"更新成功");
+                } else {
+                    NSLog(@"更新失败");
+                }
             } else {
                 [self showHint:@"下载失败，请重试"];
             }
+            [roundProgressView removeFromSuperview];
+            button.enabled = YES;
         } failed:^(NSInteger errorCode) {
             [self showHint:@"下载失败，请重试"];
+            [roundProgressView removeFromSuperview];
+            button.enabled = YES;
         }];
     } else {
-        [self alertTitle:@"提示" andMessage:@"该视频暂时无法下载"];
+        [self alertTitle:@"提示" andMessage:@"该视频不支持下载"];
+        [roundProgressView removeFromSuperview];
+        button.enabled = YES;
     }
+    /**
+     Sets a block to be executed when a data task receives data, as handled by the `NSURLSessionDataDelegate` method `URLSession:dataTask:didReceiveData:`.
+     
+     @param block A block object to be called when an undetermined number of bytes have been downloaded from the server. This block has no return value and takes three arguments: the session, the data task, and the data received. This block may be called multiple times, and will execute on the session manager operation queue.
+     */
+    [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
+        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        });
+    }];
 }
 
 - (void)share{
