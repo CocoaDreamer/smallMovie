@@ -141,9 +141,13 @@
 - (void)like{
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    MVListModel *model = [helper searchSingle:[MVListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
+    if (model.isDownload) {
+        self.listModel.isDownload = YES;
+    }
     self.listModel.isSaved = YES;
-    if ([helper insertWhenNotExists:self.listModel]) {
-        [self alertTitle:@"成功" andMessage:@"收藏成功"];
+    if ([helper insertToDB:self.listModel]) {
+        [self showHint:@"收藏成功"];
     }
 }
 
@@ -167,8 +171,13 @@
             BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
             if (isSucceed) {
                 [self showHint:@"下载成功"];
+                LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+                MVListModel *model = [helper searchSingle:[MVListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
+                if (model.isSaved) {
+                    self.listModel.isSaved = YES;
+                }
                 self.listModel.isDownload = YES;
-                BOOL isUpdate = [[LKDBHelper getUsingLKDBHelper] insertWhenNotExists:self.listModel];
+                BOOL isUpdate = [helper insertToDB:self.listModel];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {

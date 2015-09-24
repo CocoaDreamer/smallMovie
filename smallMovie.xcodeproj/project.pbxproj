@@ -54,7 +54,6 @@
 		076C37AC1BA6B37A000D2DDC /* MVSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37AB1BA6B37A000D2DDC /* MVSearchViewController.m */; };
 		076C37AF1BA6C174000D2DDC /* MVSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37AE1BA6C174000D2DDC /* MVSearchTableViewCell.m */; };
 		076FA2891BABE9F80035DD6F /* SQLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 076FA2881BABE9F80035DD6F /* SQLHelper.m */; settings = {ASSET_TAGS = (); }; };
-		076FA28C1BAC13B40035DD6F /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		0786F69F1BABBA550083C05E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0786F6701BABBA550083C05E /* LICENSE */; settings = {ASSET_TAGS = (); }; };
 		0786F6A01BABBA550083C05E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6741BABBA550083C05E /* MJRefreshAutoFooter.m */; settings = {ASSET_TAGS = (); }; };
 		0786F6A11BABBA550083C05E /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6761BABBA550083C05E /* MJRefreshBackFooter.m */; settings = {ASSET_TAGS = (); }; };
@@ -293,6 +292,7 @@
 		0795E8F41BA91AAE00B2FEB3 /* leftbackiamge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795E8F31BA91AAE00B2FEB3 /* leftbackiamge.png */; };
 		0795E8F71BA942CA00B2FEB3 /* MovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0795E8F61BA942CA00B2FEB3 /* MovieViewController.m */; };
 		0795E8F91BA957BC00B2FEB3 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795E8F81BA957BC00B2FEB3 /* menu.png */; };
+		07AADEAE1BB3E41E00217F49 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AADEAB1BB3E41E00217F49 /* MyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		07C458CF1BA7E7AE00158EF2 /* MVListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C458CE1BA7E7AE00158EF2 /* MVListViewController.m */; };
 		07C458DD1BA8204A00158EF2 /* GuessYourThinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C458DA1BA8204A00158EF2 /* GuessYourThinkViewController.m */; };
 		07C458E01BA8206600158EF2 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C458DF1BA8206600158EF2 /* DeformationButton.m */; };
@@ -430,8 +430,6 @@
 		076C37AE1BA6C174000D2DDC /* MVSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVSearchTableViewCell.m; sourceTree = "<group>"; };
 		076FA2871BABE9F80035DD6F /* SQLHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLHelper.h; sourceTree = "<group>"; };
 		076FA2881BABE9F80035DD6F /* SQLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLHelper.m; sourceTree = "<group>"; };
-		076FA28A1BAC13B40035DD6F /* MyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCollectionViewController.h; path = ../LeftSlideViewController/MyCollectionViewController.h; sourceTree = "<group>"; };
-		076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCollectionViewController.m; path = ../LeftSlideViewController/MyCollectionViewController.m; sourceTree = "<group>"; };
 		0786F6701BABBA550083C05E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		0786F6731BABBA550083C05E /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		0786F6741BABBA550083C05E /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
@@ -710,6 +708,8 @@
 		0795E8F61BA942CA00B2FEB3 /* MovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieViewController.m; sourceTree = "<group>"; };
 		0795E8F81BA957BC00B2FEB3 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		0795E8FA1BA9719300B2FEB3 /* userDefault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDefault.h; sourceTree = "<group>"; };
+		07AADEAA1BB3E41E00217F49 /* MyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewController.h; sourceTree = "<group>"; };
+		07AADEAB1BB3E41E00217F49 /* MyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewController.m; sourceTree = "<group>"; };
 		07C458CD1BA7E7AE00158EF2 /* MVListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVListViewController.h; sourceTree = "<group>"; };
 		07C458CE1BA7E7AE00158EF2 /* MVListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVListViewController.m; sourceTree = "<group>"; };
 		07C458D91BA8204A00158EF2 /* GuessYourThinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuessYourThinkViewController.h; sourceTree = "<group>"; };
@@ -1175,8 +1175,8 @@
 				078F7D941B9EE568005B1500 /* PrefixHeader.pch */,
 				078F7D6C1B9EE18D005B1500 /* AppDelegate.h */,
 				078F7D6D1B9EE18D005B1500 /* AppDelegate.m */,
+				07AADEA81BB3E41E00217F49 /* MyCollection */,
 				436391551BB2EF9400386081 /* MyDownloads */,
-				436391541BB2EEA700386081 /* MyCollection */,
 				43C1D3691BAF01B40092010B /* AboutUs */,
 				43C1D3651BAF01630092010B /* UseHelp */,
 				0795E8E61BA9133500B2FEB3 /* LeftSlideViewController */,
@@ -1503,6 +1503,39 @@
 			path = LeftSlideViewController;
 			sourceTree = "<group>";
 		};
+		07AADEA81BB3E41E00217F49 /* MyCollection */ = {
+			isa = PBXGroup;
+			children = (
+				07AADEA91BB3E41E00217F49 /* Controller */,
+				07AADEAC1BB3E41E00217F49 /* Model */,
+				07AADEAD1BB3E41E00217F49 /* View */,
+			);
+			path = MyCollection;
+			sourceTree = "<group>";
+		};
+		07AADEA91BB3E41E00217F49 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				07AADEAA1BB3E41E00217F49 /* MyCollectionViewController.h */,
+				07AADEAB1BB3E41E00217F49 /* MyCollectionViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		07AADEAC1BB3E41E00217F49 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		07AADEAD1BB3E41E00217F49 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		07C458D71BA8204A00158EF2 /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -1662,15 +1695,6 @@
 				EC042A1B698F1958A4DA9BD5 /* libPods.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		436391541BB2EEA700386081 /* MyCollection */ = {
-			isa = PBXGroup;
-			children = (
-				076FA28A1BAC13B40035DD6F /* MyCollectionViewController.h */,
-				076FA28B1BAC13B40035DD6F /* MyCollectionViewController.m */,
-			);
-			path = MyCollection;
 			sourceTree = "<group>";
 		};
 		436391551BB2EF9400386081 /* MyDownloads */ = {
@@ -2118,6 +2142,7 @@
 				078F7D711B9EE18D005B1500 /* ViewController.m in Sources */,
 				43A1B5331BA7084700ADB041 /* BMEnvObserverCenter.m in Sources */,
 				07C459661BA8225700158EF2 /* UIScrollview+TKCategory.m in Sources */,
+				07AADEAE1BB3E41E00217F49 /* MyCollectionViewController.m in Sources */,
 				0786F6A51BABBA550083C05E /* MJRefreshAutoGifFooter.m in Sources */,
 				07C4596B1BA8225700158EF2 /* UIView+TKAnimation.m in Sources */,
 				07C4596E1BA8225700158EF2 /* UIViewController+HUD.m in Sources */,
@@ -2198,7 +2223,6 @@
 				07C459631BA8225700158EF2 /* UINavigationBar+TKCategory.m in Sources */,
 				07C458E31BA8208300158EF2 /* MMMaterialDesignSpinner.m in Sources */,
 				078F7D921B9EE554005B1500 /* APISDK.m in Sources */,
-				076FA28C1BAC13B40035DD6F /* MyCollectionViewController.m in Sources */,
 				07C459651BA8225700158EF2 /* UIScreen+TKCategory.m in Sources */,
 				07C4594B1BA8225700158EF2 /* NSDictionary+JSONString.m in Sources */,
 				07C4595F1BA8225700158EF2 /* UIImage+TKCategory.m in Sources */,
@@ -2353,7 +2377,7 @@
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/WeChatSDK",
 				);
 				PRODUCT_NAME = smallMovie;
-				PROVISIONING_PROFILE = "228c7d22-fdb0-4cdd-beba-96d1cdb570e9";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2390,7 +2414,7 @@
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/WeChatSDK",
 				);
 				PRODUCT_NAME = smallMovie;
-				PROVISIONING_PROFILE = "228c7d22-fdb0-4cdd-beba-96d1cdb570e9";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

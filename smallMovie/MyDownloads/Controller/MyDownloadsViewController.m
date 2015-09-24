@@ -152,7 +152,7 @@
             [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
         } else {
             model.isDownload = NO;
-            BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertWhenNotExists:model];
+            BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertToDB:model];
             if (isSuccess) {
                 NSLog(@"更新成功");
             } else {
@@ -170,7 +170,7 @@
             [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
         } else {
             model.isDownload = NO;
-            BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertWhenNotExists:model];
+            BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertToDB:model];
             if (isSuccess) {
                 NSLog(@"更新成功");
             } else {
