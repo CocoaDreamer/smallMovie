@@ -8,8 +8,18 @@
 
 #import "MainViewController.h"
 #import "AppDelegate.h"
+#import "ListModel.h"
+#import "MVListModel.h"
 
 @interface MainViewController ()<BMNetworkStatusProtocol>
+
+@property (nonatomic, strong) NSMutableArray *mvDataSource;
+
+@property (nonatomic, strong) NSMutableArray *movieDataSoure;
+
+@property (nonatomic, assign) NSInteger movieCount;//收藏电影的数量
+
+@property (nonatomic, assign) NSInteger mvCount;//收藏MV的数量
 
 @end
 
@@ -36,7 +46,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.iconImageView = imageView;
     BMAddNetworkStatusObserver(self);
-    [self createAPISDK];//创建一个实例，但并不传参数，只是确保一直有一个sessionManager来管理下载
+//    [self createAPISDK];//创建一个实例，但并不传参数，只是确保一直有一个sessionManager来管理下载，以后做吧
 }
 
 - (void)createAPISDK{
@@ -66,6 +76,21 @@
 - (void)initData{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateIconImageView) name:@"updateIconImageView" object:nil];
+    
+    LKDBHelper *hepler = [LKDBHelper getUsingLKDBHelper];
+    _movieCount = [hepler rowCount:[ListModel class] where:nil];
+    _movieDataSoure = [hepler search:[ListModel class] where:nil orderBy:nil offset:0 count:_movieCount];
+    for (ListModel *model in _movieDataSoure) {
+        model.isDownloading = NO;
+        [hepler insertToDB:model];
+    }
+    _mvCount = [hepler rowCount:[MVListModel class] where:nil];
+    _mvDataSource = [hepler search:[MVListModel class] where:nil orderBy:nil offset:0 count:_mvCount];
+    for (MVListModel *model in _mvDataSource) {
+        model.isDownloading = NO;
+        [hepler insertToDB:model];
+    }
+    
 }
 
 #pragma mark - BMNetworkStatusProtocol

@@ -16,4 +16,5 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 @end

@@ -75,6 +75,14 @@
 #import "CALayer+TKAnimation.h"
 #import "CAKeyframeAnimation+TKAnimation.h"
 
+
+//各种通知名称
+#define ISDOWNLOADING @"theTaskIsDownLoading"//任务正在下载
+
+
+
+
+
 /**
  *  当Xcode为Release时不输出，为Debug时输出
  *

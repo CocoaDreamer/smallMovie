@@ -22,7 +22,6 @@
     apisdk.interface = @"http://magicapi.vmovier.com/magicapi/find";
     [apisdk addValue:@1 forKey:@"json"];
     [apisdk addValue:@1 forKey:@"p"];
-    
     [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:get finished:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"dict = %@",dict);

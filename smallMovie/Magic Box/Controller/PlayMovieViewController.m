@@ -12,6 +12,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import "PopMenu.h"
 #import "AppDelegate.h"
+#import "DownLoadModel.h"
 
 
 
@@ -334,11 +335,16 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 }
 
 - (void)download:(UIButton *)button{
-    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
-    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+    LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    ListModel *model = [helper searchSingle:[ListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
+    if (model != nil) {
+        self.listModel = model;
+    }
+    if (self.listModel.isDownload == YES) {
         [self showHint:@"您已下载过该视频，无需重新下载"];
+        return;
+    } else if (self.listModel.isDownloading == YES){
+        [self showHint:@"该视频正在下载，请稍后"];
         return;
     }
     button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
@@ -352,29 +358,51 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     NSArray *pdownlinkArray = self.listModel.pdownlink[0];
     NSDictionary *dic = pdownlinkArray[0];
     if ([dic objectForKey:@"video"] != nil) {
+        self.listModel.isDownloading = YES;
+        BOOL isUpdate = [helper insertToDB:self.listModel];
+        if (isUpdate) {
+            NSLog(@"更新成功");
+        } else {
+            NSLog(@"更新失败");
+            
+        }
         apisdk.interface = dic[@"video"];
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-            BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
-            if (isSucceed) {
-                [self showHint:@"下载成功"];
-                LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-                ListModel *model = [helper searchSingle:[ListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
-                if (model.isSaved) {
-                    self.listModel.isSaved = YES;
+            NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+            NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+            dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+                BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
+                self.listModel.isDownloading = NO;
+                if (isSucceed) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showHint:@"下载成功"];
+                    });
+                    self.listModel.isDownload = YES;
+                    BOOL isUpdate = [helper insertToDB:self.listModel];
+                    if (isUpdate) {
+                        NSLog(@"更新成功");
+                    } else {
+                        NSLog(@"更新失败");
+                        
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showHint:@"下载失败，请重试"];
+                    });
                 }
-                self.listModel.isDownload = YES;
+            });
+            [roundProgressView removeFromSuperview];
+            button.enabled = YES;
+        } failed:^(NSInteger errorCode) {
+            self.listModel.isDownloading = NO;
+            dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
                 BOOL isUpdate = [helper insertToDB:self.listModel];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {
                     NSLog(@"更新失败");
                 }
-            } else {
-                [self showHint:@"下载失败，请重试"];
-            }
-            [roundProgressView removeFromSuperview];
-            button.enabled = YES;
-        } failed:^(NSInteger errorCode) {
+            });
             [self showHint:@"下载失败，请重试"];
             [roundProgressView removeFromSuperview];
             button.enabled = YES;
@@ -389,8 +417,14 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
      
      @param block A block object to be called when an undetermined number of bytes have been downloaded from the server. This block has no return value and takes three arguments: the session, the data task, and the data received. This block may be called multiple times, and will execute on the session manager operation queue.
      */
+    //此方法用于监听接收的数据流
+    DownLoadModel *downModel = [[DownLoadModel alloc] init];
+    downModel.title = self.listModel.title;
     [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
         NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        downModel.percent = percent;
+        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:downModel];
         dispatch_sync(dispatch_get_main_queue(), ^{
             roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
         });
@@ -417,7 +451,6 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     } else {
         return nil;
     }
-    
 }
 
 /**

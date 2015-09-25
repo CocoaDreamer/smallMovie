@@ -977,6 +977,13 @@
                                                     <color key="textColor" red="1" green="0.02925999596" blue="0.017480126540000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt2-La-pla">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                                                    <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="1Oh-6F-03j" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" constant="160" id="ACk-Xo-NeJ"/>
@@ -995,6 +1002,7 @@
                                         <connections>
                                             <outlet property="artistLabel" destination="L6Q-mp-ZAf" id="KQi-LJ-yMM"/>
                                             <outlet property="iconImageView" destination="gLN-oT-Lhg" id="qab-wO-mu4"/>
+                                            <outlet property="progressLabel" destination="rt2-La-pla" id="pNm-1T-pwP"/>
                                             <outlet property="titleLabel" destination="1Oh-6F-03j" id="HUb-IK-a25"/>
                                         </connections>
                                     </tableViewCell>

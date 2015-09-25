@@ -42,6 +42,7 @@
 		072B7A341BA273BB0021D3DE /* sina_weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 072B7A241BA273BB0021D3DE /* sina_weibo.jpg */; };
 		072B7A351BA273BB0021D3DE /* weixin_friend.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 072B7A251BA273BB0021D3DE /* weixin_friend.jpg */; };
 		072B7A381BA2AAC40021D3DE /* MVListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B7A371BA2AAC40021D3DE /* MVListModel.m */; };
+		072EFC361BB4F82E0072C32A /* DownLoadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EFC351BB4F82E0072C32A /* DownLoadModel.m */; settings = {ASSET_TAGS = (); }; };
 		0750E7D21BAFB6F5001A9752 /* collectionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7D11BAFB6F5001A9752 /* collectionIcon.png */; settings = {ASSET_TAGS = (); }; };
 		0750E7D41BAFB760001A9752 /* collectionSelectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7D31BAFB760001A9752 /* collectionSelectedIcon.png */; settings = {ASSET_TAGS = (); }; };
 		0750E7DE1BAFE092001A9752 /* icon_activation_story_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DB1BAFE092001A9752 /* icon_activation_story_heart.png */; settings = {ASSET_TAGS = (); }; };
@@ -414,6 +415,8 @@
 		072B7A251BA273BB0021D3DE /* weixin_friend.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = weixin_friend.jpg; sourceTree = "<group>"; };
 		072B7A361BA2AAC40021D3DE /* MVListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVListModel.h; sourceTree = "<group>"; };
 		072B7A371BA2AAC40021D3DE /* MVListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVListModel.m; sourceTree = "<group>"; };
+		072EFC341BB4F82E0072C32A /* DownLoadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownLoadModel.h; path = smallMovie/MyDownLoads/Model/DownLoadModel.h; sourceTree = SOURCE_ROOT; };
+		072EFC351BB4F82E0072C32A /* DownLoadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownLoadModel.m; path = smallMovie/MyDownLoads/Model/DownLoadModel.m; sourceTree = SOURCE_ROOT; };
 		0750E7D11BAFB6F5001A9752 /* collectionIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = collectionIcon.png; path = ../collectionIcon.png; sourceTree = "<group>"; };
 		0750E7D31BAFB760001A9752 /* collectionSelectedIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collectionSelectedIcon.png; sourceTree = "<group>"; };
 		0750E7DB1BAFE092001A9752 /* icon_activation_story_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_activation_story_heart.png; sourceTree = "<group>"; };
@@ -1719,6 +1722,8 @@
 		436391571BB2EF9400386081 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				072EFC341BB4F82E0072C32A /* DownLoadModel.h */,
+				072EFC351BB4F82E0072C32A /* DownLoadModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2221,6 +2226,7 @@
 				07C4595C1BA8225700158EF2 /* UIGestureRecognizer+TKCategory.m in Sources */,
 				43A1B5351BA7084700ADB041 /* BMEnvObserverCoordinator.m in Sources */,
 				07C459631BA8225700158EF2 /* UINavigationBar+TKCategory.m in Sources */,
+				072EFC361BB4F82E0072C32A /* DownLoadModel.m in Sources */,
 				07C458E31BA8208300158EF2 /* MMMaterialDesignSpinner.m in Sources */,
 				078F7D921B9EE554005B1500 /* APISDK.m in Sources */,
 				07C459651BA8225700158EF2 /* UIScreen+TKCategory.m in Sources */,

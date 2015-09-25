@@ -142,8 +142,8 @@
     NSLog(@"喜欢");
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
     MVListModel *model = [helper searchSingle:[MVListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
-    if (model.isDownload) {
-        self.listModel.isDownload = YES;
+    if (model != nil) {
+        self.listModel = model;
     }
     self.listModel.isSaved = YES;
     if ([helper insertToDB:self.listModel]) {
@@ -152,11 +152,16 @@
 }
 
 - (void)download:(UIButton *)button{
-    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
-    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+    LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    MVListModel *model = [helper searchSingle:[MVListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
+    if (model != nil) {
+        self.listModel = model;
+    }
+    if (self.listModel.isDownload == YES) {
         [self showHint:@"您已下载过该视频，无需重新下载"];
+        return;
+    } else if (self.listModel.isDownloading == YES){
+        [self showHint:@"该视频正在下载，请稍后"];
         return;
     }
     button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
@@ -165,30 +170,52 @@
     roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
     roundProgressView.backgroundTintColor = [UIColor whiteColor];
     [button addSubview:roundProgressView];
+    self.listModel.isDownloading = YES;
+    BOOL isUpdate = [helper insertToDB:self.listModel];
+    if (isUpdate) {
+        NSLog(@"更新成功");
+    } else {
+        NSLog(@"更新失败");
+        
+    }
     APISDK *apisdk = [[APISDK alloc] init];
         apisdk.interface = self.listModel.url;
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-            BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
-            if (isSucceed) {
-                [self showHint:@"下载成功"];
-                LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
-                MVListModel *model = [helper searchSingle:[MVListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
-                if (model.isSaved) {
-                    self.listModel.isSaved = YES;
+            NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+            NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+            dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+                BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
+                self.listModel.isDownloading = NO;
+                if (isSucceed) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showHint:@"下载成功"];
+                    });
+                    self.listModel.isDownload = YES;
+                    BOOL isUpdate = [helper insertToDB:self.listModel];
+                    if (isUpdate) {
+                        NSLog(@"更新成功");
+                    } else {
+                        NSLog(@"更新失败");
+                        
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showHint:@"下载失败，请重试"];
+                    });
                 }
-                self.listModel.isDownload = YES;
+            });
+            [roundProgressView removeFromSuperview];
+            button.enabled = YES;
+        } failed:^(NSInteger errorCode) {
+            self.listModel.isDownloading = NO;
+            dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
                 BOOL isUpdate = [helper insertToDB:self.listModel];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {
                     NSLog(@"更新失败");
                 }
-            } else {
-                [self showHint:@"下载失败，请重试"];
-            }
-            [roundProgressView removeFromSuperview];
-            button.enabled = YES;
-        } failed:^(NSInteger errorCode) {
+            });
             [self showHint:@"下载失败，请重试"];
             [roundProgressView removeFromSuperview];
             button.enabled = YES;

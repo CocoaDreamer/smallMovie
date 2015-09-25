@@ -69,10 +69,28 @@
 
 @property (nonatomic, strong) NSString *videolink;
 
-//自己加的字段  用来判断是不是下载了
+
+/**********************************自定义字段**********************************************/
+
+/**
+ *  是否下载完成
+ */
 @property (nonatomic, assign) BOOL isDownload;
 
-@property (nonatomic, assign) BOOL isSaved;//是否收藏
+/**
+ *  是否收藏
+ */
+@property (nonatomic, assign) BOOL isSaved;
+
+/**
+ *  是否正在下载
+ */
+@property (nonatomic, assign) BOOL isDownloading;
+
+/**
+ *  下载百分比
+ */
+@property (nonatomic, assign) float percent;
 
 
 - (instancetype)initWithDict:(NSDictionary *)dict;

@@ -66,10 +66,27 @@
 
 @property (nonatomic, strong) NSString *playListPic;
 
+/**********************************自定义字段**********************************************/
+
+/**
+ *  是否下载完成
+ */
 @property (nonatomic, assign) BOOL isDownload;
 
+/**
+ *  是否收藏
+ */
 @property (nonatomic, assign) BOOL isSaved;
 
+/**
+ *  是否正在下载
+ */
+@property (nonatomic, assign) BOOL isDownloading;
+
+/**
+ *  下载百分比
+ */
+@property (nonatomic, assign) float percent;
 
 - (instancetype)initWithDic:(NSDictionary *)dic;
 
