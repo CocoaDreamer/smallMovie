@@ -378,7 +378,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
                         [self showHint:@"下载成功"];
                     });
                     self.listModel.isDownload = YES;
-                    BOOL isUpdate = [helper insertToDB:self.listModel];
+                    BOOL isUpdate = [helper updateToDB:self.listModel where:nil];
                     if (isUpdate) {
                         NSLog(@"更新成功");
                     } else {
@@ -396,7 +396,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
         } failed:^(NSInteger errorCode) {
             self.listModel.isDownloading = NO;
             dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
-                BOOL isUpdate = [helper insertToDB:self.listModel];
+                BOOL isUpdate = [helper updateToDB:self.listModel where:nil];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {

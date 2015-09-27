@@ -169,6 +169,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ListModel *model = _dataSource[indexPath.row];
+    model.isDownload = NO;
+    model.isDownloading = NO;
+    model.isSaved = NO;
     NSArray *backuplink = model.backuplink;
     NSArray *inBackuplink = backuplink[0];
     NSDictionary *dict = inBackuplink[0];

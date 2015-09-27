@@ -17,4 +17,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint;
+
+
+- (void)setprogerssLabelContraint:(float)leadingContranit;
+
 @end

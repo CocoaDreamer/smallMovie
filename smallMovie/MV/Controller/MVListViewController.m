@@ -197,6 +197,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MVListModel *model = _dataSource[indexPath.row];
+    model.isDownload = NO;
+    model.isDownloading = NO;
+    model.isSaved = NO;
     _listModel = model;
     ListTableViewCell *cell = (ListTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     _backImage = cell.pictureImageView.image;

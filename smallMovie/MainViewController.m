@@ -66,7 +66,6 @@
             NSLog(@"常见失败");
         }
     }
-    
 }
 
 - (void)updateIconImageView{

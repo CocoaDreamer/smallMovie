@@ -12,6 +12,7 @@
 #import "PopMenu.h"
 #import "MVListTableViewCell.h"
 #import "AppDelegate.h"
+#import "DownLoadModel.h"
 
 
 @interface PlayMVViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -191,12 +192,11 @@
                         [self showHint:@"下载成功"];
                     });
                     self.listModel.isDownload = YES;
-                    BOOL isUpdate = [helper insertToDB:self.listModel];
+                    BOOL isUpdate = [helper updateToDB:self.listModel where:nil];
                     if (isUpdate) {
                         NSLog(@"更新成功");
                     } else {
                         NSLog(@"更新失败");
-                        
                     }
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -220,8 +220,13 @@
             [roundProgressView removeFromSuperview];
             button.enabled = YES;
         }];
+    DownLoadModel *downModel = [[DownLoadModel alloc] init];
+    downModel.title = self.listModel.title;
     [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
         NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        downModel.percent = percent;
+        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:downModel];
         dispatch_sync(dispatch_get_main_queue(), ^{
             roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
         });

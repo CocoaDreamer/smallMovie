@@ -31,7 +31,6 @@
 
 @property (nonatomic, strong) NSTimer *timer;//为了优化，1秒刷新一次
 
-
 @end
 
 @implementation MyDownloadsViewController
@@ -46,7 +45,7 @@
     
     self.title = @"我的下载";
     
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refreshTableView) userInfo:nil repeats:YES];
+//    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshTableView) userInfo:nil repeats:YES];
 }
 
 - (void)refreshTableView{
@@ -65,9 +64,35 @@
     if ([idModel isKindOfClass:[ListModel class]]) {
         ListModel *listModel = [_totalDict objectForKey:model.title];
         listModel.percent = model.percent;
+        if (listModel.percent == 1.0) {
+            listModel.isDownload = 1;
+            listModel.isDownloading = 0;
+        }
+        for (int i = 0; i < _movieDataSoure.count; i++) {
+            if (_movieDataSoure[i] == listModel) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                });
+                return;
+            }
+        }
     } else {
         MVListModel *mvListModel = [_totalDict objectForKey:model.title];
         mvListModel.percent = model.percent;
+        if (mvListModel.percent == 1.0) {
+            mvListModel.isDownload = 1;
+            mvListModel.isDownloading = 0;
+        }
+        for (int i = 0; i < _mvDataSource.count; i++) {
+            if (_mvDataSource[i] == mvListModel) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:1];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                });
+                return;
+            }
+        }
     }
 }
 
@@ -95,23 +120,23 @@
     MVSearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MVSearchTableViewCell"];
     if (indexPath.section == 0) {
         ListModel *model = _movieDataSoure[indexPath.row];
-//        NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:cell.progressLabel attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeLeading multiplier:1.0f constant:(APP_WIDTH * model.percent)];
-//        NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:cell.progressLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0];
-//        NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:cell.progressLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0];
-//        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:cell.progressLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0];
-//        cell.progressLabel.frame = CGRectMake(APP_WIDTH*model.percent, 0, APP_WIDTH, 100);
-//        [cell.contentView addConstraint:leftConstraint];
-//        [cell.contentView addConstraint:rightConstraint];
-//        [cell.contentView addConstraint:topConstraint];
-//        [cell.contentView addConstraint:bottomConstraint];
-
-        
-
+        if (model.isDownload == 1) {
+            cell.progressLabel.hidden = YES;
+        } else {
+            cell.progressLabel.hidden = NO;
+        }
+        [cell setprogerssLabelContraint:(APP_WIDTH * model.percent)];
         [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.pimg] placeholderImage:[UIImage imageNamed:@"Jay.jpg"]];
         cell.titleLabel.text = model.title;
         cell.artistLabel.text = model.intro;
     } else {
         MVListModel *model = _mvDataSource[indexPath.row];
+        if (model.isDownload == 1) {
+            cell.progressLabel.hidden = YES;
+        } else {
+            cell.progressLabel.hidden = NO;
+        }
+        [cell setprogerssLabelContraint:(APP_WIDTH * model.percent)];
         [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.thumbnailPic] placeholderImage:[UIImage imageNamed:@"Jay.jpg"]];
         cell.titleLabel.text = model.title;
         cell.artistLabel.text = model.MVdescription;
@@ -124,6 +149,10 @@
     if (indexPath.section == 0) {
         MVSearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         ListModel *model = _movieDataSoure[indexPath.row];
+        if (!model.isDownload) {
+            [self showHint:@"下载中，请稍后"];
+            return;
+        }
         PlayMovieViewController *vc = [[PlayMovieViewController alloc] init];
         vc.listModel = model;
         vc.backImage = cell.iconImageView.image;
@@ -132,6 +161,10 @@
     } else if (indexPath.section == 1){
         MVSearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         MVListModel *model = _mvDataSource[indexPath.row];
+        if (!model.isDownload) {
+            [self showHint:@"下载中，请稍后"];
+            return;
+        }
         PlayMVViewController *vc = [[PlayMVViewController alloc] init];
         vc.listModel = model;
         vc.backImage = cell.iconImageView.image;
@@ -195,7 +228,12 @@
         NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,model.title]];
         [fileManager removeItemAtPath:urlStr error:nil];
         if (model.isSaved == NO) {
-            [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
+            BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] deleteToDB:model];
+            if (isSuccess) {
+                NSLog(@"删除成功");
+            } else {
+                NSLog(@"删除失败");
+            }
         } else {
             model.isDownload = NO;
             BOOL isSuccess = [[LKDBHelper getUsingLKDBHelper] insertToDB:model];

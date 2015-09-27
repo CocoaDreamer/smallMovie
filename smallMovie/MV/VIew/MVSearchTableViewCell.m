@@ -14,6 +14,11 @@
     // Initialization code
 }
 
+- (void)setprogerssLabelContraint:(float)leadingContranit{
+    self.leadingConstraint.constant = leadingContranit;
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

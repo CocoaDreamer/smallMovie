@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Left Slide View Controller-->
+        <!--View Controller-->
         <scene sceneID="rWr-fd-Zqd">
             <objects>
-                <viewController id="PjL-aY-4dJ" customClass="LeftSlideViewController" sceneMemberID="viewController">
+                <viewController id="PjL-aY-4dJ" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wwW-0K-mjN"/>
                         <viewControllerLayoutGuide type="bottom" id="W7i-qR-XNs"/>
@@ -22,7 +22,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E8Q-dW-JnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1498" y="980"/>
+            <point key="canvasLocation" x="-1480" y="166"/>
         </scene>
         <!--榜单-->
         <scene sceneID="u02-tE-SjT">
@@ -977,7 +977,7 @@
                                                     <color key="textColor" red="1" green="0.02925999596" blue="0.017480126540000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt2-La-pla">
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt2-La-pla">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                                     <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -987,10 +987,14 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="1Oh-6F-03j" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" constant="160" id="ACk-Xo-NeJ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rt2-La-pla" secondAttribute="trailing" constant="-41" id="BWj-XV-tA9"/>
                                                 <constraint firstItem="L6Q-mp-ZAf" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" constant="160" id="K3k-cz-h61"/>
                                                 <constraint firstAttribute="bottom" secondItem="gLN-oT-Lhg" secondAttribute="bottom" id="Lu7-6x-KmB"/>
                                                 <constraint firstAttribute="bottom" secondItem="1Oh-6F-03j" secondAttribute="bottom" constant="50" id="MY7-9s-Ibm"/>
                                                 <constraint firstItem="1Oh-6F-03j" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="top" constant="20" id="P71-hz-CyV"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="rt2-La-pla" secondAttribute="bottom" constant="-8" id="RBS-5w-yO2"/>
+                                                <constraint firstItem="rt2-La-pla" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="topMargin" constant="-8" id="bIR-o2-Mfv"/>
+                                                <constraint firstItem="rt2-La-pla" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leadingMargin" constant="-8" id="cdc-d1-MvJ"/>
                                                 <constraint firstItem="L6Q-mp-ZAf" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="top" constant="55" id="dgf-lH-xyC"/>
                                                 <constraint firstItem="gLN-oT-Lhg" firstAttribute="leading" secondItem="Zbs-yr-3Tt" secondAttribute="leading" id="eGZ-9r-7eM"/>
                                                 <constraint firstItem="gLN-oT-Lhg" firstAttribute="top" secondItem="Zbs-yr-3Tt" secondAttribute="top" id="iq1-D1-KTf"/>
@@ -1002,6 +1006,7 @@
                                         <connections>
                                             <outlet property="artistLabel" destination="L6Q-mp-ZAf" id="KQi-LJ-yMM"/>
                                             <outlet property="iconImageView" destination="gLN-oT-Lhg" id="qab-wO-mu4"/>
+                                            <outlet property="leadingConstraint" destination="cdc-d1-MvJ" id="MjS-yC-0yr"/>
                                             <outlet property="progressLabel" destination="rt2-La-pla" id="pNm-1T-pwP"/>
                                             <outlet property="titleLabel" destination="1Oh-6F-03j" id="HUb-IK-a25"/>
                                         </connections>
