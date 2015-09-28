@@ -107,7 +107,7 @@
         }
         [self.mvListTableView reloadData];
     } failed:^(NSInteger errorCode) {
-        [self alertTitle:@"Error" andMessage:[NSString stringWithFormat:@"%ld",(long)errorCode]];
+        [self showHint:@"请求列表失败"];
     }];
 }
 
