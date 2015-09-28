@@ -210,7 +210,7 @@
         } failed:^(NSInteger errorCode) {
             weakSelf.listModel.isDownloading = NO;
             dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
-                BOOL isUpdate = [helper insertToDB:weakSelf.listModel];
+                BOOL isUpdate = [helper updateToDB:weakSelf.listModel where:nil];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {
