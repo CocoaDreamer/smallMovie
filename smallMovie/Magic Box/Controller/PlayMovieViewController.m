@@ -335,6 +335,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 }
 
 - (void)download:(UIButton *)button{
+    __weak __typeof(self) weakSelf = self;
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
     ListModel *model = [helper searchSingle:[ListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
     if (model != nil) {
@@ -370,15 +371,15 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
             NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
-            dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+            dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
                 BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
-                self.listModel.isDownloading = NO;
+                weakSelf.listModel.isDownloading = NO;
                 if (isSucceed) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self showHint:@"下载成功"];
                     });
-                    self.listModel.isDownload = YES;
-                    BOOL isUpdate = [helper updateToDB:self.listModel where:nil];
+                    weakSelf.listModel.isDownload = YES;
+                    BOOL isUpdate = [helper updateToDB:weakSelf.listModel where:nil];
                     if (isUpdate) {
                         NSLog(@"更新成功");
                     } else {
@@ -394,9 +395,9 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
             [roundProgressView removeFromSuperview];
             button.enabled = YES;
         } failed:^(NSInteger errorCode) {
-            self.listModel.isDownloading = NO;
-            dispatch_async(dispatch_queue_create([self.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
-                BOOL isUpdate = [helper updateToDB:self.listModel where:nil];
+            weakSelf.listModel.isDownloading = NO;
+            dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+                BOOL isUpdate = [helper updateToDB:weakSelf.listModel where:nil];
                 if (isUpdate) {
                     NSLog(@"更新成功");
                 } else {
@@ -419,7 +420,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
      */
     //此方法用于监听接收的数据流
     DownLoadModel *downModel = [[DownLoadModel alloc] init];
-    downModel.title = self.listModel.title;
+    downModel.title = weakSelf.listModel.title;
     [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
         NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
         float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
@@ -531,6 +532,10 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  */
 -(void)mediaPlayerPlaybackFinished:(NSNotification *)notification{
     NSLog(@"播放完成.%li",self.moviePlayer.playbackState);
+}
+
+- (void)dealloc{
+    NSLog(@"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
 }
 
 - (void)didReceiveMemoryWarning {

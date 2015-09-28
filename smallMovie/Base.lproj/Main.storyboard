@@ -376,7 +376,6 @@
                     <connections>
                         <segue destination="l9Y-nV-8Sc" kind="relationship" relationship="viewControllers" id="22C-f9-X22"/>
                         <segue destination="Hin-FX-T3m" kind="relationship" relationship="viewControllers" id="VgW-D5-fOb"/>
-                        <segue destination="bac-Pg-8QE" kind="relationship" relationship="viewControllers" id="reL-iy-kg4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QId-ks-lXD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -386,7 +385,7 @@
         <!--小游戏-->
         <scene sceneID="CCl-Tw-BYX">
             <objects>
-                <viewController id="bac-Pg-8QE" customClass="GuessYourThinkViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GuessYourThinkViewController" id="bac-Pg-8QE" customClass="GuessYourThinkViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="l2h-1Z-2Me"/>
                         <viewControllerLayoutGuide type="bottom" id="zHy-yc-UwE"/>
@@ -948,7 +947,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hET-wi-izT">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hET-wi-izT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -977,7 +976,7 @@
                                                     <color key="textColor" red="1" green="0.02925999596" blue="0.017480126540000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt2-La-pla">
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt2-La-pla">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                                     <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -1033,7 +1032,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0b4-Rk-HI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1330" y="-1452"/>
+            <point key="canvasLocation" x="1347" y="-1482"/>
         </scene>
     </scenes>
     <resources>

@@ -41,11 +41,16 @@
     
     [self initData];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self addNotifications];
-    
-    self.title = @"我的下载";
-    
-//    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshTableView) userInfo:nil repeats:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)refreshTableView{
@@ -266,10 +271,6 @@
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationTop];
 }
 
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_timer invalidate];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

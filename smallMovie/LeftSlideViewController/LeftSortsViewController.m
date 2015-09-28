@@ -99,7 +99,7 @@
     } else if (indexPath.row == 1) {
         cell.textLabel.text = @"QQ钱包";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"网上营业厅";
+        cell.textLabel.text = @"小游戏";
     } else if (indexPath.row == 3) {
         cell.textLabel.text = @"我的收藏";
     } else if (indexPath.row == 4) {
@@ -124,6 +124,8 @@
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutUsViewController"];
     } else if (indexPath.row == 4) {
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyDownloadsViewController"];
+    } else if (indexPath.row == 2){
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"GuessYourThinkViewController"];
     }
     else {
     vc = [[otherViewController alloc] init];

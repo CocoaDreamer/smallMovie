@@ -37,16 +37,10 @@
 
 @implementation GuessYourThinkViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.tabBarController.title = @"猜你在想谁";
-    self.tabBarController.navigationController.navigationItem.rightBarButtonItem = nil;
-}
-
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
 
 }
 
@@ -54,7 +48,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.tabBarController.title = @"猜你在想谁";
+    self.title = @"猜你在想谁";
     
 //    self.foundView = [[UIView alloc] initWithFrame:self.view.bounds];
 //    self.foundView.backgroundColor = [UIColor clearColor];
