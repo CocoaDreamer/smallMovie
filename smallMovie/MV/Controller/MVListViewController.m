@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 
 @interface MVListViewController ()
+
 @property (weak, nonatomic) IBOutlet UITableView *mvListTableView;
 
 @property (nonatomic, assign) int offset;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) UIImage *backImage;
 
 @property (nonatomic, strong) NSString *area;
+
 @property (weak, nonatomic) IBOutlet UIButton *KRButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *USButton;
@@ -32,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *MLButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *HTButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *JPButton;
 
 @end
