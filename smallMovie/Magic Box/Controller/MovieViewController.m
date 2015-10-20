@@ -156,7 +156,6 @@
 
 - (ListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ID"];
-    
     // Configure the cell...
     ListModel *model = _dataSource[indexPath.row];
     [cell.pictureImageView sd_setImageWithURL:[NSURL URLWithString:model.pimg] placeholderImage:[UIImage imageNamed:@"Jay.jpg"]];

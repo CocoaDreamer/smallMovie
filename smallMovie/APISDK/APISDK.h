@@ -18,7 +18,6 @@ typedef void(^RequestFinished)(id responseObject);
 typedef void(^RequestFailed)(NSInteger errorCode);
 @interface APISDK : NSObject
 @property(nonatomic,strong) NSMutableDictionary * requestDic;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
 @property (nonatomic, strong) NSURLSessionTask *task;
 @property (nonatomic, strong) NSString *interface;

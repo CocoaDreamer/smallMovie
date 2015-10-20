@@ -10,8 +10,10 @@
 #import "AppDelegate.h"
 #import "ListModel.h"
 #import "MVListModel.h"
+#import "MovieViewController.h"
+#import "MVListViewController.h"
 
-@interface MainViewController ()<BMNetworkStatusProtocol>
+@interface MainViewController ()<BMNetworkStatusProtocol,UITabBarControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *mvDataSource;
 
@@ -32,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.delegate = self;
     [self initData];
     [self createFile];//创建文件夹
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -51,6 +54,10 @@
 
 - (void)createAPISDK{
     APISDK *apisdk = [[APISDK alloc] init];
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
+    NSLog(@"%@",viewController);
 }
 
 //创建文件夹

@@ -91,6 +91,11 @@
     _area = @"ML";
 }
 
+- (void)refreshTableView{
+    [self stopMJRefresh];
+    [self requestDataWithUpOrDown:YES];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -115,7 +120,6 @@
     __weak __typeof(self) weakSelf = self;
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
-
     _mvListTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _offset = 0;
         [weakSelf requestDataWithUpOrDown:YES];
@@ -125,11 +129,8 @@
     _mvListTableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [weakSelf requestDataWithUpOrDown:NO];
     }];
-    
     // 马上进入刷新状态
     [_mvListTableView.header beginRefreshing];
-    
-    
 }
 
 /**
