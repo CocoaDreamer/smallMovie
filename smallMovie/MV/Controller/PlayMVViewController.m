@@ -93,7 +93,7 @@
 }
 
 - (void)requestData{
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     apisdk.interface = MV_Related_List(self.listModel.id);
     [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
@@ -180,7 +180,7 @@
         NSLog(@"更新失败");
         
     }
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
         apisdk.interface = self.listModel.url;
         [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];

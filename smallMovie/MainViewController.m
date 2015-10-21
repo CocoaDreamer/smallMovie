@@ -53,7 +53,7 @@
 }
 
 - (void)createAPISDK{
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{

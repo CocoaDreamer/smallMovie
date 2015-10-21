@@ -100,9 +100,9 @@
  *  做请求
  */
 - (void)AskQuestion{
-    APISDK *apisk = [[APISDK alloc] init];
-    apisk.interface = _requestString;
-    [apisk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    APISDK *apisdk = [APISDK getSingleClass];
+    apisdk.interface = _requestString;
+    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         [self performSelector:@selector(btnSettings) withObject:self afterDelay:0.8];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"starturl"]) {
@@ -175,7 +175,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     NSLog(@"viewDidDisappear");
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     [apisdk CloseAndClearRequest];
 }
 

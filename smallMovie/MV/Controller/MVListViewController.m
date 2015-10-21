@@ -137,7 +137,7 @@
  *  请求数据   NO上拉  YES下拉
  */
 - (void)requestDataWithUpOrDown:(BOOL)upOrDown{
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     apisdk.interface = MV_List(_area, [NSNumber numberWithInt:_offset]);
     [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];

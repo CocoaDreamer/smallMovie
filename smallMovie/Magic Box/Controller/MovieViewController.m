@@ -61,11 +61,14 @@
  *  请求数据   NO上拉  YES下拉
  */
 - (void)requestDataWithUpOrDown:(BOOL)upOrDown{
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
+    NSDictionary *dic = @{
+                          @"json":@1,
+                          @"p":[NSNumber numberWithInt:_page]
+                          };
     apisdk.interface = Movie_List;
-    [apisdk addValue:@1 forKey:@"json"];
-    [apisdk addValue:[NSNumber numberWithInt:_page] forKey:@"p"];
-    [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:get finished:^(id responseObject) {
+    
+    [apisdk sendDataWithParamDictionary:dic requestMethod:get finished:^(id responseObject) {
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if (upOrDown) {
             [_dataSource removeAllObjects];
@@ -82,6 +85,7 @@
             [self.mvListTableView reloadData];
             [self stopMJRefresh];
         } else {
+            [self stopMJRefresh];
             [self.mvListTableView.footer noticeNoMoreData];
         }
     } failed:^(NSInteger errorCode) {

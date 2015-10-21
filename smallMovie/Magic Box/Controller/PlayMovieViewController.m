@@ -182,15 +182,16 @@
  *  请求评论
  */
 - (void)requestComments{
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     apisdk.interface = Comment_List;
-http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&withHot=1
 
-    [apisdk addValue:[NSNumber numberWithInt:_page] forKey:@"p"];
-    [apisdk addValue:self.listModel.id forKey:@"postid"];
-    [apisdk addValue:@"new" forKey:@"sort"];
-    [apisdk addValue:@1 forKey:@"withHot"];
-    [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:post finished:^(id responseObject) {
+    NSDictionary *param = @{
+                            @"p":[NSNumber numberWithInt:_page],
+                            @"postid":self.listModel.id,
+                            @"sort":@"new",
+                            @"withHot":@1
+                            };
+    [apisdk sendDataWithParamDictionary:param requestMethod:post finished:^(id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"dic = %@",dic);
         
@@ -354,7 +355,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
     roundProgressView.backgroundTintColor = [UIColor whiteColor];
     [button addSubview:roundProgressView];
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     NSLog(@"%@",self.listModel.pdownlink[0]);
     NSArray *pdownlinkArray = self.listModel.pdownlink[0];
     NSDictionary *dic = pdownlinkArray[0];

@@ -7,22 +7,32 @@
 //
 
 #import "APISDK.h"
+#import "objc/runtime.h"
 
 #define TIME_OUT  20
-@interface APISDK() 
+static char getParamDic;
+@interface APISDK()
 
 @end
 
 @implementation APISDK
 
--(id)init{
+- (id)init{
     self = [super init];
     if (self) {
-        _requestDic = [[NSMutableDictionary alloc]init];
         _sessionManager = [AFHTTPSessionManager manager];
         _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
     return self;
+}
+
++ (instancetype)getSingleClass{
+    static APISDK *apisdk = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        apisdk = self.new;
+    });
+    return apisdk;
 }
 
 - (NSMutableURLRequest *)makePostRequest:(NSString *)url {
@@ -40,15 +50,15 @@
 }
 
 - (NSData *)makeHTTPbodyFromObject:(id)object {
-    NSAssert([NSJSONSerialization isValidJSONObject:object], @"这不是Json类型");
-    
+    NSCAssert([NSJSONSerialization isValidJSONObject:object], @"这不是Json类型");
     return [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:nil];
 }
 
-- (void)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+- (AFHTTPRequestOperation *)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+    NSMutableString *urlString = [NSMutableString stringWithString:self.interface];
     AFHTTPRequestOperation * operation;
     if (method == post) {
-        NSMutableURLRequest *request = [self makePostRequest:self.interface];
+        NSMutableURLRequest *request = [self makePostRequest:urlString];
         request.HTTPBody = [self makeHTTPbodyFromObject:param];
         operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
@@ -58,7 +68,16 @@
             NSLog(@"%@", error);
         }];
     } else {
-        NSMutableURLRequest *request = [self makeGetRequest:self.interface];
+        if (param.allKeys.count > 0) {
+            [urlString appendFormat:@"?"];
+            for (NSString *key in param.allKeys) {
+                [urlString appendFormat:@"%@=",key];
+                [urlString appendFormat:@"%@",param[key]];
+                [urlString appendString:@"&"];
+            }
+            [urlString deleteCharactersInRange:NSMakeRange(urlString.length-1, 1)];
+        }
+        NSMutableURLRequest *request = [self makeGetRequest:urlString];
         operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             finished(responseObject);
@@ -68,12 +87,7 @@
         }];
     }
     [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
-}
-
-- (void)addValue:(id)value forKey:(NSString *)key{
-    if (value) {
-        [self.requestDic setObject:value forKey:key];
-    }
+    return operation;
 }
 
 //下载
@@ -93,5 +107,30 @@
         }];
     }
 }
+
+- (void)CloseAndClearRequest{
+    [[AFHTTPRequestOperationManager manager].operationQueue cancelAllOperations];
+}
+
+
+
+//
+//- (void)addValue:(id)value forKey:(NSString *)key{
+//    if (value) {
+//        NSMutableDictionary *requestDic = [self requestParamDictionary];
+//        [requestDic setObject:value forKey:key];
+//    }
+//}
+//
+//- (NSMutableDictionary *)requestParamDictionary{
+//    NSMutableDictionary *paramDictionary = objc_getAssociatedObject(self, &getParamDic);
+//    if (paramDictionary) {
+//        return paramDictionary;
+//    }
+//    paramDictionary = [NSMutableDictionary dictionary];
+//    objc_setAssociatedObject(self, &getParamDic, paramDictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//    return paramDictionary;
+//}
+
 
 @end

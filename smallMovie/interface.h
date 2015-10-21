@@ -6,7 +6,8 @@
 //  Copyright (c) 2015年 lei.cheng. All rights reserved.
 //
 
-#define Movie_List @"http://magicapi.vmovier.com/magicapi/find"
+#define Movie_List [NSString stringWithFormat:@"http://magicapi.vmovier.com/magicapi/find"]
+
 
 #define Intro_Movie @"http://magicapi.vmovier.com/magicapi/index/shareview?id=5639&source=recommend&viewfrom=magic_collect_inner&MagicBoxApp=2.0&device=ios&video=native"
 
