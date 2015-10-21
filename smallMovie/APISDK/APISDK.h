@@ -30,6 +30,8 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  *
  */
 + (instancetype)getSingleClass;
+//@property (nonatomic, strong)    AFHTTPRequestOperationManager *manager;
+
 
 /**
  *  发送请求
