@@ -1,8 +1,8 @@
 //
 //  APISDK.m
-//  EFAnimationMenu
+//  smallMoview
 //
-//  Created by aayongche on 15/8/14.
+//  Created by 程磊 on 15/8/14.
 //  Copyright (c) 2015年 Jueying. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import "objc/runtime.h"
 
 #define TIME_OUT  20
-static char getParamDic;
+//static char getParamDic;
 @interface APISDK()
 
 @end
@@ -20,6 +20,11 @@ static char getParamDic;
 - (id)init{
     self = [super init];
     if (self) {
+        _manager = [AFHTTPRequestOperationManager manager];
+        _manager.requestSerializer.timeoutInterval = 15.0;
+        _manager.requestSerializer.HTTPShouldUsePipelining = YES;
+        _manager.requestSerializer.HTTPShouldHandleCookies = YES;
+        _manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         _sessionManager = [AFHTTPSessionManager manager];
         _sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     }
@@ -35,58 +40,26 @@ static char getParamDic;
     return apisdk;
 }
 
-- (NSMutableURLRequest *)makePostRequest:(NSString *)url {
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    request.HTTPMethod = @"POST";
-    request.timeoutInterval = TIME_OUT;
-    return request;
-}
 
-- (NSMutableURLRequest *)makeGetRequest:(NSString *)url {
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    request.HTTPMethod = @"GET";
-    request.timeoutInterval = TIME_OUT;
-    return request;
-}
-
-- (NSData *)makeHTTPbodyFromObject:(id)object {
-    NSCAssert([NSJSONSerialization isValidJSONObject:object], @"这不是Json类型");
-    return [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:nil];
-}
 
 - (AFHTTPRequestOperation *)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
     NSMutableString *urlString = [NSMutableString stringWithString:self.interface];
     AFHTTPRequestOperation * operation;
     if (method == post) {
-        NSMutableURLRequest *request = [self makePostRequest:urlString];
-        request.HTTPBody = [self makeHTTPbodyFromObject:param];
-        operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        operation = [_manager POST:urlString parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             finished(responseObject);
-        } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             failed(error.code);
             NSLog(@"%@", error);
         }];
     } else {
-        if (param.allKeys.count > 0) {
-            [urlString appendFormat:@"?"];
-            for (NSString *key in param.allKeys) {
-                [urlString appendFormat:@"%@=",key];
-                [urlString appendFormat:@"%@",param[key]];
-                [urlString appendString:@"&"];
-            }
-            [urlString deleteCharactersInRange:NSMakeRange(urlString.length-1, 1)];
-        }
-        NSMutableURLRequest *request = [self makeGetRequest:urlString];
-        operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        operation = [_manager GET:urlString parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             finished(responseObject);
-        } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             failed(error.code);
             NSLog(@"%@", error);
         }];
     }
-    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
     return operation;
 }
 
@@ -132,6 +105,25 @@ static char getParamDic;
 //    paramDictionary = [NSMutableDictionary dictionary];
 //    objc_setAssociatedObject(self, &getParamDic, paramDictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 //    return paramDictionary;
+//}
+
+//- (NSMutableURLRequest *)makePostRequest:(NSString *)url {
+//    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+//    request.HTTPMethod = @"POST";
+//    request.timeoutInterval = TIME_OUT;
+//    return request;
+//}
+//
+//- (NSMutableURLRequest *)makeGetRequest:(NSString *)url {
+//    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+//    request.HTTPMethod = @"GET";
+//    request.timeoutInterval = TIME_OUT;
+//    return request;
+//}
+//
+//- (NSData *)makeHTTPbodyFromObject:(id)object {
+//    NSCAssert([NSJSONSerialization isValidJSONObject:object], @"这不是Json类型");
+//    return [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:nil];
 //}
 
 

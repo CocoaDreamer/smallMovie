@@ -53,15 +53,8 @@
 - (void)requestData{
     APISDK *apisdk = [APISDK getSingleClass];
     NSString *artist = [_MVSearchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    apisdk.interface = MV_Search;
-    NSDictionary *param = @{
-                            @"D-A":@0,
-                            @"offset":[NSNumber numberWithInt:_offset],
-                            @"size":@20,
-                            @"keyword":artist,
-                            @"deviceinfo":@"%7B%22aid%22%3A%2210201024%22%2C%22os%22%3A%22Android%22%2C%22ov%22%3A%224.2.2%22%2C%22rn%22%3A%22480*800%22%2C%22dn%22%3A%22H30-T00%22%2C%22cr%22%3A%2246002%22%2C%22as%22%3A%22WIFI%22%2C%22uid%22%3A%22c5aa133090bd0d5d9ecd4163bb27f3cb%22%2C%22clid%22%3A110013000%7D"
-                            };
-    [apisdk sendDataWithParamDictionary:param requestMethod:get finished:^(id responseObject) {
+    apisdk.interface = MV_Search([NSNumber numberWithInt:_offset], artist);
+    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         NSLog(@"dic = %@",dic);
         NSArray *videos = dic[@"videos"];

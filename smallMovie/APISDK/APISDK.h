@@ -1,8 +1,8 @@
 //
 //  APISDK.h
-//  EFAnimationMenu
+//  smallMovie
 //
-//  Created by aayongche on 15/8/14.
+//  Created by 程磊 on 15/8/14.
 //  Copyright (c) 2015年 Jueying. All rights reserved.
 //
 
@@ -21,6 +21,11 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  *  下载管理者
  */
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
+
+/**
+ *  网络请求管理
+ */
+@property (nonatomic, strong)    AFHTTPRequestOperationManager *manager;
 /**
  *  接口网址
  */
@@ -30,7 +35,6 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  *
  */
 + (instancetype)getSingleClass;
-//@property (nonatomic, strong)    AFHTTPRequestOperationManager *manager;
 
 
 /**
