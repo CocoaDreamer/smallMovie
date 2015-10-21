@@ -94,8 +94,14 @@
 
 - (void)requestData{
     APISDK *apisdk = [APISDK getSingleClass];
-    apisdk.interface = MV_Related_List(self.listModel.id);
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    apisdk.interface = MV_Related_List;
+    NSDictionary *param = @{
+                            @"D-A":@0,
+                            @"relatedVideos":@"true",
+                            @"id":self.listModel.id,
+                            @"deviceinfo":@"%7B%22aid%22%3A%2210201024%22%2C%22os%22%3A%22Android%22%2C%22ov%22%3A%224.2.2%22%2C%22rn%22%3A%22480*800%22%2C%22dn%22%3A%22H30-T00%22%2C%22cr%22%3A%2246002%22%2C%22as%22%3A%22WIFI%22%2C%22uid%22%3A%22c5aa133090bd0d5d9ecd4163bb27f3cb%22%2C%22clid%22%3A110013000%7D"
+                            };
+    [apisdk sendDataWithParamDictionary:param requestMethod:get finished:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSArray *relatedVideos = [dict objectForKey:@"relatedVideos"];
         if (relatedVideos.count > 0) {

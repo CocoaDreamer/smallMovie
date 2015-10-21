@@ -17,15 +17,10 @@ typedef void(^RequestFinished)(id responseObject);
 
 typedef void(^RequestFailed)(NSInteger errorCode);
 @interface APISDK : NSObject
-
 /**
  *  下载管理者
  */
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
-/**
- *  下载任务
- */
-@property (nonatomic, strong) NSURLSessionTask *task;
 /**
  *  接口网址
  */
@@ -63,7 +58,7 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  *  @param finished 请求完成
  *  @param failed   请求失败
  */
-- (void)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
+- (NSURLSessionTask *)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
 
 
 @end

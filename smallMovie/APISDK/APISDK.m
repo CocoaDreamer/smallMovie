@@ -91,21 +91,23 @@ static char getParamDic;
 }
 
 //下载
-- (void)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+- (NSURLSessionTask *)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+    NSURLSessionTask *task;
     NSString *urlString = self.interface;
     if (method == post) {
-        _task = [_sessionManager POST:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        task = [_sessionManager POST:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
             finished(responseObject);
         } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
             failed(error.code);
         }];
     } else {
-        _task = [_sessionManager GET:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+        task = [_sessionManager GET:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
             finished(responseObject);
         } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
             failed(error.code);
         }];
     }
+    return task;
 }
 
 - (void)CloseAndClearRequest{
