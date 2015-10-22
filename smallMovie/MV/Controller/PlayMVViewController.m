@@ -94,8 +94,8 @@
 
 - (void)requestData{
     APISDK *apisdk = [APISDK getSingleClass];
-    apisdk.interface = MV_Related_List(self.listModel.id);
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    NSString *urlString = MV_Related_List(self.listModel.id);
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSArray *relatedVideos = [dict objectForKey:@"relatedVideos"];
         if (relatedVideos.count > 0) {
@@ -181,8 +181,8 @@
         
     }
     APISDK *apisdk = [APISDK getSingleClass];
-        apisdk.interface = self.listModel.url;
-        [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+        NSString *urlString = self.listModel.url;
+        [apisdk downDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
             NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,weakSelf.listModel.title]];
             dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
@@ -222,16 +222,16 @@
             button.enabled = YES;
         }];
     DownLoadModel *downModel = [[DownLoadModel alloc] init];
-    downModel.title = weakSelf.listModel.title;
-    [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
-        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        downModel.percent = percent;
-        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:downModel];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        });
-    }];
+//    downModel.title = weakSelf.listModel.title;
+//    [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
+//        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+//        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+//        downModel.percent = percent;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:downModel];
+//        dispatch_sync(dispatch_get_main_queue(), ^{
+//            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+//        });
+//    }];
 }
 
 - (void)createUI{

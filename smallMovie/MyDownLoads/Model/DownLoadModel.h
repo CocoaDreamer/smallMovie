@@ -11,7 +11,7 @@
 
 @interface DownLoadModel : NSObject
 
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *urlString;
 
 @property (nonatomic, assign) float percent;
 

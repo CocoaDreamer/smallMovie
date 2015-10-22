@@ -53,8 +53,8 @@
 - (void)requestData{
     APISDK *apisdk = [APISDK getSingleClass];
     NSString *artist = [_MVSearchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    apisdk.interface = MV_Search([NSNumber numberWithInt:_offset], artist);
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    NSString *urlString = MV_Search([NSNumber numberWithInt:_offset], artist);
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
         NSLog(@"dic = %@",dic);
         NSArray *videos = dic[@"videos"];

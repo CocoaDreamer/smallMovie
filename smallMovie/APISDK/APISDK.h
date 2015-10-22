@@ -27,10 +27,6 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  */
 @property (nonatomic, strong)    AFHTTPRequestOperationManager *manager;
 /**
- *  接口网址
- */
-@property (nonatomic, strong) NSString *interface;
-/**
  *  获取单例
  *
  */
@@ -44,7 +40,7 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  *  @param finished 请求成功结果
  *  @param failed   请求失败描述
  */
-- (AFHTTPRequestOperation *)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
+- (AFHTTPRequestOperation *)sendDataWithUrlString:(NSString *)urlString ParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
 /**
  *  取消请求
  */
@@ -64,7 +60,7 @@ typedef void(^RequestFailed)(NSInteger errorCode);
  *  @param finished 请求完成
  *  @param failed   请求失败
  */
-- (NSURLSessionTask *)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
+- (NSURLSessionTask *)downDataWithUrlString:(NSString *)urlString ParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed;
 
 
 @end

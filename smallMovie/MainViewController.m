@@ -12,6 +12,7 @@
 #import "MVListModel.h"
 #import "MovieViewController.h"
 #import "MVListViewController.h"
+#import "DownLoadModel.h"
 
 @interface MainViewController ()<BMNetworkStatusProtocol,UITabBarControllerDelegate>
 
@@ -22,6 +23,9 @@
 @property (nonatomic, assign) NSInteger movieCount;//收藏电影的数量
 
 @property (nonatomic, assign) NSInteger mvCount;//收藏MV的数量
+
+@property (nonatomic, strong) DownLoadModel *downloadModel;
+
 
 @end
 
@@ -49,12 +53,26 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.iconImageView = imageView;
     BMAddNetworkStatusObserver(self);
-//    [self createAPISDK];//创建一个实例，但并不传参数，只是确保一直有一个sessionManager来管理下载，以后做吧
+    [self checkDownloadPercent];
+
 }
 
-- (void)createAPISDK{
-    APISDK *apisdk = [APISDK getSingleClass];
+/**
+ *  检查下载进度
+ */
+- (void)checkDownloadPercent {
+    if (!_downloadModel) {
+        _downloadModel = [[DownLoadModel alloc] init];
+    }
+    [[APISDK getSingleClass].sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
+        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
+        _downloadModel.urlString = dataTask.currentRequest.URL.absoluteString;
+        _downloadModel.percent = percent;
+        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:_downloadModel];
+    }];
 }
+
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
     NSLog(@"%@",viewController);

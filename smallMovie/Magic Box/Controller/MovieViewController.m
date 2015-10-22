@@ -66,9 +66,9 @@
                           @"json":@1,
                           @"p":[NSNumber numberWithInt:_page]
                           };
-    apisdk.interface = Movie_List;
+    NSString *urlString = Movie_List;
     
-    [apisdk sendDataWithParamDictionary:dic requestMethod:get finished:^(id responseObject) {
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:dic requestMethod:get finished:^(id responseObject) {
         NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if (upOrDown) {
             [_dataSource removeAllObjects];

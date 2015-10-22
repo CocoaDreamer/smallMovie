@@ -13,9 +13,9 @@
 #import "PopMenu.h"
 #import "AppDelegate.h"
 #import "DownLoadModel.h"
+#import "objc/runtime.h"
 
-
-
+static char downloadbutton;
 @interface PlayMovieViewController ()
 
 @property (nonatomic,strong) MPMoviePlayerController *moviePlayer;//视频播放控制器
@@ -52,6 +52,12 @@
 @property (nonatomic, strong) PopMenu *popMenu;
 
 @property (nonatomic, strong) UIImageView *backImageView;
+
+/**
+ *  下载按钮进度
+ */
+@property (nonatomic, strong) MBRoundProgressView *roundProgressView;
+
 
 
 
@@ -90,6 +96,34 @@
 //    [self requestComments];
     //添加通知
     [self addNotification];
+}
+
+/**
+ *  刷新下载进度
+ *
+ */
+- (void)refreshProgressView:(NSNotification *)noti{
+    DownLoadModel *model = noti.object;
+    __weak __typeof(self)weakSelf = self;
+    NSArray *pdownlinkArray = weakSelf.listModel.pdownlink[0];
+    NSDictionary *dic = pdownlinkArray[0];
+    NSString *urlString = dic[@"video"];
+    if ([urlString isEqualToString:model.urlString]) {
+            UIButton *button = objc_getAssociatedObject(weakSelf, &downloadbutton);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!weakSelf.roundProgressView) {
+                button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
+                weakSelf.roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+                weakSelf.roundProgressView.progress = model.percent;
+                weakSelf.roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+                weakSelf.roundProgressView.backgroundTintColor = [UIColor whiteColor];
+                [button addSubview:weakSelf.roundProgressView];
+                }
+
+                weakSelf.roundProgressView.progress = model.percent;
+            });
+        
+    }
 }
 
 - (void)initData{
@@ -183,7 +217,7 @@
  */
 - (void)requestComments{
     APISDK *apisdk = [APISDK getSingleClass];
-    apisdk.interface = Comment_List;
+    NSString *urlString = Comment_List;
 
     NSDictionary *param = @{
                             @"p":[NSNumber numberWithInt:_page],
@@ -191,7 +225,7 @@
                             @"sort":@"new",
                             @"withHot":@1
                             };
-    [apisdk sendDataWithParamDictionary:param requestMethod:post finished:^(id responseObject) {
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:param requestMethod:post finished:^(id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"dic = %@",dic);
         
@@ -283,6 +317,7 @@
     [downBtn addTarget:self action:@selector(download:) forControlEvents:UIControlEventTouchUpInside];
     [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
     [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
+    objc_setAssociatedObject(self, &downloadbutton, downBtn, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];
     
     NSArray *array = [NSArray arrayWithObjects:downItem,barItem,collectItem, nil];
@@ -335,7 +370,9 @@
     [self.view addSubview:introTextView];
 }
 
+
 - (void)download:(UIButton *)button{
+    NSString *urlString;
     __weak __typeof(self) weakSelf = self;
     LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
     ListModel *model = [helper searchSingle:[ListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
@@ -350,11 +387,11 @@
         return;
     }
     button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
-    MBRoundProgressView *roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    roundProgressView.progress = 0;
-    roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
-    roundProgressView.backgroundTintColor = [UIColor whiteColor];
-    [button addSubview:roundProgressView];
+    _roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    _roundProgressView.progress = 0;
+    _roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+    _roundProgressView.backgroundTintColor = [UIColor whiteColor];
+    [button addSubview:_roundProgressView];
     APISDK *apisdk = [APISDK getSingleClass];
     NSLog(@"%@",self.listModel.pdownlink[0]);
     NSArray *pdownlinkArray = self.listModel.pdownlink[0];
@@ -368,8 +405,8 @@
             NSLog(@"更新失败");
             
         }
-        apisdk.interface = dic[@"video"];
-        [apisdk downDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+        urlString = dic[@"video"];
+        [apisdk downDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
             NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
             dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
@@ -393,7 +430,7 @@
                     });
                 }
             });
-            [roundProgressView removeFromSuperview];
+            [_roundProgressView removeFromSuperview];
             button.enabled = YES;
         } failed:^(NSInteger errorCode) {
             weakSelf.listModel.isDownloading = NO;
@@ -406,31 +443,14 @@
                 }
             });
             [self showHint:@"下载失败，请重试"];
-            [roundProgressView removeFromSuperview];
+            [_roundProgressView removeFromSuperview];
             button.enabled = YES;
         }];
     } else {
         [self alertTitle:@"提示" andMessage:@"该视频不支持下载"];
-        [roundProgressView removeFromSuperview];
+        [_roundProgressView removeFromSuperview];
         button.enabled = YES;
     }
-    /**
-     Sets a block to be executed when a data task receives data, as handled by the `NSURLSessionDataDelegate` method `URLSession:dataTask:didReceiveData:`.
-     
-     @param block A block object to be called when an undetermined number of bytes have been downloaded from the server. This block has no return value and takes three arguments: the session, the data task, and the data received. This block may be called multiple times, and will execute on the session manager operation queue.
-     */
-    //此方法用于监听接收的数据流
-    DownLoadModel *downModel = [[DownLoadModel alloc] init];
-    downModel.title = weakSelf.listModel.title;
-    [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
-        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        downModel.percent = percent;
-        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:downModel];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        });
-    }];
 }
 
 - (void)share{
@@ -477,14 +497,13 @@
     NSNotificationCenter *notificationCenter=[NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerPlaybackStateChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerPlaybackFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-    NSNotificationCenter *NSDC = [NSNotificationCenter defaultCenter];
-    [NSDC addObserver:self    selector:@selector(moviePlayerWillEnterFullscreenNotification:)
+    [notificationCenter addObserver:self    selector:@selector(moviePlayerWillEnterFullscreenNotification:)
                  name:MPMoviePlayerWillEnterFullscreenNotification
                object:_moviePlayer];
-    [NSDC addObserver:self     selector:@selector(moviePlayerWillExitFullscreenNotification:)
+    [notificationCenter addObserver:self     selector:@selector(moviePlayerWillExitFullscreenNotification:)
                  name:MPMoviePlayerWillExitFullscreenNotification
                object:_moviePlayer];
-    
+    [notificationCenter addObserver:self selector:@selector(refreshProgressView:) name:ISDOWNLOADING object:nil];
 }
 
 - (void)moviePlayerWillEnterFullscreenNotification:(NSNotification*)notify

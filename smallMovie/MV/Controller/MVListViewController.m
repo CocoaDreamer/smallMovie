@@ -138,8 +138,8 @@
  */
 - (void)requestDataWithUpOrDown:(BOOL)upOrDown{
     APISDK *apisdk = [APISDK getSingleClass];
-    apisdk.interface = MV_List(_area, [NSNumber numberWithInt:_offset]);
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    NSString *urlString = MV_List(_area, [NSNumber numberWithInt:_offset]);
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if (upOrDown) {
             [_dataSource removeAllObjects];

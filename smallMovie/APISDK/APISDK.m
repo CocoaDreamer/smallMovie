@@ -42,8 +42,8 @@
 
 
 
-- (AFHTTPRequestOperation *)sendDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
-    NSMutableString *urlString = [NSMutableString stringWithString:self.interface];
+- (AFHTTPRequestOperation *)sendDataWithUrlString:(NSString *)urlString ParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+    NSParameterAssert(urlString);
     AFHTTPRequestOperation * operation;
     if (method == post) {
         operation = [_manager POST:urlString parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -64,9 +64,9 @@
 }
 
 //下载
-- (NSURLSessionTask *)downDataWithParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+- (NSURLSessionTask *)downDataWithUrlString:(NSString *)urlString ParamDictionary:(NSDictionary *)param requestMethod:(reqMethod)method finished:(RequestFinished)finished failed:(RequestFailed)failed{
+    NSParameterAssert(urlString);
     NSURLSessionTask *task;
-    NSString *urlString = self.interface;
     if (method == post) {
         task = [_sessionManager POST:urlString parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
             finished(responseObject);

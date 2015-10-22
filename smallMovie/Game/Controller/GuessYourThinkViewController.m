@@ -101,8 +101,8 @@
  */
 - (void)AskQuestion{
     APISDK *apisdk = [APISDK getSingleClass];
-    apisdk.interface = _requestString;
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    NSString *urlString = _requestString;
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         [self performSelector:@selector(btnSettings) withObject:self afterDelay:0.8];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"starturl"]) {
