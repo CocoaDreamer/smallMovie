@@ -40,6 +40,11 @@
     // Do any additional setup after loading the view.
     
     [self initData];
+    [self addNotification];
+}
+
+- (void)addNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downProgress:) name:ISDOWNLOADING object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -48,6 +53,9 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound){
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
 }
 
 - (void)refreshTableView{
@@ -55,45 +63,45 @@
 }
 
 
-//- (void)downProgress:(NSNotification *)noti{
-//    DownLoadModel *model = noti.object;
-////    NSLog(@"title = %@",model.title);
-//    NSLog(@"percent = %f",model.percent);
-//    id idModel = [_totalDict objectForKey:model.title];
-//    if ([idModel isKindOfClass:[ListModel class]]) {
-//        ListModel *listModel = [_totalDict objectForKey:model.title];
-//        listModel.percent = model.percent;
-//        if (listModel.percent == 1.0) {
-//            listModel.isDownload = 1;
-//            listModel.isDownloading = 0;
-//        }
-//        for (int i = 0; i < _movieDataSoure.count; i++) {
-//            if (_movieDataSoure[i] == listModel) {
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//                });
-//                return;
-//            }
-//        }
-//    } else {
-//        MVListModel *mvListModel = [_totalDict objectForKey:model.title];
-//        mvListModel.percent = model.percent;
-//        if (mvListModel.percent == 1.0) {
-//            mvListModel.isDownload = 1;
-//            mvListModel.isDownloading = 0;
-//        }
-//        for (int i = 0; i < _mvDataSource.count; i++) {
-//            if (_mvDataSource[i] == mvListModel) {
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:1];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//                });
-//                return;
-//            }
-//        }
-//    }
-//}
+- (void)downProgress:(NSNotification *)noti{
+    DownLoadModel *model = noti.object;
+//    NSLog(@"title = %@",model.title);
+    NSLog(@"percent = %f",model.percent);
+    id idModel = [_totalDict objectForKey:model.urlString];
+    if ([idModel isKindOfClass:[ListModel class]]) {
+        ListModel *listModel = [_totalDict objectForKey:model.urlString];
+        listModel.percent = model.percent;
+        if (listModel.percent == 1.0) {
+            listModel.isDownload = 1;
+            listModel.isDownloading = 0;
+        }
+        for (int i = 0; i < _movieDataSoure.count; i++) {
+            if (_movieDataSoure[i] == listModel) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                });
+                return;
+            }
+        }
+    } else {
+        MVListModel *mvListModel = [_totalDict objectForKey:model.urlString];
+        mvListModel.percent = model.percent;
+        if (mvListModel.percent == 1.0) {
+            mvListModel.isDownload = 1;
+            mvListModel.isDownloading = 0;
+        }
+        for (int i = 0; i < _mvDataSource.count; i++) {
+            if (_mvDataSource[i] == mvListModel) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:1];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                });
+                return;
+            }
+        }
+    }
+}
 
 - (void)initData{
     _totalDict = [[NSMutableDictionary alloc] init];
@@ -106,25 +114,14 @@
         [self showHint:@"无下载视频"];
     }
     for (ListModel *model in _movieDataSoure) {
-        [_totalDict setObject:model forKey:model.title];
+        NSArray *pdownlinkArray = model.pdownlink[0];
+        NSDictionary *dic = pdownlinkArray[0];
+        NSString *urlString = dic[@"video"];
+        [_totalDict setObject:model forKey:urlString];
     }
     for (MVListModel *model in _mvDataSource) {
-        [_totalDict setObject:model forKey:model.title];
+        [_totalDict setObject:model forKey:model.url];
     }
-    
-    /**
-     Sets a block to be executed when a data task receives data, as handled by the `NSURLSessionDataDelegate` method `URLSession:dataTask:didReceiveData:`.
-     
-     @param block A block object to be called when an undetermined number of bytes have been downloaded from the server. This block has no return value and takes three arguments: the session, the data task, and the data received. This block may be called multiple times, and will execute on the session manager operation queue.
-     */
-    //此方法用于监听接收的数据流
-    [[APISDK getSingleClass].sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
-        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        dispatch_sync(dispatch_get_main_queue(), ^{
-//            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        });
-    }];
 }
 
 

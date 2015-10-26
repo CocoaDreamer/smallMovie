@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "DownLoadModel.h"
 #import "objc/runtime.h"
+#import "MainViewController.h"
 
 static char downloadbutton;
 @interface PlayMovieViewController ()
@@ -121,6 +122,9 @@ static char downloadbutton;
                 }
 
                 weakSelf.roundProgressView.progress = model.percent;
+                if (model.percent == 1) {
+                    [self finishDownload];
+                }
             });
         
     }
@@ -392,7 +396,6 @@ static char downloadbutton;
     _roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
     _roundProgressView.backgroundTintColor = [UIColor whiteColor];
     [button addSubview:_roundProgressView];
-    APISDK *apisdk = [APISDK getSingleClass];
     NSLog(@"%@",self.listModel.pdownlink[0]);
     NSArray *pdownlinkArray = self.listModel.pdownlink[0];
     NSDictionary *dic = pdownlinkArray[0];
@@ -406,6 +409,13 @@ static char downloadbutton;
             
         }
         urlString = dic[@"video"];
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        for (id vc in tempAppDelegate.mainNavigationController.viewControllers) {
+            if ([vc isKindOfClass:[MainViewController class]]) {
+                [vc checkDownloadPercent];
+            }
+        }
+        APISDK *apisdk = [APISDK getSingleClass];
         [apisdk downDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
             NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
             NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
@@ -430,8 +440,7 @@ static char downloadbutton;
                     });
                 }
             });
-            [_roundProgressView removeFromSuperview];
-            button.enabled = YES;
+            [self finishDownload];
         } failed:^(NSInteger errorCode) {
             weakSelf.listModel.isDownloading = NO;
             dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
@@ -443,14 +452,26 @@ static char downloadbutton;
                 }
             });
             [self showHint:@"下载失败，请重试"];
-            [_roundProgressView removeFromSuperview];
-            button.enabled = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self finishDownload];
+            });
         }];
     } else {
         [self alertTitle:@"提示" andMessage:@"该视频不支持下载"];
-        [_roundProgressView removeFromSuperview];
-        button.enabled = YES;
+        [self finishDownload];
     }
+}
+
+/**
+ *  下载完成后的处理工作
+ */
+- (void)finishDownload{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_roundProgressView removeFromSuperview];
+        UIButton *button = objc_getAssociatedObject(self, &downloadbutton);
+        button.enabled = YES;
+    });
+    
 }
 
 - (void)share{

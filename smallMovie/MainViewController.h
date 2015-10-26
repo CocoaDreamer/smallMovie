@@ -12,4 +12,9 @@
 
 @property (nonatomic, strong) UIImageView *iconImageView;
 
+/**
+ *  检查下载进度
+ */
+- (void)checkDownloadPercent;
+
 @end

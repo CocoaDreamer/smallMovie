@@ -53,8 +53,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageView];
     self.iconImageView = imageView;
     BMAddNetworkStatusObserver(self);
-    [self checkDownloadPercent];
-
 }
 
 /**
@@ -67,9 +65,10 @@
     [[APISDK getSingleClass].sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
         NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
         float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-        _downloadModel.urlString = dataTask.currentRequest.URL.absoluteString;
+        _downloadModel.urlString = dataTask.originalRequest.URL.absoluteString;
         _downloadModel.percent = percent;
         [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:_downloadModel];
+        
     }];
 }
 

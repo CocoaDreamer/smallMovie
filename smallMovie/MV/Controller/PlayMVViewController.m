@@ -13,8 +13,9 @@
 #import "MVListTableViewCell.h"
 #import "AppDelegate.h"
 #import "DownLoadModel.h"
+#import "MainViewController.h"
 
-
+static char downloadbutton;
 @interface PlayMVViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) MPMoviePlayerController *moviePlayer;//视频播放控制器
@@ -53,12 +54,10 @@
 @property (nonatomic, strong) UIView *backgroundView;
 
 @property (nonatomic, strong) UIImageView *backImageView;
-
 /**
  *  标题
  */
 @property (nonatomic, strong) UILabel *titleLabel;
-
 /**
  *  更新时间
  */
@@ -68,6 +67,11 @@
  *  观看次数
  */
 @property (nonatomic, strong) UILabel *viewCountLabel;
+/**
+ *  下载按钮进度
+ */
+@property (nonatomic, strong) MBRoundProgressView *roundProgressView;
+
 
 
 @end
@@ -78,9 +82,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.tabBarController.tabBar.hidden = YES;
-        
     self.navigationItem.title = self.listModel.title;
-    
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     
@@ -167,11 +169,11 @@
         return;
     }
     button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
-    MBRoundProgressView *roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    roundProgressView.progress = 0;
-    roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
-    roundProgressView.backgroundTintColor = [UIColor whiteColor];
-    [button addSubview:roundProgressView];
+    _roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    _roundProgressView.progress = 0;
+    _roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+    _roundProgressView.backgroundTintColor = [UIColor whiteColor];
+    [button addSubview:_roundProgressView];
     self.listModel.isDownloading = YES;
     BOOL isUpdate = [helper insertToDB:self.listModel];
     if (isUpdate) {
@@ -179,6 +181,12 @@
     } else {
         NSLog(@"更新失败");
         
+    }
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    for (id vc in tempAppDelegate.mainNavigationController.viewControllers) {
+        if ([vc isKindOfClass:[MainViewController class]]) {
+            [vc checkDownloadPercent];
+        }
     }
     APISDK *apisdk = [APISDK getSingleClass];
         NSString *urlString = self.listModel.url;
@@ -205,8 +213,7 @@
                     });
                 }
             });
-            [roundProgressView removeFromSuperview];
-            button.enabled = YES;
+            [self finishDownload];
         } failed:^(NSInteger errorCode) {
             weakSelf.listModel.isDownloading = NO;
             dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
@@ -218,20 +225,22 @@
                 }
             });
             [self showHint:@"下载失败，请重试"];
-            [roundProgressView removeFromSuperview];
-            button.enabled = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self finishDownload];
+            });
         }];
-    DownLoadModel *downModel = [[DownLoadModel alloc] init];
-//    downModel.title = weakSelf.listModel.title;
-//    [apisdk.sessionManager setDataTaskDidReceiveDataBlock:^(NSURLSession * _Nonnull session, NSURLSessionDataTask * _Nonnull dataTask, NSData * _Nonnull data) {
-//        NSLog(@"当前进度%f",(float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-//        float percent = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-//        downModel.percent = percent;
-//        [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:downModel];
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            roundProgressView.progress = ((float)dataTask.countOfBytesReceived / (double)dataTask.countOfBytesExpectedToReceive);
-//        });
-//    }];
+}
+
+/**
+ *  下载完成后的处理工作
+ */
+- (void)finishDownload{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_roundProgressView removeFromSuperview];
+        UIButton *button = objc_getAssociatedObject(self, &downloadbutton);
+        button.enabled = YES;
+    });
+    
 }
 
 - (void)createUI{
@@ -277,6 +286,7 @@
     [downBtn addTarget:self action:@selector(download:) forControlEvents:UIControlEventTouchUpInside];
     [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
     [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
+    objc_setAssociatedObject(self, &downloadbutton, downBtn, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];
     
     NSArray *array = [NSArray arrayWithObjects:downItem,barItem,collectItem, nil];
@@ -512,15 +522,45 @@
     NSNotificationCenter *notificationCenter=[NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerPlaybackStateChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerPlaybackFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-    NSNotificationCenter *noti = [NSNotificationCenter defaultCenter];
-    [noti addObserver:self    selector:@selector(moviePlayerWillEnterFullscreenNotification:)
+    [notificationCenter addObserver:self    selector:@selector(moviePlayerWillEnterFullscreenNotification:)
                  name:MPMoviePlayerWillEnterFullscreenNotification
                object:_moviePlayer];
-    [noti addObserver:self     selector:@selector(moviePlayerWillExitFullscreenNotification:)
+    [notificationCenter addObserver:self     selector:@selector(moviePlayerWillExitFullscreenNotification:)
                  name:MPMoviePlayerWillExitFullscreenNotification
                object:_moviePlayer];
+    [notificationCenter addObserver:self selector:@selector(refreshProgressView:) name:ISDOWNLOADING object:nil];
     
 }
+
+/**
+ *  刷新下载进度
+ *
+ */
+- (void)refreshProgressView:(NSNotification *)noti{
+    DownLoadModel *model = noti.object;
+    __weak __typeof(self)weakSelf = self;
+    
+    if ([self.listModel.url isEqualToString:model.urlString]) {
+        UIButton *button = objc_getAssociatedObject(weakSelf, &downloadbutton);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!weakSelf.roundProgressView) {
+                button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
+                weakSelf.roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+                weakSelf.roundProgressView.progress = model.percent;
+                weakSelf.roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+                weakSelf.roundProgressView.backgroundTintColor = [UIColor whiteColor];
+                [button addSubview:weakSelf.roundProgressView];
+            }
+            
+            weakSelf.roundProgressView.progress = model.percent;
+            if (model.percent == 1) {
+                [self finishDownload];
+            }
+        });
+        
+    }
+}
+
 
 #pragma mark -moviePlayer代理方法
 - (void)moviePlayerWillEnterFullscreenNotification:(NSNotification*)notify
