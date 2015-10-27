@@ -401,14 +401,13 @@ static char downloadbutton;
     _popMenu.perRowItemCount = 3; // or 2
     
     
-    
+    __weak typeof(self) weakSelf = self;
+
     _popMenu.didSelectedItemCompletion = ^(MenuItem *selectedItem){
         NSLog(@"%lu",(unsigned long)selectedItem.index);
         SSDKPlatformType formType;
         
         SSDKContentType contentType;
-        
-        __weak typeof(self) weakSelf = self;
         
         NSString *shareText;
         if (selectedItem.index == 1) {
@@ -542,7 +541,7 @@ static char downloadbutton;
     
     if ([self.listModel.url isEqualToString:model.urlString]) {
         UIButton *button = objc_getAssociatedObject(weakSelf, &downloadbutton);
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             if (!weakSelf.roundProgressView) {
                 button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
                 weakSelf.roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];

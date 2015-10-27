@@ -78,7 +78,7 @@
         for (int i = 0; i < _movieDataSoure.count; i++) {
             if (_movieDataSoure[i] == listModel) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_sync(dispatch_get_main_queue(), ^{
                     [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 });
                 return;
@@ -94,7 +94,7 @@
         for (int i = 0; i < _mvDataSource.count; i++) {
             if (_mvDataSource[i] == mvListModel) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:1];
-                dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_sync(dispatch_get_main_queue(), ^{
                     [_dloadsTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 });
                 return;
@@ -200,34 +200,18 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (_mvDataSource.count > 0 && _movieDataSoure.count > 0) {
-        return 2;
-    } else if (_movieDataSoure.count > 0 || _mvDataSource.count > 0){
-        return 1;
-    } else {
-        return 1;
-    }
+    return 2;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (_mvDataSource.count > 0 && _movieDataSoure.count > 0) {
-        if (section == 0) {
-            return @"我下载的电影";
-        } else {
-            return @"我下载的MV";
-        }
-    } else if (_movieDataSoure.count > 0){
+    if (section == 0) {
         return @"我下载的电影";
-    } else if (_mvDataSource.count > 0){
-        return @"我下载的MV";
     } else {
-        return nil;
+        return @"我下载的MV";
     }
-    
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     return UITableViewCellEditingStyleDelete;
 }
 

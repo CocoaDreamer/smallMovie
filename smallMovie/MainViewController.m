@@ -68,7 +68,6 @@
         _downloadModel.urlString = dataTask.originalRequest.URL.absoluteString;
         _downloadModel.percent = percent;
         [[NSNotificationCenter defaultCenter] postNotificationName:ISDOWNLOADING object:_downloadModel];
-        
     }];
 }
 
