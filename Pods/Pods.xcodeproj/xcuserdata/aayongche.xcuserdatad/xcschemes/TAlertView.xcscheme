@@ -7,17 +7,17 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
+            buildForAnalyzing = "YES"
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4894429E2717AA119C83F11C"
-               BuildableName = "libTAlertView.a"
-               BlueprintName = "TAlertView"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BuildableIdentifier = 'primary'
+               BlueprintIdentifier = 'C305AE2F704E3D62E54B19F9'
+               BlueprintName = 'TAlertView'
+               ReferencedContainer = 'container:Pods.xcodeproj'
+               BuildableName = 'libTAlertView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,28 +29,26 @@
       buildConfiguration = "Debug">
       <AdditionalOptions>
       </AdditionalOptions>
-      <Testables>
-      </Testables>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
+      buildConfiguration = "Debug"
       allowLocationSimulation = "YES">
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
-      shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES"
       buildConfiguration = "Release"
-      debugDocumentVersioning = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

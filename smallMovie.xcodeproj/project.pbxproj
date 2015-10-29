@@ -42,40 +42,40 @@
 		072B7A341BA273BB0021D3DE /* sina_weibo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 072B7A241BA273BB0021D3DE /* sina_weibo.jpg */; };
 		072B7A351BA273BB0021D3DE /* weixin_friend.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 072B7A251BA273BB0021D3DE /* weixin_friend.jpg */; };
 		072B7A381BA2AAC40021D3DE /* MVListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 072B7A371BA2AAC40021D3DE /* MVListModel.m */; };
-		072EFC361BB4F82E0072C32A /* DownLoadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EFC351BB4F82E0072C32A /* DownLoadModel.m */; settings = {ASSET_TAGS = (); }; };
-		0750E7D21BAFB6F5001A9752 /* collectionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7D11BAFB6F5001A9752 /* collectionIcon.png */; settings = {ASSET_TAGS = (); }; };
-		0750E7D41BAFB760001A9752 /* collectionSelectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7D31BAFB760001A9752 /* collectionSelectedIcon.png */; settings = {ASSET_TAGS = (); }; };
-		0750E7DE1BAFE092001A9752 /* icon_activation_story_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DB1BAFE092001A9752 /* icon_activation_story_heart.png */; settings = {ASSET_TAGS = (); }; };
-		0750E7DF1BAFE092001A9752 /* icon_activation_story_heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DC1BAFE092001A9752 /* icon_activation_story_heart@2x.png */; settings = {ASSET_TAGS = (); }; };
-		0750E7E01BAFE092001A9752 /* icon_activation_story_heart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DD1BAFE092001A9752 /* icon_activation_story_heart@3x.png */; settings = {ASSET_TAGS = (); }; };
-		0750E7E51BB13E68001A9752 /* Download.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7E41BB13E68001A9752 /* Download.png */; settings = {ASSET_TAGS = (); }; };
-		0750E7E71BB13F81001A9752 /* DownloadHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7E61BB13F81001A9752 /* DownloadHighlighted.png */; settings = {ASSET_TAGS = (); }; };
+		072EFC361BB4F82E0072C32A /* DownLoadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EFC351BB4F82E0072C32A /* DownLoadModel.m */; };
+		0750E7D21BAFB6F5001A9752 /* collectionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7D11BAFB6F5001A9752 /* collectionIcon.png */; };
+		0750E7D41BAFB760001A9752 /* collectionSelectedIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7D31BAFB760001A9752 /* collectionSelectedIcon.png */; };
+		0750E7DE1BAFE092001A9752 /* icon_activation_story_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DB1BAFE092001A9752 /* icon_activation_story_heart.png */; };
+		0750E7DF1BAFE092001A9752 /* icon_activation_story_heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DC1BAFE092001A9752 /* icon_activation_story_heart@2x.png */; };
+		0750E7E01BAFE092001A9752 /* icon_activation_story_heart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7DD1BAFE092001A9752 /* icon_activation_story_heart@3x.png */; };
+		0750E7E51BB13E68001A9752 /* Download.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7E41BB13E68001A9752 /* Download.png */; };
+		0750E7E71BB13F81001A9752 /* DownloadHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0750E7E61BB13F81001A9752 /* DownloadHighlighted.png */; };
 		076C37A41BA66AF9000D2DDC /* MVListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37A31BA66AF9000D2DDC /* MVListTableViewCell.m */; };
 		076C37A91BA6A507000D2DDC /* bfzn.png in Resources */ = {isa = PBXBuildFile; fileRef = 076C37A81BA6A507000D2DDC /* bfzn.png */; };
 		076C37AC1BA6B37A000D2DDC /* MVSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37AB1BA6B37A000D2DDC /* MVSearchViewController.m */; };
 		076C37AF1BA6C174000D2DDC /* MVSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 076C37AE1BA6C174000D2DDC /* MVSearchTableViewCell.m */; };
-		076FA2891BABE9F80035DD6F /* SQLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 076FA2881BABE9F80035DD6F /* SQLHelper.m */; settings = {ASSET_TAGS = (); }; };
-		0786F69F1BABBA550083C05E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0786F6701BABBA550083C05E /* LICENSE */; settings = {ASSET_TAGS = (); }; };
-		0786F6A01BABBA550083C05E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6741BABBA550083C05E /* MJRefreshAutoFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A11BABBA550083C05E /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6761BABBA550083C05E /* MJRefreshBackFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A21BABBA550083C05E /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6781BABBA550083C05E /* MJRefreshComponent.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A31BABBA550083C05E /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F67A1BABBA550083C05E /* MJRefreshFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A41BABBA550083C05E /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F67C1BABBA550083C05E /* MJRefreshHeader.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A51BABBA550083C05E /* MJRefreshAutoGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6811BABBA550083C05E /* MJRefreshAutoGifFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A61BABBA550083C05E /* MJRefreshAutoNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6831BABBA550083C05E /* MJRefreshAutoNormalFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A71BABBA550083C05E /* MJRefreshAutoStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6851BABBA550083C05E /* MJRefreshAutoStateFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A81BABBA550083C05E /* MJRefreshBackGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6881BABBA550083C05E /* MJRefreshBackGifFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6A91BABBA550083C05E /* MJRefreshBackNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F68A1BABBA550083C05E /* MJRefreshBackNormalFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6AA1BABBA550083C05E /* MJRefreshBackStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F68C1BABBA550083C05E /* MJRefreshBackStateFooter.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6AB1BABBA550083C05E /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F68F1BABBA550083C05E /* MJRefreshGifHeader.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6AC1BABBA550083C05E /* MJRefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6911BABBA550083C05E /* MJRefreshNormalHeader.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6AD1BABBA550083C05E /* MJRefreshStateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6931BABBA550083C05E /* MJRefreshStateHeader.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6AE1BABBA550083C05E /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0786F6941BABBA550083C05E /* MJRefresh.bundle */; settings = {ASSET_TAGS = (); }; };
-		0786F6AF1BABBA550083C05E /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6971BABBA550083C05E /* MJRefreshConst.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6B01BABBA550083C05E /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6991BABBA550083C05E /* UIScrollView+MJExtension.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6B11BABBA550083C05E /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F69B1BABBA550083C05E /* UIScrollView+MJRefresh.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6B21BABBA550083C05E /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F69D1BABBA550083C05E /* UIView+MJExtension.m */; settings = {ASSET_TAGS = (); }; };
-		0786F6B31BABBA550083C05E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0786F69E1BABBA550083C05E /* README.md */; settings = {ASSET_TAGS = (); }; };
+		076FA2891BABE9F80035DD6F /* SQLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 076FA2881BABE9F80035DD6F /* SQLHelper.m */; };
+		0786F69F1BABBA550083C05E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 0786F6701BABBA550083C05E /* LICENSE */; };
+		0786F6A01BABBA550083C05E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6741BABBA550083C05E /* MJRefreshAutoFooter.m */; };
+		0786F6A11BABBA550083C05E /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6761BABBA550083C05E /* MJRefreshBackFooter.m */; };
+		0786F6A21BABBA550083C05E /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6781BABBA550083C05E /* MJRefreshComponent.m */; };
+		0786F6A31BABBA550083C05E /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F67A1BABBA550083C05E /* MJRefreshFooter.m */; };
+		0786F6A41BABBA550083C05E /* MJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F67C1BABBA550083C05E /* MJRefreshHeader.m */; };
+		0786F6A51BABBA550083C05E /* MJRefreshAutoGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6811BABBA550083C05E /* MJRefreshAutoGifFooter.m */; };
+		0786F6A61BABBA550083C05E /* MJRefreshAutoNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6831BABBA550083C05E /* MJRefreshAutoNormalFooter.m */; };
+		0786F6A71BABBA550083C05E /* MJRefreshAutoStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6851BABBA550083C05E /* MJRefreshAutoStateFooter.m */; };
+		0786F6A81BABBA550083C05E /* MJRefreshBackGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6881BABBA550083C05E /* MJRefreshBackGifFooter.m */; };
+		0786F6A91BABBA550083C05E /* MJRefreshBackNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F68A1BABBA550083C05E /* MJRefreshBackNormalFooter.m */; };
+		0786F6AA1BABBA550083C05E /* MJRefreshBackStateFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F68C1BABBA550083C05E /* MJRefreshBackStateFooter.m */; };
+		0786F6AB1BABBA550083C05E /* MJRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F68F1BABBA550083C05E /* MJRefreshGifHeader.m */; };
+		0786F6AC1BABBA550083C05E /* MJRefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6911BABBA550083C05E /* MJRefreshNormalHeader.m */; };
+		0786F6AD1BABBA550083C05E /* MJRefreshStateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6931BABBA550083C05E /* MJRefreshStateHeader.m */; };
+		0786F6AE1BABBA550083C05E /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0786F6941BABBA550083C05E /* MJRefresh.bundle */; };
+		0786F6AF1BABBA550083C05E /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6971BABBA550083C05E /* MJRefreshConst.m */; };
+		0786F6B01BABBA550083C05E /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F6991BABBA550083C05E /* UIScrollView+MJExtension.m */; };
+		0786F6B11BABBA550083C05E /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F69B1BABBA550083C05E /* UIScrollView+MJRefresh.m */; };
+		0786F6B21BABBA550083C05E /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0786F69D1BABBA550083C05E /* UIView+MJExtension.m */; };
+		0786F6B31BABBA550083C05E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0786F69E1BABBA550083C05E /* README.md */; };
 		078F7D6B1B9EE18D005B1500 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 078F7D6A1B9EE18D005B1500 /* main.m */; };
 		078F7D6E1B9EE18D005B1500 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 078F7D6D1B9EE18D005B1500 /* AppDelegate.m */; };
 		078F7D711B9EE18D005B1500 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 078F7D701B9EE18D005B1500 /* ViewController.m */; };
@@ -293,7 +293,7 @@
 		0795E8F41BA91AAE00B2FEB3 /* leftbackiamge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795E8F31BA91AAE00B2FEB3 /* leftbackiamge.png */; };
 		0795E8F71BA942CA00B2FEB3 /* MovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0795E8F61BA942CA00B2FEB3 /* MovieViewController.m */; };
 		0795E8F91BA957BC00B2FEB3 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795E8F81BA957BC00B2FEB3 /* menu.png */; };
-		07AADEAE1BB3E41E00217F49 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AADEAB1BB3E41E00217F49 /* MyCollectionViewController.m */; settings = {ASSET_TAGS = (); }; };
+		07AADEAE1BB3E41E00217F49 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07AADEAB1BB3E41E00217F49 /* MyCollectionViewController.m */; };
 		07C458CF1BA7E7AE00158EF2 /* MVListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C458CE1BA7E7AE00158EF2 /* MVListViewController.m */; };
 		07C458DD1BA8204A00158EF2 /* GuessYourThinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C458DA1BA8204A00158EF2 /* GuessYourThinkViewController.m */; };
 		07C458E01BA8206600158EF2 /* DeformationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C458DF1BA8206600158EF2 /* DeformationButton.m */; };
@@ -344,15 +344,15 @@
 		07C4596D1BA8225700158EF2 /* UIViewController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C4593E1BA8225700158EF2 /* UIViewController+DismissKeyboard.m */; };
 		07C4596E1BA8225700158EF2 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C459401BA8225700158EF2 /* UIViewController+HUD.m */; };
 		07C4596F1BA8225700158EF2 /* UIViewController+TKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C459421BA8225700158EF2 /* UIViewController+TKCategory.m */; };
-		4363915B1BB2F65600386081 /* MyDownloadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4363915A1BB2F65600386081 /* MyDownloadsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		4363915B1BB2F65600386081 /* MyDownloadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4363915A1BB2F65600386081 /* MyDownloadsViewController.m */; };
 		438561F61BA8518D0066DC3A /* guessNameBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 438561F51BA8518D0066DC3A /* guessNameBackground.jpg */; };
 		438561F81BA8568A0066DC3A /* Jay_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 438561F71BA8568A0066DC3A /* Jay_2.jpg */; };
 		43A1B5331BA7084700ADB041 /* BMEnvObserverCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B52B1BA7084700ADB041 /* BMEnvObserverCenter.m */; };
 		43A1B5341BA7084700ADB041 /* BMEnvObserverCenterNetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B52D1BA7084700ADB041 /* BMEnvObserverCenterNetworkStatus.m */; };
 		43A1B5351BA7084700ADB041 /* BMEnvObserverCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B52F1BA7084700ADB041 /* BMEnvObserverCoordinator.m */; };
 		43A1B5361BA7084700ADB041 /* BMObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A1B5311BA7084700ADB041 /* BMObserver.m */; };
-		43C1D3681BAF01770092010B /* UseHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C1D3671BAF01770092010B /* UseHelpViewController.m */; settings = {ASSET_TAGS = (); }; };
-		43C1D36C1BAF0B450092010B /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C1D36B1BAF0B450092010B /* AboutUsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		43C1D3681BAF01770092010B /* UseHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C1D3671BAF01770092010B /* UseHelpViewController.m */; };
+		43C1D36C1BAF0B450092010B /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C1D36B1BAF0B450092010B /* AboutUsViewController.m */; };
 		55FBEF044629C8B79447C054 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC042A1B698F1958A4DA9BD5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1790,6 +1790,7 @@
 				078F7D621B9EE18D005B1500 /* Frameworks */,
 				078F7D631B9EE18D005B1500 /* Resources */,
 				0BD4315B7F38073E54E02B5D /* Copy Pods Resources */,
+				3CF81DECD7C89534ED5EBEA0 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2115,6 +2116,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3CF81DECD7C89534ED5EBEA0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7DDFDE0E74D9E5BA0A952106 /* Check Pods Manifest.lock */ = {

@@ -7,17 +7,17 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
+            buildForAnalyzing = "YES"
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D6B5B0AE86C3E69FFB3BFE93"
-               BuildableName = "libSAMRateLimit.a"
-               BlueprintName = "SAMRateLimit"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BuildableIdentifier = 'primary'
+               BlueprintIdentifier = '50ECC9F405AC2C6E0D9B3B06'
+               BlueprintName = 'SAMRateLimit'
+               ReferencedContainer = 'container:Pods.xcodeproj'
+               BuildableName = 'libSAMRateLimit.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,28 +29,26 @@
       buildConfiguration = "Debug">
       <AdditionalOptions>
       </AdditionalOptions>
-      <Testables>
-      </Testables>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
+      buildConfiguration = "Debug"
       allowLocationSimulation = "YES">
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
-      shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES"
       buildConfiguration = "Release"
-      debugDocumentVersioning = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
