@@ -18,6 +18,7 @@
 
 
 #import "MJRefresh.h"
+#import "MJExtension.h"
 #import "SSToolkit.h"
 #import "APISDK.h"
 #import "TAlertView.h"

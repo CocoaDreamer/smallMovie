@@ -79,7 +79,7 @@
         NSArray *data = [responseDict objectForKey:@"data"];
         if ([data isKindOfClass: [NSArray class]]) {
             for (NSDictionary *dict in data) {
-                ListModel *model = [[ListModel alloc] initWithDict:dict];
+                ListModel *model = [ListModel objectWithKeyValues:dict];
                 [_dataSource addObject:model];
             }
             [self.mvListTableView reloadData];

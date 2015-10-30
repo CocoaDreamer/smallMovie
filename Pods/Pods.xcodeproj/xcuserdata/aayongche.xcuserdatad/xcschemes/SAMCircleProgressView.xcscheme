@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'CAB4382624C870D31CC3DD32'
+               BlueprintIdentifier = 'CBF6F292B9277053F6DA612E'
                BlueprintName = 'SAMCircleProgressView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libSAMCircleProgressView.a'>

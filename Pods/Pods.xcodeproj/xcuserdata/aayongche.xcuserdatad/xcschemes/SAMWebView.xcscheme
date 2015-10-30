@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '09CAE79B1AEEA5AFAE0D8143'
+               BlueprintIdentifier = 'BD138777D6C062FB0940028D'
                BlueprintName = 'SAMWebView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libSAMWebView.a'>

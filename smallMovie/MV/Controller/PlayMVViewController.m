@@ -102,7 +102,7 @@ static char downloadbutton;
         NSArray *relatedVideos = [dict objectForKey:@"relatedVideos"];
         if (relatedVideos.count > 0) {
             for (NSDictionary *modelDic in relatedVideos) {
-                MVListModel *model = [[MVListModel alloc] initWithDic:modelDic];
+                MVListModel *model = [MVListModel objectWithKeyValues:modelDic];
                 model.MVdescription = [modelDic objectForKey:@"description"];
                 [_dataSource addObject:model];
             }

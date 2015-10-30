@@ -13,7 +13,7 @@
 #import "PopMenu.h"
 #import "AppDelegate.h"
 #import "DownLoadModel.h"
-#import "objc/runtime.h"
+#import <objc/runtime.h>
 #import "MainViewController.h"
 
 static char downloadbutton;
@@ -71,7 +71,6 @@ static char downloadbutton;
 - (void)viewWillDisappear:(BOOL)animated{
     
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound){
-        
         //用户点击了返回按钮
         if (_moviePlayer) {
             [self.moviePlayer stop];

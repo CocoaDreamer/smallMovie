@@ -88,6 +88,4 @@
  */
 @property (nonatomic, assign) float percent;
 
-- (instancetype)initWithDic:(NSDictionary *)dic;
-
 @end

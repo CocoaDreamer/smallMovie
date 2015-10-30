@@ -149,7 +149,7 @@
         NSArray *videos = [dict objectForKey:@"videos"];
         if (videos.count > 0) {
             for (NSDictionary *video in videos) {
-                MVListModel *model = [[MVListModel alloc] initWithDic:video];
+                MVListModel *model = [MVListModel objectWithKeyValues:video];
                 model.MVdescription = video[@"description"];
                 [_dataSource addObject:model];
             }

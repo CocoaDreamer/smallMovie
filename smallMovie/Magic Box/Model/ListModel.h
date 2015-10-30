@@ -70,7 +70,7 @@
 @property (nonatomic, strong) NSString *videolink;
 
 
-/**********************************自定义字段**********************************************/
+/********************************************自定义字段*********************************************/
 
 /**
  *  是否下载完成
@@ -91,8 +91,5 @@
  *  下载百分比
  */
 @property (nonatomic, assign) float percent;
-
-
-- (instancetype)initWithDict:(NSDictionary *)dict;
 
 @end
