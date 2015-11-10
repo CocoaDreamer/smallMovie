@@ -8,6 +8,7 @@
 
 #import "GuessYourThinkViewController.h"
 #import "DeformationButton.h"
+#import "AppDelegate.h"
 
 @interface GuessYourThinkViewController (){
     DeformationButton *yesBtn;
@@ -36,18 +37,18 @@
 
 @implementation GuessYourThinkViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.tabBarController.title = @"猜你在想谁";
-    self.tabBarController.navigationController.navigationItem.rightBarButtonItem = nil;
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.tabBarController.title = @"猜你在想谁";
-
+    self.title = @"猜你在想谁";
     
 //    self.foundView = [[UIView alloc] initWithFrame:self.view.bounds];
 //    self.foundView.backgroundColor = [UIColor clearColor];
@@ -92,8 +93,6 @@
     [notsureBtn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:notsureBtn];
     [self AskQuestion];
-    
-    
 }
 
 
@@ -101,9 +100,9 @@
  *  做请求
  */
 - (void)AskQuestion{
-    APISDK *apisk = [[APISDK alloc] init];
-    apisk.interface = _requestString;
-    [apisk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+    APISDK *apisdk = [APISDK getSingleClass];
+    NSString *urlString = _requestString;
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
         [self performSelector:@selector(btnSettings) withObject:self afterDelay:0.8];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"starturl"]) {
@@ -127,8 +126,7 @@
         noBtn.enabled = YES;
         notsureBtn.enabled = YES;
         [self performSelector:@selector(btnSettings) withObject:self afterDelay:0.8];
-
-        NSLog(@"网络请求失败");
+        [self showHint:@"请求失败"];
     }];
 }
 
@@ -177,7 +175,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     NSLog(@"viewDidDisappear");
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     [apisdk CloseAndClearRequest];
 }
 

@@ -11,6 +11,7 @@
 #import "ListTableViewCell.h"
 #import "PlayMovieViewController.h"
 #import "MVSearchViewController.h"
+#import "AppDelegate.h"
 
 @interface MovieViewController ()
 
@@ -33,6 +34,13 @@
     self.tabBarController.title = @"热播视频";
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
+}
+
 /**
  *  初始化数据
  */
@@ -53,12 +61,15 @@
  *  请求数据   NO上拉  YES下拉
  */
 - (void)requestDataWithUpOrDown:(BOOL)upOrDown{
-    APISDK *apisdk = [[APISDK alloc] init];
-    apisdk.interface = Movie_List;
-    [apisdk addValue:@1 forKey:@"json"];
-    [apisdk addValue:[NSNumber numberWithInt:_page] forKey:@"p"];
-    [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:get finished:^(id responseObject) {
-        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+    APISDK *apisdk = [APISDK getSingleClass];
+    NSDictionary *dic = @{
+                          @"json":@1,
+                          @"p":[NSNumber numberWithInt:_page]
+                          };
+    NSString *urlString = Movie_List;
+    
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:dic requestMethod:get finished:^(id responseObject) {
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (upOrDown) {
             [_dataSource removeAllObjects];
         } else {
@@ -68,17 +79,18 @@
         NSArray *data = [responseDict objectForKey:@"data"];
         if ([data isKindOfClass: [NSArray class]]) {
             for (NSDictionary *dict in data) {
-                ListModel *model = [[ListModel alloc] initWithDict:dict];
+                ListModel *model = [ListModel objectWithKeyValues:dict];
                 [_dataSource addObject:model];
             }
             [self.mvListTableView reloadData];
             [self stopMJRefresh];
         } else {
+            [self stopMJRefresh];
             [self.mvListTableView.footer noticeNoMoreData];
         }
     } failed:^(NSInteger errorCode) {
         NSLog(@"%ld",(long)errorCode);
-        [self alertErrorTitle:@"列表请求失败" andMessage:[NSString stringWithFormat:@"错误码%ld",(long)errorCode]];
+        [self showHint:@"列表请求失败"];
         if (upOrDown) {
             _page = 1;
         }
@@ -94,15 +106,6 @@
     [self .mvListTableView.footer endRefreshing];
 }
 
-/**
- *  弹出提示框
- *
- */
-- (void)alertErrorTitle:(NSString *)title andMessage:(NSString *)message{
-    TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
-    [alert show];
-}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -110,12 +113,6 @@
     [self initData];
     
     [self setupRefresh];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 /**
@@ -149,7 +146,6 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return _dataSource.count;
 }
@@ -157,7 +153,6 @@
 
 - (ListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ID"];
-    
     // Configure the cell...
     ListModel *model = _dataSource[indexPath.row];
     [cell.pictureImageView sd_setImageWithURL:[NSURL URLWithString:model.pimg] placeholderImage:[UIImage imageNamed:@"Jay.jpg"]];
@@ -170,6 +165,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ListModel *model = _dataSource[indexPath.row];
+    model.isDownload = NO;
+    model.isDownloading = NO;
+    model.isSaved = NO;
     NSArray *backuplink = model.backuplink;
     NSArray *inBackuplink = backuplink[0];
     NSDictionary *dict = inBackuplink[0];

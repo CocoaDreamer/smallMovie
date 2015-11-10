@@ -10,6 +10,7 @@
 #import "MVListModel.h"
 #import "MVSearchTableViewCell.h"
 #import "PlayMVViewController.h"
+#import "AppDelegate.h"
 
 @interface MVSearchViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
@@ -31,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     [self initData];
     [self setupRefresh];
     _MVSearchBar.delegate = self;
@@ -48,16 +51,16 @@
  *  请求数据
  */
 - (void)requestData{
-    APISDK *apisdk = [[APISDK alloc] init];
+    APISDK *apisdk = [APISDK getSingleClass];
     NSString *artist = [_MVSearchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    apisdk.interface = MV_Search([NSNumber numberWithInt:_offset], artist);
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+    NSString *urlString = MV_Search([NSNumber numberWithInt:_offset], artist);
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"dic = %@",dic);
         NSArray *videos = dic[@"videos"];
         if (videos.count > 0) {
             for (NSDictionary *video in videos) {
-                MVListModel *model = [[MVListModel alloc] initWithDic:video];
+                MVListModel *model = [MVListModel objectWithKeyValues:video];
                 model.MVdescription = video[@"description"];
                 [_dataSource addObject:model];
             }
@@ -67,7 +70,7 @@
         [self stopMJRefresh];
     } failed:^(NSInteger errorCode) {
         NSLog(@"errorCode = %ld",(long)errorCode);
-        [self alertTitle:@"请求列表错误" andMessage:[NSString stringWithFormat:@"%ld",(long)errorCode]];
+        [self showHint:@"列表请求错误"];
         [self stopMJRefresh];
     }];
 }
@@ -109,16 +112,6 @@
 - (void)stopMJRefresh{
     [_searchMVTableView.footer endRefreshing];
 }
-
-/**
- *  弹出提示框
- *
- */
-- (void)alertTitle:(NSString *)title andMessage:(NSString *)message{
-    TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
-    [alert show];
-}
-
 
 #pragma mark - UITableViewDelegate
 - (MVSearchTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

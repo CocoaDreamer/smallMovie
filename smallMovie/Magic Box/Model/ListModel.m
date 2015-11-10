@@ -10,15 +10,8 @@
 
 @implementation ListModel
 
-- (instancetype)initWithDict:(NSDictionary *)dict{
-    if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
-    }
-    return self;
-}
-
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
-    
++ (NSString *)getPrimaryKey{
+    return @"id";
 }
 
 @end

@@ -18,18 +18,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    APISDK *apisdk = [[APISDK alloc] init];
-    apisdk.interface = @"http://magicapi.vmovier.com/magicapi/find";
-    [apisdk addValue:@1 forKey:@"json"];
-    [apisdk addValue:@1 forKey:@"p"];
-    
-    [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:get finished:^(id responseObject) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        NSLog(@"dict = %@",dict);
-    } failed:^(NSInteger errorCode) {
-        NSLog(@"%ld",(long)errorCode);
-    }];
-    
+//    APISDK *apisdk = [APISDK getSingleClass];
+//    apisdk.interface = @"http://magicapi.vmovier.com/magicapi/find";
+//    [apisdk addValue:@1 forKey:@"json"];
+//    [apisdk addValue:@1 forKey:@"p"];
+//    [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:get finished:^(id responseObject) {
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        NSLog(@"dict = %@",dict);
+//    } failed:^(NSInteger errorCode) {
+//        NSLog(@"%ld",(long)errorCode);
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {

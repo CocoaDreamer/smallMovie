@@ -13,19 +13,26 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 #endif
+
+#import "interface.h"
+
+
 #import "MJRefresh.h"
+#import "MJExtension.h"
 #import "SSToolkit.h"
 #import "APISDK.h"
-#import "interface.h"
 #import "TAlertView.h"
 #import "UIImageView+WebCache.h"
 #import "Masonry.h"
 #import "BMReachability/BMReachability.h"
 #import "userDefault.h"
+#import "LKDBHelper.h"
+#import "MJExtension.h"
+#import "MBProgressHUD.h"
 
 #define CL_TEST YES
 #define CL_TITLE  @"浪死浪断气"
-
+#define VIDEO_Location @"video"//文件下载的文件夹
 
 
 
@@ -60,12 +67,26 @@
 #import "UINavigationBar+TKCategory.h"
 #import "UILabel+TKCategory.h"
 #import "UIApplication+TKCategory.h"
+#import "NSString+Extension.h"
+#import "NSString+Hashing.h"
+#import "UIView+HUD.h"
+#import "UIView+Screenshot.h"
+#import "UIViewController+HUD.h"
 
 // Animations
 #import "UIView+TKAnimation.h"
 #import "CAAnimation+TKAnimation.h"
 #import "CALayer+TKAnimation.h"
 #import "CAKeyframeAnimation+TKAnimation.h"
+
+
+//各种通知名称
+#define ISDOWNLOADING @"theTaskIsDownLoading"//任务正在下载
+#define Refresh_MVList @"Refresh_MVListTabelView"
+#define Refresh_MovieList @"Refresh_MovieListTableView"
+
+
+
 
 /**
  *  当Xcode为Release时不输出，为Debug时输出

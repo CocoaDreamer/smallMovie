@@ -2,119 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SchemeUserState</key>
-	<dict>
-		<key>AFNetworking.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>MBProgressHUD.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>MJRefresh.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Masonry.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>PopMenu.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMAddressBar.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMBadgeView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMCategories.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMCircleProgressView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMGradientView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMHUDView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMLabel.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMLoadingView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMRateLimit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMTextField.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMTextView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAMWebView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SDWebImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>TAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>XHRealTimeBlur.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>pop.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>06AAF3E3F3723BB37CAC8AA25E896BFF</key>
@@ -192,16 +79,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4D3236BA5D642595927A316E0CAEC51E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4EB0A41827E1C073FFA06F0A41D67849</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>5203E89D39674A18AF27D93E408C6153</key>
 		<dict>
 			<key>primary</key>
@@ -248,11 +125,6 @@
 			<true/>
 		</dict>
 		<key>6634E4875BB8FF8F139069426CE0CF0F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>734892156E4CAD16563F4B149C0C164D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -333,11 +205,6 @@
 			<true/>
 		</dict>
 		<key>C412F0BE14BEE2EAD0A4414EB45E2C3D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D4BF633E754D99893AFBF7D1106D91F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -11,8 +11,10 @@
 #import "APISDK.h"
 #import "MVListModel.h"
 #import "PlayMVViewController.h"
+#import "AppDelegate.h"
 
 @interface MVListViewController ()
+
 @property (weak, nonatomic) IBOutlet UITableView *mvListTableView;
 
 @property (nonatomic, assign) int offset;
@@ -24,6 +26,7 @@
 @property (nonatomic, strong) UIImage *backImage;
 
 @property (nonatomic, strong) NSString *area;
+
 @property (weak, nonatomic) IBOutlet UIButton *KRButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *USButton;
@@ -31,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *MLButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *HTButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *JPButton;
 
 @end
@@ -43,7 +47,12 @@
     self.tabBarController.title = @"热播MV";
 }
 
-
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
+}
 
 - (IBAction)btnClick:(UIButton *)sender {
     if (sender.tag == 10) {
@@ -82,19 +91,16 @@
     _area = @"ML";
 }
 
+- (void)refreshTableView{
+    [self stopMJRefresh];
+    [self requestDataWithUpOrDown:YES];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initData];
-    
     [self setupRefresh];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 }
 
 /**
@@ -104,9 +110,7 @@
  */
 - (void)setupRefresh{
     __weak __typeof(self) weakSelf = self;
-    
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
-
     _mvListTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _offset = 0;
         [weakSelf requestDataWithUpOrDown:YES];
@@ -116,21 +120,19 @@
     _mvListTableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [weakSelf requestDataWithUpOrDown:NO];
     }];
-    
     // 马上进入刷新状态
     [_mvListTableView.header beginRefreshing];
-    
-    
 }
 
 /**
  *  请求数据   NO上拉  YES下拉
  */
 - (void)requestDataWithUpOrDown:(BOOL)upOrDown{
-    APISDK *apisdk = [[APISDK alloc] init];
-    apisdk.interface = MV_List(_area, [NSNumber numberWithInt:_offset]);
-    [apisdk sendDataWithParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+    APISDK *apisdk = [APISDK getSingleClass];
+    NSString *urlString = MV_List(_area, [NSNumber numberWithInt:_offset]);
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"dict = %@",dict);
         if (upOrDown) {
             [_dataSource removeAllObjects];
         } else {
@@ -139,7 +141,7 @@
         NSArray *videos = [dict objectForKey:@"videos"];
         if (videos.count > 0) {
             for (NSDictionary *video in videos) {
-                MVListModel *model = [[MVListModel alloc] initWithDic:video];
+                MVListModel *model = [MVListModel objectWithKeyValues:video];
                 model.MVdescription = video[@"description"];
                 [_dataSource addObject:model];
             }
@@ -148,7 +150,7 @@
         [self stopMJRefresh];
     } failed:^(NSInteger errorCode) {
         NSLog(@"errorCode = %ld",(long)errorCode);
-        [self alertTitle:@"请求列表错误" andMessage:[NSString stringWithFormat:@"%ld",(long)errorCode]];
+        [self showHint:@"列表请求失败"];
         if (upOrDown) {
             _offset = 0;
         }
@@ -163,21 +165,6 @@
     [_mvListTableView.header endRefreshing];
     [_mvListTableView.footer endRefreshing];
 }
-
-
-/**
- *  弹出提示框
- *
- */
-- (void)alertTitle:(NSString *)title andMessage:(NSString *)message{
-    TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
-    [alert show];
-}
-
-
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -206,6 +193,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MVListModel *model = _dataSource[indexPath.row];
+    model.isDownload = NO;
+    model.isDownloading = NO;
+    model.isSaved = NO;
     _listModel = model;
     ListTableViewCell *cell = (ListTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     _backImage = cell.pictureImageView.image;

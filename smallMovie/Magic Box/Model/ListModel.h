@@ -23,9 +23,9 @@
  */
 @property (nonatomic, strong) NSNumber *count_comment;
 
-@property (nonatomic, strong) NSNumber *count_like;
+@property (nonatomic, strong) NSString *count_like;
 
-@property (nonatomic, strong) NSNumber *count_share;
+@property (nonatomic, strong) NSString *count_share;
 
 @property (nonatomic, strong) NSString *count_view;
 
@@ -46,6 +46,10 @@
 @property (nonatomic, strong) NSNumber *pid;
 
 @property (nonatomic, strong) NSString *pimg;
+
+@property (nonatomic, strong) NSString *pimg_big;
+
+@property (nonatomic, strong) NSString *pimg_small;
 
 @property (nonatomic, strong) NSString *pintro;
 
@@ -69,6 +73,27 @@
 
 @property (nonatomic, strong) NSString *videolink;
 
-- (instancetype)initWithDict:(NSDictionary *)dict;
+
+/********************************************自定义字段*********************************************/
+
+/**
+ *  是否下载完成
+ */
+@property (nonatomic, assign) BOOL isDownload;
+
+/**
+ *  是否收藏
+ */
+@property (nonatomic, assign) BOOL isSaved;
+
+/**
+ *  是否正在下载
+ */
+@property (nonatomic, assign) BOOL isDownloading;
+
+/**
+ *  下载百分比
+ */
+@property (nonatomic, assign) float percent;
 
 @end

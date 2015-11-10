@@ -12,9 +12,11 @@
 #import <ShareSDK/ShareSDK.h>
 #import "PopMenu.h"
 #import "AppDelegate.h"
+#import "DownLoadModel.h"
+#import <objc/runtime.h>
+#import "MainViewController.h"
 
-
-
+static char downloadbutton;
 @interface PlayMovieViewController ()
 
 @property (nonatomic,strong) MPMoviePlayerController *moviePlayer;//视频播放控制器
@@ -52,6 +54,12 @@
 
 @property (nonatomic, strong) UIImageView *backImageView;
 
+/**
+ *  下载按钮进度
+ */
+@property (nonatomic, strong) MBRoundProgressView *roundProgressView;
+
+
 
 
 
@@ -63,16 +71,12 @@
 - (void)viewWillDisappear:(BOOL)animated{
     
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound){
-        
         //用户点击了返回按钮
         if (_moviePlayer) {
             [self.moviePlayer stop];
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-
         }
-        
     }
-    
     [super viewWillDisappear:animated];
 }
 
@@ -80,21 +84,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-        
     self.tabBarController.tabBar.hidden = YES;
-    
     self.navigationItem.title = self.listModel.title;
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     
     [self initData];
     
     [self createUI];
     
 //    [self requestComments];
-    //播放
-    [self.moviePlayer play];
-    
     //添加通知
     [self addNotification];
+}
+
+/**
+ *  刷新下载进度
+ *
+ */
+- (void)refreshProgressView:(NSNotification *)noti{
+    DownLoadModel *model = noti.object;
+    __weak __typeof(self)weakSelf = self;
+    NSArray *pdownlinkArray = weakSelf.listModel.pdownlink[0];
+    NSDictionary *dic = pdownlinkArray[0];
+    NSString *urlString = dic[@"video"];
+    if ([urlString isEqualToString:model.urlString]) {
+            UIButton *button = objc_getAssociatedObject(weakSelf, &downloadbutton);
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (!weakSelf.roundProgressView) {
+                button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
+                weakSelf.roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+                weakSelf.roundProgressView.progress = model.percent;
+                weakSelf.roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+                weakSelf.roundProgressView.backgroundTintColor = [UIColor whiteColor];
+                [button addSubview:weakSelf.roundProgressView];
+                }
+
+                weakSelf.roundProgressView.progress = model.percent;
+                if (model.percent == 1) {
+                    [self finishDownload];
+                }
+            });
+        
+    }
 }
 
 - (void)initData{
@@ -121,7 +153,7 @@
     _popMenu.menuAnimationType = kPopMenuAnimationTypeNetEase; // kPopMenuAnimationTypeSina
     _popMenu.perRowItemCount = 3; // or 2
     
-    
+    __weak __typeof(self) weakSelf = self;
     
     _popMenu.didSelectedItemCompletion = ^(MenuItem *selectedItem){
         NSLog(@"%lu",(unsigned long)selectedItem.index);
@@ -129,7 +161,6 @@
         
         SSDKContentType contentType;
         
-         __weak typeof(self) weakSelf = self;
 
         NSString *shareText;
         if (selectedItem.index == 1) {
@@ -168,13 +199,13 @@
         [ShareSDK share:formType parameters:shareParams onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
             switch (state) {
                 case SSDKResponseStateSuccess:
-                    [self alertErrorTitle:@"成功" andMessage:@"分享成功"];
+                    [self alertTitle:@"成功" andMessage:@"分享成功"];
                     break;
                 case SSDKResponseStateFail:
-                    [self alertErrorTitle:@"失败" andMessage:@"分享失败"];
+                    [self alertTitle:@"失败" andMessage:@"分享失败"];
                     break;
                 case SSDKResponseStateCancel:
-                    [self alertErrorTitle:@"取消" andMessage:@"取消分享"];
+                    [self alertTitle:@"取消" andMessage:@"取消分享"];
                 default:
                     break;
             }
@@ -187,21 +218,22 @@
  *  请求评论
  */
 - (void)requestComments{
-    APISDK *apisdk = [[APISDK alloc] init];
-    apisdk.interface = Comment_List;
-http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&withHot=1
+    APISDK *apisdk = [APISDK getSingleClass];
+    NSString *urlString = Comment_List;
 
-    [apisdk addValue:[NSNumber numberWithInt:_page] forKey:@"p"];
-    [apisdk addValue:self.listModel.id forKey:@"postid"];
-    [apisdk addValue:@"new" forKey:@"sort"];
-    [apisdk addValue:@1 forKey:@"withHot"];
-    [apisdk sendDataWithParamDictionary:apisdk.requestDic requestMethod:post finished:^(id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+    NSDictionary *param = @{
+                            @"p":[NSNumber numberWithInt:_page],
+                            @"postid":self.listModel.id,
+                            @"sort":@"new",
+                            @"withHot":@1
+                            };
+    [apisdk sendDataWithUrlString:urlString ParamDictionary:param requestMethod:post finished:^(id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"dic = %@",dic);
         
     } failed:^(NSInteger errorCode) {
         NSLog(@"%ld",(long)errorCode);
-        [self alertErrorTitle:@"列表请求失败" andMessage:[NSString stringWithFormat:@"错误码%ld",(long)errorCode]];
+        [self showHint:@"请求失败"];
     }];
 }
 
@@ -209,7 +241,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  *  弹出提示框
  *
  */
-- (void)alertErrorTitle:(NSString *)title andMessage:(NSString *)message{
+- (void)alertTitle:(NSString *)title andMessage:(NSString *)message{
     TAlertView *alert = [[TAlertView alloc] initWithTitle:title andMessage:message];
     [alert show];
 }
@@ -219,7 +251,27 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  */
 - (void)playVideo{
     [_backImageView removeFromSuperview];
+    NSURL *url;
+    if ([self getFileUrl] != nil) {
+        url = [self getFileUrl];
+    } else {
+        url=[self getNetworkUrl];
+    }
+    self.moviePlayer.contentURL = url;
     [self.moviePlayer play];
+}
+
+- (void)save{
+    NSLog(@"喜欢");
+    LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    ListModel *model = [helper searchSingle:[ListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
+    if (model.isDownload) {
+        self.listModel.isDownload = YES;
+    }
+    self.listModel.isSaved = YES;
+    if ([helper insertToDB:self.listModel]) {
+        [self showHint:@"收藏成功"];
+    }
 }
 
 /**
@@ -228,8 +280,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
 - (void) createUI{
     
     if (!_moviePlayer) {
-        NSURL *url=[self getNetworkUrl];
-        _moviePlayer=[[MPMoviePlayerController alloc]initWithContentURL:url];
+        _moviePlayer=[[MPMoviePlayerController alloc] init];
         _moviePlayer.view.frame = CGRectMake(0, 64, APP_WIDTH, 200);
         [self.view addSubview:_moviePlayer.view];
     }
@@ -239,24 +290,48 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     [self.view addSubview:_backImageView];
     _backImageView.userInteractionEnabled = YES;
     
+    //播放按钮
     UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [playButton setImage:[UIImage imageNamed:@"bfzn"] forState:UIControlStateNormal];
     playButton.frame = CGRectMake(_backImageView.frame.size.width/2-30, _backImageView.frame.size.height/2-30, 60, 60);
     [playButton addTarget:self action:@selector(playVideo) forControlEvents:UIControlEventTouchUpInside];
     [_backImageView addSubview:playButton];
     
+    //分享按钮
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareBtn setImage:[UIImage imageNamed:@"wshare_click"] forState:UIControlStateNormal];
-    [shareBtn setImage:[UIImage imageNamed:@"wshare_normal"] forState:UIControlStateHighlighted];
+    [shareBtn setImage:[UIImage imageNamed:@"share_normal"] forState:UIControlStateNormal];
+    [shareBtn setImage:[UIImage imageNamed:@"share_click"] forState:UIControlStateHighlighted];
     [shareBtn addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
-    shareBtn.frame = CGRectMake(0, 0, 40, 40);
+    shareBtn.frame = CGRectMake(0, 0, 25, 25);
+    
+    //收藏按钮
+    UIButton *collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    collectBtn.frame = CGRectMake(0, 0, 25, 25);
+    [collectBtn setImage:[UIImage imageNamed:@"collectionIcon"] forState:UIControlStateNormal];
+    [collectBtn setImage:[UIImage imageNamed:@"collectionSelectedIcon"] forState:UIControlStateHighlighted];
+    [collectBtn addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *collectItem = [[UIBarButtonItem alloc] initWithCustomView:collectBtn];
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
-    self.navigationItem.rightBarButtonItem = barItem;
+    
+    //下载按钮
+    UIButton *downBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    downBtn.frame = CGRectMake(0, 0, 25, 25);
+    [downBtn addTarget:self action:@selector(download:) forControlEvents:UIControlEventTouchUpInside];
+    [downBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
+    [downBtn setImage:[UIImage imageNamed:@"DownloadHighlighted"] forState:UIControlStateHighlighted];
+    objc_setAssociatedObject(self, &downloadbutton, downBtn, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    UIBarButtonItem *downItem = [[UIBarButtonItem alloc] initWithCustomView:downBtn];
+    
+    NSArray *array = [NSArray arrayWithObjects:downItem,barItem,collectItem, nil];
+    self.navigationItem.rightBarButtonItems = array;
+
+    
+    
     
     
     //多少人看过
     UIImageView *count_viewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 274, 20, 20)];
-    count_viewImageView.image = [UIImage imageNamed:@"wshare_click"];
+    count_viewImageView.image = [UIImage imageNamed:@"explore_selected"];
     [self.view addSubview:count_viewImageView];
     UILabel *count_viewLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 274, 60, 20)];
     count_viewLabel.font = [UIFont systemFontOfSize:15];
@@ -266,7 +341,7 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     
     //多少人喜欢
     UIImageView *count_likeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 274, 20, 20)];
-    count_likeImageView.image = [UIImage imageNamed:@"wshare_click"];
+    count_likeImageView.image = [UIImage imageNamed:@"icon_activation_story_heart"];
     [self.view addSubview:count_likeImageView];
     UILabel *count_likeLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 274, 60, 20)];
     count_likeLabel.font = [UIFont systemFontOfSize:15];
@@ -291,9 +366,110 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
                                                                     NSFontAttributeName: [UIFont systemFontOfSize:17.0],
                                                                     NSParagraphStyleAttributeName: paragraphStyle
                                                                     }context:nil].size;
-    UITextView *introLabel = [[UITextView alloc] initWithFrame:CGRectMake(20, 314, APP_WIDTH-40, introLabelSize.height)];
-    introLabel.text = self.listModel.intro;
-    [self.view addSubview:introLabel];
+    UITextView *introTextView = [[UITextView alloc] initWithFrame:CGRectMake(20, 314, APP_WIDTH-40, introLabelSize.height)];
+    introTextView.editable = NO;
+    introTextView.text = self.listModel.intro;
+    [self.view addSubview:introTextView];
+}
+
+
+- (void)download:(UIButton *)button{
+    NSString *urlString;
+    __weak __typeof(self) weakSelf = self;
+    LKDBHelper *helper = [LKDBHelper getUsingLKDBHelper];
+    ListModel *model = [helper searchSingle:[ListModel class] where:[NSString stringWithFormat:@"id == %@",self.listModel.id] orderBy:nil];
+    if (model != nil) {
+        self.listModel = model;
+    }
+    if (self.listModel.isDownload == YES) {
+        [self showHint:@"您已下载过该视频，无需重新下载"];
+        return;
+    } else if (self.listModel.isDownloading == YES){
+        [self showHint:@"该视频正在下载，请稍后"];
+        return;
+    }
+    button.enabled = NO;//点击按钮后禁用，直到下载失败或者成功
+    _roundProgressView = [[MBRoundProgressView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    _roundProgressView.progress = 0;
+    _roundProgressView.progressTintColor = RGB_Color(91, 186, 150);
+    _roundProgressView.backgroundTintColor = [UIColor whiteColor];
+    [button addSubview:_roundProgressView];
+    NSLog(@"%@",self.listModel.pdownlink[0]);
+    NSArray *pdownlinkArray = self.listModel.pdownlink[0];
+    NSDictionary *dic = pdownlinkArray[0];
+    if ([dic objectForKey:@"video"] != nil) {
+        self.listModel.isDownloading = YES;
+        BOOL isUpdate = [helper insertToDB:self.listModel];
+        if (isUpdate) {
+            NSLog(@"更新成功");
+        } else {
+            NSLog(@"更新失败");
+            
+        }
+        urlString = dic[@"video"];
+        AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        for (id vc in tempAppDelegate.mainNavigationController.viewControllers) {
+            if ([vc isKindOfClass:[MainViewController class]]) {
+                [vc checkDownloadPercent];
+            }
+        }
+        APISDK *apisdk = [APISDK getSingleClass];
+        [apisdk downDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
+            NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+            NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+            dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+                BOOL isSucceed = [responseObject writeToFile:urlStr atomically:YES];
+                weakSelf.listModel.isDownloading = NO;
+                if (isSucceed) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showHint:@"下载成功"];
+                    });
+                    weakSelf.listModel.isDownload = YES;
+                    BOOL isUpdate = [helper updateToDB:weakSelf.listModel where:nil];
+                    if (isUpdate) {
+                        NSLog(@"更新成功");
+                    } else {
+                        NSLog(@"更新失败");
+                        
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self showHint:@"下载失败，请重试"];
+                    });
+                }
+            });
+            [self finishDownload];
+        } failed:^(NSInteger errorCode) {
+            weakSelf.listModel.isDownloading = NO;
+            dispatch_async(dispatch_queue_create([weakSelf.listModel.title UTF8String], DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+                BOOL isUpdate = [helper updateToDB:weakSelf.listModel where:nil];
+                if (isUpdate) {
+                    NSLog(@"更新成功");
+                } else {
+                    NSLog(@"更新失败");
+                }
+            });
+            [self showHint:@"下载失败，请重试"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self finishDownload];
+            });
+        }];
+    } else {
+        [self alertTitle:@"提示" andMessage:@"该视频不支持下载"];
+        [self finishDownload];
+    }
+}
+
+/**
+ *  下载完成后的处理工作
+ */
+- (void)finishDownload{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_roundProgressView removeFromSuperview];
+        UIButton *button = objc_getAssociatedObject(self, &downloadbutton);
+        button.enabled = YES;
+    });
+    
 }
 
 - (void)share{
@@ -307,9 +483,15 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  *  @return 文件路径
  */
 -(NSURL *)getFileUrl{
-    NSString *urlStr=[[NSBundle mainBundle] pathForResource:@"The New Look of OS X Yosemite.mp4" ofType:nil];
-    NSURL *url=[NSURL fileURLWithPath:urlStr];
-    return url;
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) firstObject];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *urlStr = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@.mp4",VIDEO_Location,self.listModel.title]];
+    if ([fileManager fileExistsAtPath:urlStr isDirectory:FALSE]) {
+        NSURL *url=[NSURL fileURLWithPath:urlStr];
+        return url;
+    } else {
+        return nil;
+    }
 }
 
 /**
@@ -334,14 +516,13 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
     NSNotificationCenter *notificationCenter=[NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerPlaybackStateChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerPlaybackFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-    NSNotificationCenter *NSDC = [NSNotificationCenter defaultCenter];
-    [NSDC addObserver:self    selector:@selector(moviePlayerWillEnterFullscreenNotification:)
+    [notificationCenter addObserver:self    selector:@selector(moviePlayerWillEnterFullscreenNotification:)
                  name:MPMoviePlayerWillEnterFullscreenNotification
                object:_moviePlayer];
-    [NSDC addObserver:self     selector:@selector(moviePlayerWillExitFullscreenNotification:)
+    [notificationCenter addObserver:self     selector:@selector(moviePlayerWillExitFullscreenNotification:)
                  name:MPMoviePlayerWillExitFullscreenNotification
                object:_moviePlayer];
-    
+    [notificationCenter addObserver:self selector:@selector(refreshProgressView:) name:ISDOWNLOADING object:nil];
 }
 
 - (void)moviePlayerWillEnterFullscreenNotification:(NSNotification*)notify
@@ -390,6 +571,10 @@ http://magicapi.vmovier.com/magicapi/comment/getList?p=1&postid=5639&sort=new&wi
  */
 -(void)mediaPlayerPlaybackFinished:(NSNotification *)notification{
     NSLog(@"播放完成.%li",self.moviePlayer.playbackState);
+}
+
+- (void)dealloc{
+    NSLog(@"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
 }
 
 - (void)didReceiveMemoryWarning {

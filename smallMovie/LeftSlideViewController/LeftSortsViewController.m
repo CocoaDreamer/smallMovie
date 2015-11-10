@@ -9,6 +9,11 @@
 #import "LeftSortsViewController.h"
 #import "AppDelegate.h"
 #import "otherViewController.h"
+#import "ListModel.h"
+#import "MyCollectionViewController.h"
+#import "UseHelpViewController.h"
+#import "AboutUsViewController.h"
+#import "MyDownloadsViewController.h"
 
 @interface LeftSortsViewController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -50,7 +55,8 @@
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing = YES;
     picker.delegate = self;
-    [self presentViewController:picker animated:YES completion:nil];
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [tempAppDelegate.LeftSlideVC presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
@@ -93,15 +99,15 @@
     } else if (indexPath.row == 1) {
         cell.textLabel.text = @"QQ钱包";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"网上营业厅";
+        cell.textLabel.text = @"小游戏";
     } else if (indexPath.row == 3) {
-        cell.textLabel.text = @"个性装扮";
-    } else if (indexPath.row == 4) {
         cell.textLabel.text = @"我的收藏";
-    } else if (indexPath.row == 5) {
-        cell.textLabel.text = @"我的相册";
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 4) {
         cell.textLabel.text = @"我的文件";
+    } else if (indexPath.row == 5) {
+        cell.textLabel.text = @"使用帮助";
+    } else if (indexPath.row == 6) {
+        cell.textLabel.text = @"关于我们";
     }
     return cell;
 }
@@ -109,9 +115,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    id vc;
+    if (indexPath.row == 3) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyCollectionViewController"];
+    } else if (indexPath.row == 5){
+         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UseHelpViewController"];
+    } else if (indexPath.row == 6){
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutUsViewController"];
+    } else if (indexPath.row == 4) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MyDownloadsViewController"];
+    } else if (indexPath.row == 2){
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"GuessYourThinkViewController"];
+    }
+    else {
+    vc = [[otherViewController alloc] init];
+    }
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    otherViewController *vc = [[otherViewController alloc] init];
-    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+    [tempAppDelegate.LeftSlideVC closeLeftView];
+    [tempAppDelegate.LeftSlideVC setPanEnabled:NO];
     [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
 }
 

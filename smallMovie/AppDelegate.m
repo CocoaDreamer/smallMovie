@@ -14,6 +14,7 @@
 #import "WxApi.h"
 #import "MainViewController.h"
 #import "LeftSortsViewController.h"
+#import "WeiboSDK.h"
 
 @interface AppDelegate ()
 
@@ -43,7 +44,6 @@
     LeftSortsViewController *leftVC = [[LeftSortsViewController alloc] init];
     self.LeftSlideVC = [[LeftSlideViewController alloc] initWithLeftView:leftVC andMainView:self.mainNavigationController];
     self.window.rootViewController = self.LeftSlideVC;
-    
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     
@@ -81,6 +81,7 @@
         }
     }];
     
+    
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -109,7 +110,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 
 {
     if (self.allowRotation) {
