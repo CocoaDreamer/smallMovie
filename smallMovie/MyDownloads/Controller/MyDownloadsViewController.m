@@ -15,7 +15,7 @@
 #import "AppDelegate.h"
 #import "DownLoadModel.h"
 
-@interface MyDownloadsViewController ()
+@interface MyDownloadsViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *dloadsTableView;
 

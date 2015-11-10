@@ -23,9 +23,9 @@
  */
 @property (nonatomic, strong) NSNumber *count_comment;
 
-@property (nonatomic, strong) NSNumber *count_like;
+@property (nonatomic, strong) NSString *count_like;
 
-@property (nonatomic, strong) NSNumber *count_share;
+@property (nonatomic, strong) NSString *count_share;
 
 @property (nonatomic, strong) NSString *count_view;
 
@@ -46,6 +46,10 @@
 @property (nonatomic, strong) NSNumber *pid;
 
 @property (nonatomic, strong) NSString *pimg;
+
+@property (nonatomic, strong) NSString *pimg_big;
+
+@property (nonatomic, strong) NSString *pimg_small;
 
 @property (nonatomic, strong) NSString *pintro;
 

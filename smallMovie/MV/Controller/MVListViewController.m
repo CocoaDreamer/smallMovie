@@ -99,16 +99,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initData];
-    
     [self setupRefresh];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 }
 
 /**
@@ -118,7 +110,6 @@
  */
 - (void)setupRefresh{
     __weak __typeof(self) weakSelf = self;
-    
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     _mvListTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _offset = 0;
@@ -140,7 +131,8 @@
     APISDK *apisdk = [APISDK getSingleClass];
     NSString *urlString = MV_List(_area, [NSNumber numberWithInt:_offset]);
     [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"dict = %@",dict);
         if (upOrDown) {
             [_dataSource removeAllObjects];
         } else {

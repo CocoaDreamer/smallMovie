@@ -55,7 +55,7 @@
     NSString *artist = [_MVSearchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *urlString = MV_Search([NSNumber numberWithInt:_offset], artist);
     [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"dic = %@",dic);
         NSArray *videos = dic[@"videos"];
         if (videos.count > 0) {

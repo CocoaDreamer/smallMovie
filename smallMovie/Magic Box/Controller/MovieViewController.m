@@ -69,7 +69,7 @@
     NSString *urlString = Movie_List;
     
     [apisdk sendDataWithUrlString:urlString ParamDictionary:dic requestMethod:get finished:^(id responseObject) {
-        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (upOrDown) {
             [_dataSource removeAllObjects];
         } else {
@@ -113,12 +113,6 @@
     [self initData];
     
     [self setupRefresh];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 /**
@@ -152,7 +146,6 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return _dataSource.count;
 }

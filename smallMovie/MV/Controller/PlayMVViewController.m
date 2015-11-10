@@ -98,7 +98,7 @@ static char downloadbutton;
     APISDK *apisdk = [APISDK getSingleClass];
     NSString *urlString = MV_Related_List(self.listModel.id);
     [apisdk sendDataWithUrlString:urlString ParamDictionary:nil requestMethod:get finished:^(id responseObject) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSArray *relatedVideos = [dict objectForKey:@"relatedVideos"];
         if (relatedVideos.count > 0) {
             for (NSDictionary *modelDic in relatedVideos) {

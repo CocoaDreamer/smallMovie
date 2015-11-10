@@ -29,7 +29,7 @@ PODS:
     - FMDB
   - Masonry (0.6.3)
   - MBProgressHUD (0.9.1)
-  - MJExtension (2.5.15)
+  - MJExtension (2.5.16)
   - pop (1.0.8)
   - PopMenu (2.4):
     - pop
@@ -82,7 +82,7 @@ SPEC CHECKSUMS:
   LKDBHelper: 6bde14a7d8d1915dd6f1a960176cc868175dd14d
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MJExtension: 76967711f6ac61b1dc60ea5e148f88e12cfc8427
+  MJExtension: b8c1321a77d91bcc007b94d38cbf5383c95ea30e
   pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   PopMenu: 26b97baeaf250070f4f61b93727ca86d127d7bc5
   SAMAddressBar: ca4278987cca36a65fd8d29fae3fc5f3fa732469

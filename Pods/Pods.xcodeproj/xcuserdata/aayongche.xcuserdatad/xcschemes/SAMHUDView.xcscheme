@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B93904656D3F8AA989DD99A2'
+               BlueprintIdentifier = 'E1A7B5EA193F902EACA419DF'
                BlueprintName = 'SAMHUDView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libSAMHUDView.a'>

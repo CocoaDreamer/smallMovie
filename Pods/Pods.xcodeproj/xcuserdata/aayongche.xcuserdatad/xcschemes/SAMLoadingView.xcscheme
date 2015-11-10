@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '06C4BAF57D66CF65B1B1938F'
+               BlueprintIdentifier = 'F29F7A66AECC96B75A7A2B7B'
                BlueprintName = 'SAMLoadingView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libSAMLoadingView.a'>

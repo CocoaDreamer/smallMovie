@@ -228,7 +228,7 @@ static char downloadbutton;
                             @"withHot":@1
                             };
     [apisdk sendDataWithUrlString:urlString ParamDictionary:param requestMethod:post finished:^(id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"dic = %@",dic);
         
     } failed:^(NSInteger errorCode) {

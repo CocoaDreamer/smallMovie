@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2F05FC005DE061511C9B91F0'
+               BlueprintIdentifier = '91C33CA5DDC8562C39047FFA'
                BlueprintName = 'SAMRateLimit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libSAMRateLimit.a'>
