@@ -29,6 +29,7 @@
 #import "LKDBHelper.h"
 #import "MJExtension.h"
 #import "MBProgressHUD.h"
+#import "POP.h"
 
 #define CL_TEST YES
 #define CL_TITLE  @"浪死浪断气"
@@ -84,6 +85,7 @@
 #define ISDOWNLOADING @"theTaskIsDownLoading"//任务正在下载
 #define Refresh_MVList @"Refresh_MVListTabelView"
 #define Refresh_MovieList @"Refresh_MovieListTableView"
+#define Get_IconPicture @"updateIconImageView" //获取个人头像
 
 
 

@@ -97,7 +97,7 @@
 
 - (void)initData{
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateIconImageView) name:@"updateIconImageView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateIconImageView) name:Get_IconPicture object:nil];
     
     LKDBHelper *hepler = [LKDBHelper getUsingLKDBHelper];
     _movieCount = [hepler rowCount:[ListModel class] where:nil];
