@@ -67,8 +67,8 @@
     [USERDEFAULT setValue:data forKey:MY_Icon];
     [USERDEFAULT synchronize];
     self.iconImageView.image = [UIImage imageWithData:data];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateIconImageView" object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:Get_IconPicture object:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 
