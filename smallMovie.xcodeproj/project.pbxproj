@@ -1830,7 +1830,7 @@
 				TargetAttributes = {
 					078F7D641B9EE18D005B1500 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 6N35GSV8QE;
+						DevelopmentTeam = D9DAZ4NXLT;
 					};
 					078F7D7D1B9EE18E005B1500 = {
 						CreatedOnToolsVersion = 6.4;
@@ -2398,6 +2398,7 @@
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/WeChatSDK",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenglei.smallMovie;
 				PRODUCT_NAME = smallMovie;
 				PROVISIONING_PROFILE = "";
 			};
@@ -2435,6 +2436,7 @@
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/SinaWeiboSDK",
 					"$(PROJECT_DIR)/smallMovie/Share/libraries/extends/WeChatSDK",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenglei.smallMovie;
 				PRODUCT_NAME = smallMovie;
 				PROVISIONING_PROFILE = "";
 			};

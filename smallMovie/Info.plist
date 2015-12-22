@@ -7,9 +7,16 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.chenglei.com.smallMovie</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>zh</string>
+		<string>zh_TW</string>
+		<string>zh_CN</string>
+		<string>en</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>浪死浪断气</string>
 	<key>CFBundlePackageType</key>
@@ -78,13 +85,6 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
-	</array>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>zh</string>
-		<string>zh_TW</string>
-		<string>zh_CN</string>
-		<string>en</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
